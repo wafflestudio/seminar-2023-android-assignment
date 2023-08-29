@@ -3,7 +3,7 @@
 ### 과제 목록
 | 번호            | 키워드   | 기한        | 링크 |
 | --------------- | ----- | ---------- | ----- |
-| 0   | Android Studio, Kotlin Basics | 09/08 19시 |  |
+| 0   | Android Studio, Kotlin Basics | 09/08 19시 | [링크](https://github.com/wafflestudio/seminar-2023-android-assignment/blob/assignment0/assignment-0/README.md) |
 | 1   |  |  | |
 | 2   |  |  | |
 | 3   |  |  | |
