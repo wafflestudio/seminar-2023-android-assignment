@@ -1,0 +1,1 @@
+# seminar-2023-android-assignment
