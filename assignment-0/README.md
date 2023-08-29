@@ -69,7 +69,7 @@
     </div>
     </details>
 6. MainActivity.kt라는 것이 생겨 있지만, 일단 신경쓰지 않고 좌상단의 초록색 재생 버튼을 누릅니다.
-7. 윈도우 컴퓨터라면 높은 확률로 팬이 돌아가기 시작하고... 조금 기다리면 오른쪽에 휴대폰 화면이 등장합니다. Hello World! 라는 글씨가 보이면 완료입니다. 이 상태로 첫 번째 세미나에 오시면 됩니다! 시간이 남으신다면 [여기](https://developer.android.com/courses/android-basics-kotlin/unit-1)에서 앞으로 배울 것들을 미리 공부해 보셔도 됩니다.
+7. 윈도우 컴퓨터라면 높은 확률로 팬이 돌아가기 시작하고... 조금 기다리면 오른쪽에 휴대폰 화면이 등장합니다. Hello World! 라는 글씨가 보이면 완료입니다. 이 상태의 스크린샷을 찍어 주세요(과제 제출용). 그리고 이 상태로 첫 번째 세미나에 오시면 됩니다! 시간이 남으신다면 [여기](https://developer.android.com/courses/android-basics-kotlin/unit-1)에서 앞으로 배울 것들을 미리 공부해 보셔도 됩니다.
     <details>
     <summary>스크린샷</summary>
     <div markdown="1">
@@ -80,7 +80,7 @@
     </details>
 
 
-# 과제 0-b. 코틀린 기본 문법 익히기
+# 과제 0-b. 코틀린 기초 문법 익히기
 
 ### Kotlin 파일 실행하는 법
 안드로이드 스튜디오(이하 안스)를 설치하셨으면 kt 파일을 안스에서 실행할 수 있습니다.
@@ -94,7 +94,7 @@ fun main() {
 
 더욱 가볍게 코틀린을 실행해 보고 싶으시면, 웹 사이트 [https://play.kotlinlang.org/](https://play.kotlinlang.org/)에서도 코틀린 파일을 실행할 수 있습니다.(그런데 자동완성이 안 돼서 불편합니다)
 
-### 코틀린 기초 문법
+### 코틀린 기초 문법 공부하기
 1. [https://kotlinlang.org/docs/kotlin-tour-hello-world.html](https://kotlinlang.org/docs/kotlin-tour-hello-world.html)
 위 사이트에서 1번(Hello World) 부터 7번(Null Safety)까지 진행해 주세요.
 
@@ -104,7 +104,7 @@ fun main() {
     - Introduction 챕터: Generics
     - Special Classes 챕터 : Object Keyword
     - Functional 챕터: 이해가 가지 않기 시작하기 전까지
-    - Scope Functions 챕터 : let 외 나머지
+    - Scope Functions 챕터 : let 외 나머지 (다 공부해도 좋습니다)
     - Delegation 챕터 아래부터 쭉 (Kotlin/JS 챕터까지)
 
 ## 과제: 코테 문제 Kotlin으로 다시 풀기
@@ -238,14 +238,14 @@ output
 
 ### 2. 쌍포는 와플도 녹인다 문제
 걱정 마세요! 아래 스켈레톤 코드를 바탕으로 TODO 부분만 완성해 주시면 됩니다.
-참고로 **장군과 궁성(대각선 경로들)은 전부 고려하지 말고**, 오직 포의 이동 가능 여부만 고려하시면 됩니다. 
+참고로 **장군과 궁성(대각선 경로들)은 전부 고려하지 말고**, 오직 포의 이동 가능 여부만 고려하시면 됩니다. 1번과 동일하게 로직이 맞냐 틀리냐 보다는 공부한 코틀린 문법들을 잘 사용했는지를 볼 것입니다.
 
 #### 풀이 조건
 1. sealed class를 사용한다.
 2. nullable type을 사용한다. (+ 다양한 [null 관련 문법들](https://play.kotlinlang.org/byExample/01_introduction/04_Null%20Safety)) 
 3. when 문법을 활용한다.
 
-풀이 조건 이외에도 앞서 튜토리얼에서 공부한 코틀린 문법을 최대한 많이 사용해 보세요!
+풀이 조건 이외에도 앞서 튜토리얼에서 공부한 코틀린 문법을 최대한 많이 다양하게 사용해 보세요!
 
 <details>
 <summary>스켈레톤 코드</summary>
