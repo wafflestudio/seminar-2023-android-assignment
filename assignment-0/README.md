@@ -243,7 +243,6 @@ output
 #### 풀이 조건
 1. sealed class를 사용한다.
 2. nullable type을 사용한다. (+ 다양한 [null 관련 문법들](https://play.kotlinlang.org/byExample/01_introduction/04_Null%20Safety)) 
-3. when 문법을 활용한다.
 
 풀이 조건 이외에도 앞서 튜토리얼에서 공부한 코틀린 문법을 최대한 많이 다양하게 사용해 보세요!
 
