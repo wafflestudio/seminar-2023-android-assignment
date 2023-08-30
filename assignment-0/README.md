@@ -114,7 +114,7 @@ fun main() {
 #### 풀이 조건
 1. data class 사용하기
 2. filter 혹은 filterNot 사용하기
-4. sortBy 사용하기
+4. sortWith 사용하기
 5. 1번에서 만든 data class의 extension function 만들어서 사용하기. 두 강의가 서로 겹치는지 안겹치는지 반환하는 함수를 만들면 됩니다.
 
 테스트케이스는 아래 제공드리는 것만 돌려 보시면 됩니다. (테케가 맞았냐 틀렸냐는 저는 안 볼거고, 문법을 예쁘고 멋지게 잘 썼는지만 볼 예정입니다)
@@ -275,3 +275,7 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
 </details>
 
 <br /> <br />
+
+
+# 수정 사항
+(8/30 22시) SNUTT 강의 찾기 풀이 조건에서 `sortBy`를 `sortWith`로 변경했습니다. `sorted()` 라는 것도 쓸 수 있는데 어떻게 하면 될까요?
