@@ -56,14 +56,53 @@ data class Point(
 sealed class Piece(open val pos: Point, open val team: Boolean) { // team이 true이면 우리 편 기물
     data class Pho(override val pos: Point, override val team: Boolean) : Piece(pos, team)
     // TODO
-    // data class Cha( ... )
-    // data class Jol( ... )
-    // data class King( ... )
+    data class Cha(override val pos: Point, override val team: Boolean): Piece(pos, team)
+    data class Jol(override val pos: Point, override val team: Boolean): Piece(pos, team)
+    data class King(override val pos: Point, override val team: Boolean): Piece(pos, team)
+
+    data class Next(override val pos: Point, override val team: Boolean): Piece(pos, team)
 }
 
 fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
     // TODO : board가 주어졌을 때, next 위치로 내 포가 이동할 수 있는지 없는지 반환
-    return true
+    if (board[next.x][next.y]?.team == true || board[next.x][next.y] is Piece.Pho) {
+        return false
+    }
+    board[next.x][next.y] = Piece.Next(Point(next.x, next.y), true)
+
+    var idxPho = -10
+    var idxNext = -10
+
+    val xPieceList = board[next.x].filterNotNull()
+    for (i in 0 until xPieceList.count()) {
+        val piece = xPieceList[i]
+        if (piece is Piece.Pho && piece.team) idxPho = i
+        if (piece is Piece.Next) idxNext = i
+    }
+    if (idxPho - idxNext == 2 || idxNext - idxPho == 2) {
+        val midIdx: Int = (idxPho + idxNext) / 2
+        if (xPieceList[midIdx] !is Piece.Pho) {
+            return true
+        }
+    }
+
+    var yPieceList = mutableListOf<Piece?>()
+    for (x in 0..8) {
+        if (board[x][next.y] != null) yPieceList.add(board[x][next.y])
+    }
+    for (i in 0 until yPieceList.count()) {
+        val piece = yPieceList[i]
+        if (piece is Piece.Pho && piece.team) idxPho = i
+        if (piece is Piece.Next) idxNext = i
+    }
+    if (idxPho - idxNext == 2 || idxNext - idxPho == 2) {
+        val midIdx: Int = (idxPho + idxNext) / 2
+        if (xPieceList[midIdx] !is Piece.Pho) {
+            return true
+        }
+    }
+
+    return false
 }
 ```
 
