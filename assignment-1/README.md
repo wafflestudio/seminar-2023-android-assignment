@@ -37,6 +37,12 @@
 1. operator를 선택할 때마다 두 숫자 EditText 사이의 +, -, /, * 가 알맞게 변한다.
 2. +, -, *, / 버튼을 예쁘게 2x2로 배열한다. (힌트 : GridLayout 혹은 ConstraintLayout)
 
+# 데모
+https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/96d68e41-1cf7-4a5b-ba60-8db49eb2d92d
+
+
+
+
 # 과제 제출 방법
 1. assignment 레포지토리를 fork한다.
 2. 로컬에 clone한 후, `{자신의 깃헙 닉네임}/assignment1 브랜치`에서 개발을 진행한다.
