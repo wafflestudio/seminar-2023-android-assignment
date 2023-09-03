@@ -23,8 +23,7 @@
 4. 최하단에는 로그인하기 버튼이 있고, 버튼을 누르면 계산기 페이지로 이동한다.
 
 ## 계산기 페이지
-1. 최상단에는 로그인 페이지에서 전달받은 아이디와 비밀번호를 TextView로 표시한다.
-2. EditText를 이용해 첫 번째 수와 두 번째 수를 입력받는다.
+1. EditText를 이용해 첫 번째 수와 두 번째 수를 입력받는다.
 3. 사용자는 +, -, *, / 4가지 operator를 선택할 수 있고, operator를 클릭하면 계산 결과가 화면에 표시된다.
 
 # 추가 스펙
@@ -33,10 +32,12 @@
 1. 아이디/비밀번호 입력 창과 로그인하기 버튼을 둥근 사각형 테두리로 감싼다. (힌트 : `<shape>  </shape>`)
 2. 아이디, 비밀번호 EditText에 `아이디 입력하기` 등의 hint를 설정한다. (힌트 : `android:hint`)
 3. 비밀번호가 5자리 미만일 경우 계산기 페이지로 넘어가지 않고, `유효하지 않은 비밀번호입니다` 라는 토스트 메시지를 띄운다. (힌트: Toast)
+4. 계산기 액티비티로 이동 시, 입력한 아이디와 비밀번호를 intent를 통해 전달한다. (힌트 : `intent.putExtra`)
 
 ## 계산기 페이지
-1. operator를 선택할 때마다 두 숫자 EditText 사이의 +, -, /, * 가 알맞게 변한다.
-2. +, -, *, / 버튼을 예쁘게 2x2로 배열한다. (힌트 : GridLayout 혹은 ConstraintLayout)
+1. 최상단에는 로그인 페이지에서 전달받은 아이디와 비밀번호를 TextView로 표시한다. (힌트 : `intent.getStringExtra`)
+2. operator를 선택할 때마다 두 숫자 EditText 사이의 +, -, /, * 가 알맞게 변한다.
+3. +, -, *, / 버튼을 예쁘게 2x2로 배열한다. (힌트 : GridLayout 혹은 ConstraintLayout)
 
 # 데모
 https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/96d68e41-1cf7-4a5b-ba60-8db49eb2d92d
