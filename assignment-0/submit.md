@@ -74,12 +74,11 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
     for(row in board) {
         for (column in row) if (column is Piece.Pho && column.team) myPhoPlace = column.pos
     }
-
     if(myPhoPlace?.x == next.x){
         if(myPhoPlace.y < next.y){
             var bridge : Piece? = null
             var piecesInPath = 0
-            for(i in myPhoPlace.y..next.y){
+            for(i in (myPhoPlace.y+1)until next.y){
                 if(board[myPhoPlace.x][i] != null) {
                     piecesInPath++
                     bridge = board[myPhoPlace.x][i]!!
@@ -92,7 +91,7 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
         if(myPhoPlace.x < next.x){
             var bridge : Piece? = null
             var piecesInPath = 0
-            for(i in myPhoPlace.x..next.x){
+            for(i in (myPhoPlace.x+1)until(next.x)){
                 if(board[myPhoPlace.y][i] != null) {
                     piecesInPath++
                     bridge = board[myPhoPlace.y][i]!!
