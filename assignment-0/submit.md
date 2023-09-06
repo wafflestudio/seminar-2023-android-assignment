@@ -78,7 +78,18 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
         if(myPhoPlace.y < next.y){
             var bridge : Piece? = null
             var piecesInPath = 0
-            for(i in (myPhoPlace.y+1)until next.y){
+            for(i in (myPhoPlace.y+1) until next.y){
+                if(board[myPhoPlace.x][i] != null) {
+                    piecesInPath++
+                    bridge = board[myPhoPlace.x][i]!!
+                }
+            }
+            return piecesInPath==1 && bridge !is Piece.Pho
+        }
+        else{
+            var bridge : Piece? = null
+            var piecesInPath = 0
+            for(i in (next.y+1) until myPhoPlace.y){
                 if(board[myPhoPlace.x][i] != null) {
                     piecesInPath++
                     bridge = board[myPhoPlace.x][i]!!
@@ -91,10 +102,21 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
         if(myPhoPlace.x < next.x){
             var bridge : Piece? = null
             var piecesInPath = 0
-            for(i in (myPhoPlace.x+1)until(next.x)){
-                if(board[myPhoPlace.y][i] != null) {
+            for(i in (myPhoPlace.x+1) until next.x){
+                if(board[i][myPhoPlace.y] != null) {
                     piecesInPath++
-                    bridge = board[myPhoPlace.y][i]!!
+                    bridge = board[i][myPhoPlace.y]!!
+                }
+            }
+            return piecesInPath==1 && bridge !is Piece.Pho
+        }
+        else{
+            var bridge : Piece? = null
+            var piecesInPath = 0
+            for(i in (next.x+1) until myPhoPlace.x){
+                if(board[i][myPhoPlace.y] != null) {
+                    piecesInPath++
+                    bridge = board[i][myPhoPlace.y]!!
                 }
             }
             return piecesInPath==1 && bridge !is Piece.Pho
