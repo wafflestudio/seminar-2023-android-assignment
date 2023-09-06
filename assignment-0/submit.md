@@ -10,8 +10,53 @@
 
 여기를 채워 주세요.
 ```kotlin
-fun main() {
+data class Course(val i: Int, val d: Int, val s: Int, val e: Int)
+fun Course.available(course: Course): Boolean {
+    return if (d == course.d){
+        ((s > course.e) || (e < course.s))
+    }
+    else {
+        true
+    }
+}
 
+val User = mutableListOf<Course>()
+val Total = mutableListOf<Course>()
+var Result = mutableListOf<Course>()
+
+fun main() {
+    val setting: String? = readlnOrNull()
+    val parts = setting?.split("\\s+".toRegex())
+    val n = parts?.get(0)?.toInt()
+    val m = parts?.get(1)?.toInt()
+
+    for (i in 1..n!!){
+        val u: String? = readlnOrNull()
+        val parts = u?.split("\\s+".toRegex())
+        val user = Course(parts?.get(0)?.toInt()!!, parts?.get(1)?.toInt()!!, parts?.get(2)?.toInt()!!, parts?.get(3)?.toInt()!!)
+        User.add(user)
+    }
+
+    for (i in 1..m!!){
+        val t: String? = readlnOrNull()
+        val parts = t?.split("\\s+".toRegex())
+        val total = Course(parts?.get(0)?.toInt()!!, parts?.get(1)?.toInt()!!, parts?.get(2)?.toInt()!!, parts?.get(3)?.toInt()!!)
+        Total.add(total)
+        Result.add(total)
+    }
+
+    for (user in User){
+        Result = Result.filter{Total.filter{it.available(user)}.contains(it)}.toMutableList()
+    }
+
+    Result.sortBy{it.d * (m+1) * 24 * 24 + it.s * (m+1) * 24 + it.e * (m+1) + it.i}
+
+    if (Result.size > 0) {
+        Result.forEach { println(it.i) }
+    }
+    else{
+        println(0)
+    }
 }
 ```
 
