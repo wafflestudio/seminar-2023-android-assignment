@@ -95,7 +95,6 @@ sealed class Piece(open val pos: Point, open val team: Boolean) { // team이 tru
     data class Jol(override val pos: Point, override val team: Boolean): Piece(pos,team)
     data class King(override val pos: Point, override val team: Boolean): Piece(pos,team)
 }
-}
 
 fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
     // TODO : board가 주어졌을 때, next 위치로 내 포가 이동할 수 있는지 없는지 반환
