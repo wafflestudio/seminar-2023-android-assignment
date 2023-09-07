@@ -71,15 +71,103 @@ data class Point(
 
 sealed class Piece(open val pos: Point, open val team: Boolean) { // team이 true이면 우리 편 기물
     data class Pho(override val pos: Point, override val team: Boolean) : Piece(pos, team)
-    // TODO
-    // data class Cha( ... )
-    // data class Jol( ... )
-    // data class King( ... )
+    data class Cha(override val pos: Point, override val team: Boolean) : Piece(pos, team)
+    data class Jol(override val pos: Point, override val team: Boolean) : Piece(pos, team)
+    data class King(override val pos: Point, override val team: Boolean) : Piece(pos, team)
 }
 
 fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
     // TODO : board가 주어졌을 때, next 위치로 내 포가 이동할 수 있는지 없는지 반환
-    return true
+    val myPho = mutableListOf<Piece>()
+    val sameX = mutableListOf<Piece>()
+    val sameY = mutableListOf<Piece>()
+
+    val nonNullPiece = board.flatten().filterNotNull()
+
+    for (piece in nonNullPiece) {
+        if (piece is Piece.Pho && piece.team) {
+            myPho.add(piece)
+        }
+    }
+
+    val xPho = myPho[0].pos.x
+    val yPho = myPho[0].pos.y
+
+    if (next.x == xPho){
+        for (piece in nonNullPiece){
+            if (piece.pos.x == next.x){
+                sameX.add(piece)
+            }
+        }
+        sameX.sortBy{it.pos.y}
+
+        val iPho = sameX.indexOf(myPho[0])
+
+        for (piece in sameX){
+            if (piece.pos == next){
+                return if (piece.team){
+                    false
+                } else {
+                    val index = sameX.indexOf(piece)
+                    if (kotlin.math.abs(iPho - index) != 2){
+                        false
+                    } else{
+                        sameX[(iPho + index)/2] !is Piece.Pho
+                    }
+                }
+            }
+        }
+
+        sameX.add(Piece.Jol(next, false))
+        sameX.sortBy{it.pos.y}
+        val index = sameX.indexOf(Piece.Jol(next, false))
+
+        return if (kotlin.math.abs(iPho - index) != 2){
+            false
+        }
+        else {
+            sameX[(iPho + index)/2] !is Piece.Pho
+        }
+    }
+    else if (next.y == yPho) {
+        for (piece in nonNullPiece){
+            if (piece.pos.y == next.y){
+                sameY.add(piece)
+            }
+        }
+        sameY.sortBy{it.pos.x}
+
+        val iPho = sameY.indexOf(myPho[0])
+
+        for (piece in sameY){
+            if (piece.pos == next){
+                return if (piece.team){
+                    false
+                } else {
+                    val index = sameY.indexOf(piece)
+                    if (kotlin.math.abs(iPho - index) != 2){
+                        false
+                    } else{
+                        sameY[(iPho + index)/2] !is Piece.Pho
+                    }
+                }
+            }
+        }
+
+        sameY.add(Piece.Jol(next, false))
+        sameY.sortBy{it.pos.x}
+        val index = sameY.indexOf(Piece.Jol(next, false))
+
+        return if (kotlin.math.abs(iPho - index) != 2){
+            false
+        }
+        else {
+            sameY[(iPho + index)/2] !is Piece.Pho
+        }
+    }
+    else{
+        return false
+    }
 }
 ```
 
