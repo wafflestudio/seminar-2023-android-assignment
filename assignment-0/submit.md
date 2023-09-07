@@ -4,13 +4,70 @@
 ## 1. 설치 스크린샷
 
 깃허브 에디터에 스크린샷 이미지를 드래그 드롭 하면 이미지를 첨부할 수 있습니다. 여기에 넣어 주세요!
+![KakaoTalk_20230906_135210476](https://github.com/kimhaneal11/seminar-2023-android-assignment/assets/84558752/6b69bd05-701a-4f6e-ae30-fc50b9d60698)
+
 
 ## 2. SNUTT 강의 찾기 코드
 
 여기를 채워 주세요.
 ```kotlin
 fun main() {
+    data class Lecture(
+        var num : Int = 0,
+        var day : Int = 0,
+        var start : Int = 0,
+        var end : Int = 0
+    ){
+        constructor(str : String) : this() {
+            val line = str.split(" ")
+            this.num = line[0].toInt()
+            this.day = line[1].toInt()
+            this.start = line[2].toInt()
+            this.end = line[3].toInt()
+        }
 
+
+        fun isPossible(userLecture:List<Lecture>):Boolean{
+            for(user in userLecture){
+                if(this.day==user.day){
+                    if(this.start>=user.start && this.start<=user.end) return false
+                    if(this.end>=user.start && this.end<=user.end) return false
+                }
+            }
+            return true
+        }
+    }
+
+    fun filterList(userLecture:List<Lecture>, totalLecture:MutableList<Lecture>): MutableList<Lecture> {
+        var lst : MutableList<Lecture> = totalLecture.filter{it.isPossible(userLecture)}.toMutableList()
+        return lst
+    }
+
+    val input = readLine()!!.split(" ")
+    val N : Int = input[0].toInt()
+    val M : Int = input[1].toInt()
+
+    val userLecture : MutableList<Lecture> = mutableListOf()
+    val totalLecture : MutableList<Lecture> = mutableListOf()
+
+    for(i in 1..N){
+        var lecture : Lecture = Lecture(readLine()!!)
+        userLecture.add(lecture)
+    }
+
+    for(i in 1..M){
+        var lecture : Lecture = Lecture(readLine()!!)
+        totalLecture.add(lecture)
+    }
+
+    var filteredLecture : MutableList<Lecture> = filterList(userLecture, totalLecture)
+    filteredLecture.sortWith(compareBy<Lecture>{it.day}.thenBy {it.start}.thenBy {it.end}.thenBy {it.num})
+    if(filteredLecture.size==0) println(0)
+    else{
+        for(i in 1..filteredLecture.size){
+            println(filteredLecture[i-1].num)
+        }
+    }
 }
 ```
 
