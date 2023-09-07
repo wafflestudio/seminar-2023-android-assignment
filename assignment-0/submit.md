@@ -10,8 +10,83 @@
 
 여기를 채워 주세요.
 ```kotlin
-fun main() {
+data class Lecture(val start_time:Int, val end_time:Int, val day:Int, val id:Int)
 
+fun can_coexist(x:Lecture, y:Lecture):Boolean{
+    // already in: x, candidate: y
+    if (x.start_time == y.start_time && x.end_time ==y.end_time && x.day == y.day){ //same w.o. id
+    	return false 
+    }
+    if (x.day != y.day){
+    	return true
+    }
+    if (x.end_time < y.start_time || y.end_time < x.start_time){
+        return true
+    }
+    return false
+}
+
+fun can_insert(my_table:List<Lecture>, lecture:Lecture):Boolean{
+    var cando=true
+    for (lec in my_table){
+        if (can_coexist(lec, lecture)==false){
+            cando=false
+            break
+        }
+    }
+    return cando
+}
+
+fun main() {
+    var nm = readLine()
+    val nmSplit = nm?.split(" ")
+    //println(nmSplit)
+    val N = nmSplit?.getOrNull(0)?.toInt()
+    val M = nmSplit?.getOrNull(1)?.toInt()
+    
+    val userLectures : MutableList<Lecture> = mutableListOf()
+    for (i in 0 until (N ?: 0)) {
+        val lecture = readLine()!!.split(" ").map { it.toInt() }
+        val I = lecture[0]
+        val D = lecture[1]
+        val S = lecture[2]
+        val E = lecture[3]
+
+        require(I in 1..1000) { "Wrong lecture number." }
+        require(D in 1..7) { "Wrong day number." }
+        require(S in 0..E) { "Wrong lecture time information." }
+        require(E <= 23) { "Wrong lecture end time." }
+
+        userLectures.add(Lecture(id=I, day=D, start_time = S, end_time =E))
+    }
+
+    val allLectures : MutableList<Lecture> = mutableListOf()
+    for (i in 0 until (M ?: 0)) {
+        val lecture = readLine()!!.split(" ").map { it.toInt() }
+        val I = lecture[0]
+        val D = lecture[1]
+        val S = lecture[2]
+        val E = lecture[3]
+
+        require(I in 1..1000) { "Wrong lecture number." }
+        require(D in 1..7) { "Wrong day number." }
+        require(S in 0..E) { "Wrong lecture time information." }
+        require(E <= 23) { "Wrong lecture end time." }
+
+        allLectures.add(Lecture(id=I, day=D, start_time = S, end_time =E))
+    }
+
+    
+    val validLectures = allLectures.filter{ x -> can_insert(userLectures,x)==true }
+
+    if (validLectures.isNotEmpty()) {
+        val sortedValidLectures = validLectures.sortedWith(compareBy<Lecture> {it.day}.thenBy{it.start_time}.thenBy{it.end_time})
+        for (lecture in sortedValidLectures) {
+            println(lecture.id)
+        }
+    } else {
+        println(0)
+    }
 }
 ```
 
