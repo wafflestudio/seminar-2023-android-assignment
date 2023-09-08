@@ -75,6 +75,9 @@ fun main() {
 
 여기를 채워 주세요.
 ```kotlin
+import kotlin.math.max
+import kotlin.math.min
+
 data class Point(
     val x: Int,
     val y: Int,
@@ -82,14 +85,77 @@ data class Point(
 
 sealed class Piece(open val pos: Point, open val team: Boolean) { // team이 true이면 우리 편 기물
     data class Pho(override val pos: Point, override val team: Boolean) : Piece(pos, team)
-    // TODO
-    // data class Cha( ... )
-    // data class Jol( ... )
-    // data class King( ... )
+
+    data class Cha(override val pos: Point, override val team: Boolean) : Piece(pos, team)
+
+    data class Jol(override val pos: Point, override val team: Boolean) : Piece(pos, team)
+
+    data class King(override val pos: Point, override val team: Boolean) : Piece(pos, team)
 }
 
 fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
-    // TODO : board가 주어졌을 때, next 위치로 내 포가 이동할 수 있는지 없는지 반환
+    //1. 포의 현재 위치
+    var x : Int = -1
+    var y : Int = -1
+    var finish = false
+    for(line in board) {
+        for (mal in line) {
+            when (mal) {
+                null -> continue
+                is Piece.Pho -> {
+                    x = mal.pos.x
+                    y = mal.pos.y
+                    finish = true
+                }
+                else -> continue
+            }
+            if(finish) break
+        }
+        if(finish) break
+    }
+
+    //2. 포의 현재 위치와 next 위치가 같은 줄인지 확인
+    var check = 0//0-위아래, 1-왼오
+    if(x==next.x) check = 1
+    else if(y==next.y) check = 0
+    else return false
+
+    //3. 포의 현 위치와 다음 위치 사이에 말이 하나만 있는지 확인
+    var meet = 0
+    var start = 0
+    var end = 0
+
+    //4-1. 위아래 이동
+    if(check==0){
+        start = min(x, next.x)
+        end = max(x, next.x)
+        for(i in start+1..end-1) {
+            var mal: Piece? = board[i][y]
+            when (mal) {
+                null -> continue
+                is Piece.Pho -> return false//사이에 상대 포 있으면 이동 불가
+                else -> meet++
+            }
+        }
+        if(meet!=1) return false//사이에 말이 하나만 있어야 이동 가능
+    }
+
+    //4-2. 왼오 이동
+    else{
+        start = min(y, next.y)
+        end = max(y, next.y)
+        for(i in start+1..end-1) {
+            var mal: Piece? = board[x][i]
+            when (mal) {
+                null -> continue
+                is Piece.Pho -> return false//사이에 상대 포 있으면 이동 불가
+                else -> meet++
+            }
+        }
+        if(meet!=1) return false//사이에 말이 하나만 있어야 이동 가능
+    }
+
+    //다 통과하면 이동 가능!
     return true
 }
 ```
