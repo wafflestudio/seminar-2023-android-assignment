@@ -3,7 +3,7 @@
 
 ## 1. 설치 스크린샷
 
-깃허브 에디터에 스크린샷 이미지를 드래그 드롭 하면 이미지를 첨부할 수 있습니다. 여기에 넣어 주세요!
+![image](https://github.com/snupinel/seminar-2023-android-assignment/assets/142738524/a1e1b7ff-c00c-4ce9-9869-45289292e1a2)
 
 ## 2. SNUTT 강의 찾기 코드
 
