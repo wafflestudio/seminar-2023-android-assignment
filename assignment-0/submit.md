@@ -63,6 +63,57 @@ fun main() {
 
 여기를 채워 주세요.
 ```kotlin
+fun main() {
+    val board = Array(9) { IntArray(9) }
+    val availableLists = mutableListOf<List<Int>>()
+
+    val teamPo = readLine()?.split(" ")?.map { (it.toIntOrNull() ?: 0) - 1 }
+
+    for (i in 1..3) {
+        val xyi = readLine()?.split(" ")?.map { (it.toIntOrNull() ?: 0) - 1 }
+        board[xyi?.get(0)!!][xyi[1]!!] = 1
+    }
+    val xy = readLine()?.split(" ")?.map { (it.toIntOrNull() ?: 0) - 1 }
+    board[xy?.get(0)!!][xy[1]!!] = 2
+
+    for (i in 1..3) {
+        val xy = readLine()?.split(" ")?.map { (it.toIntOrNull() ?: 0) - 1 }
+        board[xy?.get(0)!!][xy[1]!!] = 3
+    }
+
+    val dir = listOf(listOf(1, 0), listOf(-1, 0), listOf(0, 1), listOf(0, -1))
+    for (move in dir) {
+        var PoX = teamPo?.get(0) ?: 0
+        var PoY = teamPo?.get(1) ?: 0
+        var jump = false
+        while (1 <= PoX && PoX < 8 && 1 <= PoY && PoY < 8) {
+            PoX += move[0]
+            PoY += move[1]
+            when (jump) {
+                true -> when (board[PoX][PoY]) {
+                    0 -> availableLists.add(listOf(PoX, PoY))
+                    1 -> break
+                    2 -> break
+                    3 -> {
+                        availableLists.add(listOf(PoX, PoY))
+                        break
+                    }
+                }
+
+                false -> when (board[PoX][PoY]) {
+                    0 -> continue
+                    1 -> jump = true
+                    2 -> break
+                    3 -> jump = true
+                    }
+
+                }
+            }
+        }
+    for (list in availableLists) {
+        println(list)
+        }
+}
 data class Point(
     val x: Int,
     val y: Int,
