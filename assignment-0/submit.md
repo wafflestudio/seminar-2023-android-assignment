@@ -9,7 +9,7 @@
 
 여기를 채워 주세요.
 ```kotlin
-class Lec(val _id: Int, val _day: Int,val _start: Int,val _end: Int) {//강의 정보를 가지는 클래스
+data class Lec(val _id: Int, val _day: Int,val _start: Int,val _end: Int) {//강의 정보를 가지는 클래스
     val id=_id
     val day=_day
     val start=_start
