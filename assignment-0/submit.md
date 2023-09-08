@@ -125,7 +125,7 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
     var start = 0
     var end = 0
 
-    //4-1. 위아래 이동
+    //3-1. 위아래 이동
     if(check==0){
         start = min(x, next.x)
         end = max(x, next.x)
@@ -140,7 +140,7 @@ fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
         if(meet!=1) return false//사이에 말이 하나만 있어야 이동 가능
     }
 
-    //4-2. 왼오 이동
+    //3-2. 왼오 이동
     else{
         start = min(y, next.y)
         end = max(y, next.y)
