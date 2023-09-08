@@ -110,17 +110,148 @@ sealed class Piece(open val pos: Point, open val team: Boolean) { // team이 tru
     data class King(override val pos: Point, override val team: Boolean) : Piece(pos, team)
 }
 
-fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point): Boolean {
+fun canPhoMoveTo(board: Array<Array<Piece?>>, next: Point, ourCha: Piece, thatCha: Piece): Boolean {
     // TODO : board가 주어졌을 때, next 위치로 내 포가 이동할 수 있는지 없는지 반환
-    // 
+    if (next.x !in 0..9 || next.y !in 0..8){
+        return false
+    //check if ourPho is in same row/same col
+    var isThere =false
+    var rowcol = ""
+   	for (y in 0..8){
+        if(board[next.x][y]!=null && board[next.x][y]==ourCha){
+            isThere = true
+            rowcol = "row"
+        }
+    }
+    for (x in 0..9){
+        if(board[x][next.y]!=null && board[x][next.y]==ourCha){
+            isThere = true
+            rowcol = "col"
+        }
+    }
+    if (isThere == false){
+        return false
+    }
+    
+    //now true
+    if(rowcol == "row"){
+        //same x, diff y 
+       	val small = when{
+            next.y < ourCha.pos.y -> next.y
+            next.y > ourCha.pos.y -> ourCha.pos.y
+        }
+        val big = when{
+            next.y > ourCha.pos.y -> next.y
+            next.y < ourCha.pos.y -> ourCha.pos.y
+        }
+        var numOfPieces = 0
+        for (y in small+1..<big){
+            if(board[next.x][y] !=null && board[next.x][y] != thatCha){
+                numOfPieces ++
+            }
+        }
+        if (numOfPieces !=1){
+            return false
+        }
+    }
+    else{ // col
+        //same y, diff x
+       	val small = when{
+            next.x < ourCha.pos.x -> next.x
+            next.x > ourCha.pos.x -> ourCha.pos.x
+        }
+        val big = when{
+            next.x > ourCha.pos.x -> next.x
+            next.x < ourCha.pos.x -> ourCha.pos.x
+        }
+        var numOfPieces = 0
+        for (x in small+1..<big){
+            if(board[x][next.y] !=null && board[x][next.y] != thatCha){
+                numOfPieces ++
+            }
+        }
+        if (numOfPieces !=1){
+            return false
+        }
+    }
+    
+
     return true
 }
 
 fun main(){
     //input - Array 
     //
+    var board: Array<Array<Piece?>> = Array(9) {Array(10) {null}}
+    //our side
+    var Pho = readLine()
+    val ourPhosplit = Pho?.split(" ")
+    val ourPhoX:Int = ourPhosplit?.getOrNull(0)?.toInt() ?:-1
+    val ourPhoY:Int = ourPhosplit?.getOrNull(1)?.toInt() ?:-1
+    val ourPho = Piece.Pho(Point(ourPhoX, ourPhoY), true)
+    
+    var Cha = readLine()
+    val ourChasplit = Cha?.split(" ")
+    val ourChaX:Int = ourChasplit?.getOrNull(0)?.toInt() ?:-1
+    val ourChaY:Int = ourChasplit?.getOrNull(1)?.toInt() ?:-1
+    val ourCha = Piece.Cha(Point(ourChaX, ourChaY), true)
+    
+    var Jol = readLine()
+    val ourJolsplit = Jol?.split(" ")
+    val ourJolX:Int = ourJolsplit?.getOrNull(0)?.toInt()?:-1
+    val ourJolY:Int = ourJolsplit?.getOrNull(1)?.toInt()?:-1
+    val ourJol = Piece.Jol(Point(ourJolX, ourJolY), true)
+    
+    var King = readLine()
+    val ourKingsplit = King?.split(" ")
+    val ourKingX :Int = ourKingsplit?.getOrNull(0)?.toInt()?:-1
+    val ourKingY :Int = ourKingsplit?.getOrNull(1)?.toInt()?:-1
+    val ourKing = Piece.King(Point(ourKingX, ourKingY), true)
+    
+    //that side
+    Pho = readLine()
+    val thatPhosplit = Pho?.split(" ")
+    val thatPhoX:Int = thatPhosplit?.getOrNull(0)?.toInt() ?:-1
+    val thatPhoY:Int = thatPhosplit?.getOrNull(1)?.toInt() ?:-1
+    val thatPho = Piece.Pho(Point(thatPhoX, thatPhoY), false)
+    
+    Cha = readLine()
+    val thatChasplit = Cha?.split(" ")
+    val thatChaX:Int = thatChasplit?.getOrNull(0)?.toInt() ?:-1
+    val thatChaY:Int = thatChasplit?.getOrNull(1)?.toInt() ?:-1
+    val thatCha = Piece.Cha(Point(thatChaX, thatChaY), false)
+    
+    Jol = readLine()
+    val thatJolsplit = Jol?.split(" ")
+    val thatJolX:Int = thatJolsplit?.getOrNull(0)?.toInt()?:-1
+    val thatJolY:Int = thatJolsplit?.getOrNull(1)?.toInt()?:-1
+    val thatJol = Piece.Jol(Point(thatJolX, thatJolY), false)
+    
+    King = readLine()
+    val thatKingsplit = King?.split(" ")
+    val thatKingX :Int = thatKingsplit?.getOrNull(0)?.toInt()?:-1
+    val thatKingY :Int = thatKingsplit?.getOrNull(1)?.toInt()?:-1
+    val thatKing = Piece.King(Point(thatKingX, thatKingY), false)
+    
+    //update board
+    board[ourPho.pos.x][ourPho.pos.y] = ourPho
+    board[ourCha.pos.x][ourCha.pos.y] = ourCha
+    board[ourJol.pos.x][ourJol.pos.y] = ourJol
+    board[ourKing.pos.x][ourKing.pos.y] = ourKing
+    board[thatPho.pos.x][thatPho.pos.y] = thatPho
+    board[thatCha.pos.x][thatCha.pos.y] = thatCha
+    board[thatJol.pos.x][thatJol.pos.y] = thatJol
+    board[thatKing.pos.x][thatKing.pos.y] = thatKing
+    
     //
-    //
+    //check all positions
+    for(i in 0..9){
+        for (j in 0..8){
+            if (canPhoMoveTo(board, Point(i,j), ourCha, thatCha)==true){
+                println("$i $j")
+            }
+        }
+    }
 }
 ```
 
