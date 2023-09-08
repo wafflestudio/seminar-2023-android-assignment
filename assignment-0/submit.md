@@ -44,7 +44,11 @@ fun main(){
     //겹치지 않는 강의들만 정렬해서 저장
     val result = newLecs.filter{
         it.possible()==1
-    }.sortedBy{it.id}.sortedBy{it.end}.sortedBy{it.start}.sortedBy{it.day}
+    }.toMutableList()
+    result.sortBy{it.id}
+    result.sortBy{it.end}
+    result.sortBy{it.start}
+    result.sortBy{it.day}
     
     //출력
     if(result.size==0){
