@@ -11,7 +11,22 @@
 
 여기를 채워 주세요.
 ```kotlin
+data class Lesson(var info: MutableList<List<Int>>)
+var schedule = Lesson(mutableListOf(listOf(0)))
+fun Lesson.ifAdd(new: List<Int>, comp: List<List<Int>>, num: Int): Boolean{
+    for(i in 0..num-1) {
+        when {
+            new[1] == comp[i][1] ->
+                when {
+                    new[2] >= comp[i][2] && new[2] <= comp[i][3] -> return true
+                    new[3] <= comp[i][3] && new[3] >= comp[i][2] -> return true                }
+        }
+    }
+    return false
+}
+
 fun main() {
+
    val (n, m) = readln().split(" ").map {it.toInt()}
 
     schedule.info.clear()
