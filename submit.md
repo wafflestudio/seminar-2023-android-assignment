@@ -12,9 +12,7 @@
 여기를 채워 주세요.
 ```kotlin
 fun main() {
-	val nm = readln().split(" ").map {it.toInt()}
-    val n = nm[0]
-    val m = nm[1]
+   val (n, m) = readln().split(" ").map {it.toInt()}
 
     schedule.info.clear()
 
