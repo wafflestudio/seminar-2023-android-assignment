@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/a142738524"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="이름:안시영\nMBTI:ENTP\n좋아하는것:발로란트하기 만들고싶은거 만들기 소설읽기"
+            android:textSize="20dp"
+            android:paddingLeft="8dp"
+            />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            android:src="@drawable/imageremovebgpreview"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal">
+            <EditText
+                android:id="@+id/myId"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+
+                android:paddingTop="30dp"
+                android:hint="아이디를 입력 하든가 말든가."/>
+            <EditText
+                android:id="@+id/myPw"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+
+                android:hint="비밀번호를 입력 하든가 말든가."/>
+            <Button
+                android:id="@+id/myButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그인"
+                android:background="@drawable/rectangle_shape"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
