@@ -36,7 +36,7 @@
     <summary>스크린샷</summary>
     <div markdown="1">
     
-    <img src="https://github.com/JuTaK97/JuTaK97.github.io/assets/88367636/09958509-3ab4-4203-83d0-aa329da901d1" width=800 />
+    <img src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/68140623/0f33971c-5a24-4a70-bacb-8f590b71b556)" width=800 />
     
     </div>
     </details>
