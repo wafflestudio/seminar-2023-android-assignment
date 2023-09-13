@@ -36,15 +36,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이름 : 이민석" />
+                android:text="이름 : 이민석"
+                android:paddingVertical="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MBTI : ENTJ" />
+                android:text="MBTI : ENTJ"
+                android:paddingVertical="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="개강하지 않은 휴학생" />
+                android:text="개강하지 않은 휴학생"
+                android:paddingVertical="5dp"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,10 +85,10 @@
             android:id="@+id/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그인"
+            android:text="로그인하기"
             android:padding="10dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             />
     </LinearLayout>
 

@@ -9,6 +9,8 @@
         android:text="유저 정보"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:textSize="50dp"
         android:textStyle="bold"
         android:id="@+id/UserInfo"/>
@@ -18,6 +20,7 @@
         android:id="@+id/UserId"
         app:layout_constraintTop_toBottomOf="@id/UserInfo"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="20dp"
         android:textSize="30dp"/>
     <TextView
         android:layout_width="wrap_content"
@@ -25,17 +28,20 @@
         android:id="@+id/UserPw"
         app:layout_constraintTop_toBottomOf="@id/UserId"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="20dp"
         android:textSize="30dp"/>
 
     <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
         android:id="@+id/firstInput"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:hint="첫번째 수"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="20dp"
-        android:hint="첫 번째 수"/>
+        android:inputType="number"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,25 +50,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/firstInput"
+        android:textSize="25dp"
         android:paddingHorizontal="20dp"
         />
 
     <EditText
         android:id="@+id/secondInput"
-        android:layout_width="100dp"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/operator"
         app:layout_constraintTop_toTopOf="parent"
-        android:hint="두 번째 수"/>
+        android:textSize="25dp"
+        android:inputType="number"
+        android:hint="두번째 수"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="="
+        android:id="@+id/equal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/secondInput"
+        android:textSize="25dp"
+        android:paddingHorizontal="20dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/result"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/secondInput"
+        app:layout_constraintStart_toEndOf="@id/equal"
         android:paddingHorizontal="20dp"
+        android:textSize="25dp"
         />
 
     <GridLayout
