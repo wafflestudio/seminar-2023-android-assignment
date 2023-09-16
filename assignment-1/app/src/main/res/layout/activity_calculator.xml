@@ -107,6 +107,7 @@
             android:layout_height="150dp"
             android:text="+"
             android:textSize="50sp"
+            android:textColor="#FFFFFF"
             android:background="#99FF99" />
 
         <Button
@@ -114,6 +115,7 @@
             android:layout_height="150dp"
             android:text="-"
             android:textSize="50sp"
+            android:textColor="#FFFFFF"
             android:background="#FFFF00"/>
 
         <Button
@@ -121,6 +123,7 @@
             android:layout_height="150dp"
             android:text="*"
             android:textSize="50sp"
+            android:textColor="#FFFFFF"
             android:background="#FF6666"/>
 
         <Button
@@ -128,6 +131,7 @@
             android:layout_height="150dp"
             android:text="/"
             android:textSize="50sp"
+            android:textColor="#FFFFFF"
             android:background="#6600CC"/>
     </GridLayout>
 
