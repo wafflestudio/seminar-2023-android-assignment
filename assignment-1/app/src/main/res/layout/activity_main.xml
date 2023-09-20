@@ -6,13 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profileArea"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/loginArea">
+        <TextView
+            android:id="@+id/tmiText"
+            android:layout_width="220dp"
+            android:layout_height="150dp"
+            android:text = "이름: 정민욱\nMBTI: ISTJ\n좋아하는 것: 하루종일 누워있기"
+            android:textSize="7pt"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+        <ImageView
+            android:id="@+id/image"
+            android:src="@drawable/myimage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tmiText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loginArea"
+        android:layout_width="380dp"
+        android:layout_height="150dp"
+        android:background="@drawable/round_square"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileArea">
+
+        <EditText
+            android:id="@+id/inputId"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:hint="아이디를 입력하세요"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/inputPassword"/>
+
+        <EditText
+            android:id="@+id/inputPassword"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 입력하세요"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputId"
+            app:layout_constraintBottom_toTopOf="@id/loginButton" />
+
+        <android.widget.Button
+            android:id="@+id/loginButton"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:background="#000064"
+            android:text="로그인하기"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputPassword"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

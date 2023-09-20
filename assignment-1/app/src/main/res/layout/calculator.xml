@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/infoArea"
+        android:layout_width="380dp"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputArea">
+        <TextView
+            android:id="@+id/userInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "유저 정보"
+            android:textSize="13pt"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/id"/>
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "입력받은ID"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userInfo"
+            app:layout_constraintBottom_toTopOf="@id/password"/>
+        <TextView
+            android:id="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "입력받은PW"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/inputArea"
+        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonArea"
+        app:layout_constraintTop_toBottomOf="@id/infoArea">
+        <EditText
+            android:id="@+id/inputNum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="첫 번째 수"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/operator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "+"
+            android:textSize="11pt"
+            app:layout_constraintStart_toEndOf="@id/inputNum1"
+            app:layout_constraintEnd_toStartOf="@id/inputNum2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <EditText
+            android:id="@+id/inputNum2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="두 번째 수"
+            app:layout_constraintEnd_toStartOf="@id/equal"
+            app:layout_constraintStart_toEndOf="@id/operator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/equal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "="
+            android:textSize="11pt"
+            app:layout_constraintStart_toEndOf="@id/inputNum2"
+            app:layout_constraintEnd_toStartOf="@id/answer"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11pt"
+            app:layout_constraintStart_toEndOf="@id/equal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputArea"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <android.widget.Button
+            android:id="@+id/buttonPlus"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:text="+"
+            android:textSize="80dp"
+            android:background="#8BC34A"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonMinus"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonMult"/>
+        <android.widget.Button
+            android:id="@+id/buttonMinus"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:text="-"
+            android:textSize="80dp"
+            android:background="#FFEB3B"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/buttonPlus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonDiv" />
+        <android.widget.Button
+            android:id="@+id/buttonMult"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:text="*"
+            android:textSize="80dp"
+            android:background="#F44336"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonDiv"
+            app:layout_constraintTop_toBottomOf="@id/buttonPlus"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <android.widget.Button
+            android:id="@+id/buttonDiv"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:text="/"
+            android:textSize="80dp"
+            android:background="#673AB7"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/buttonMult"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonMinus"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
