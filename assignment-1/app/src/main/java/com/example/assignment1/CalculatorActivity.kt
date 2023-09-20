@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Button
+import android.widget.Toast
 
 class CalculatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,9 +14,8 @@ class CalculatorActivity : AppCompatActivity() {
 
         val idTextView = findViewById<TextView>(R.id.id)
         val pwTextView = findViewById<TextView>(R.id.password)
-        val getId = intent.getStringExtra("id")
-        pwTextView.setText(intent.getStringExtra("pw"))
-        idTextView.text = getId
+        idTextView.text = intent.getStringExtra("intentId")
+        pwTextView.text = intent.getStringExtra("intentPw")
 
         val answerTextView = findViewById<TextView>(R.id.answer)
         val operatorTextView = findViewById<TextView>(R.id.operator)
