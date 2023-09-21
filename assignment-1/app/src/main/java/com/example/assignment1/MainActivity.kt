@@ -18,13 +18,12 @@ class MainActivity : AppCompatActivity() {
         val imageView : ImageView = findViewById(R.id.profileImage)
         imageView.setImageResource(R.drawable.profileimage)
 
-        val textViewInfo: TextView? = null
-        textViewInfo?.text = "이름: 손영준\nMBTI: INTJ\n좋아하는 것: 헤헤"
+        val textViewInfo: TextView = findViewById(R.id.textViewInfo) // null로 설정 시 무한 루프
+        textViewInfo.text = "이름: 손영준\nMBTI: INTJ\n좋아하는 것: 헤헤"
 
         val editTextUsername : EditText = findViewById(R.id.editTextUsername)
         val editTextPassword : EditText = findViewById(R.id.editTextPassword)
         val buttonLogin : Button =  findViewById(R.id.buttonLogin)
-
 
         buttonLogin.setOnClickListener {
             val textUserName = editTextUsername.text.toString()
