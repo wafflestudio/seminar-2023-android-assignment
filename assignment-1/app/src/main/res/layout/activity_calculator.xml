@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/first_number_input"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="첫번째 수"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/operator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textSize="30dp"
+        app:layout_constraintStart_toEndOf="@id/first_number_input"
+        app:layout_constraintTop_toTopOf="@id/first_number_input"
+        app:layout_constraintBottom_toBottomOf="@id/first_number_input"
+        android:layout_marginStart="8dp"/>
+
+
+    <EditText
+        android:id="@+id/second_number_input"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="두번째 수"
+        app:layout_constraintStart_toEndOf="@id/operator"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/operator"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp" />
+
+
+
+    <TextView
+        android:id="@+id/equal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="="
+        android:textSize="30dp"
+        android:typeface="serif"
+        app:layout_constraintStart_toEndOf="@id/second_number_input"
+        app:layout_constraintTop_toTopOf="@id/second_number_input"
+        app:layout_constraintBottom_toBottomOf="@id/second_number_input"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        app:layout_constraintStart_toEndOf="@id/equal"
+        app:layout_constraintTop_toTopOf="@id/equal"
+        app:layout_constraintBottom_toBottomOf="@id/equal"
+        android:layout_marginStart="8dp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <Button
+            android:id="@+id/plus"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:text="+"
+            android:textSize="50dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/second_number_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/minus"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/minus"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:text="-"
+            android:textSize="50dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/second_number_input"
+            app:layout_constraintStart_toEndOf="@id/plus"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <Button
+            android:id="@+id/mul"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:text="*"
+            android:textSize="50dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/plus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/div"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/div"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:text="/"
+            android:textSize="50dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/minus"
+            app:layout_constraintStart_toEndOf="@id/mul"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
