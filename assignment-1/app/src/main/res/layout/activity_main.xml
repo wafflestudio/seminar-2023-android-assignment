@@ -23,9 +23,9 @@
             android:layout_height="180dp"
             android:layout_weight="4"
             android:src="@drawable/profileimage"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="14dp"
             android:layout_marginStart="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             />
 
         <TextView
