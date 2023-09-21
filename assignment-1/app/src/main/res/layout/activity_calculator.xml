@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/userInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="유저 정보"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" /> <!-- User Information -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/userInformation"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/outputId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Example Id"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/outputPw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Example Pw"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout> <!-- Id, Pw -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp">
+
+        <EditText
+            android:id="@+id/firstOperand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="첫 번째 수"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            tools:ignore="Autofill,HardcodedText" />
+
+        <TextView
+            android:id="@+id/operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/secondOperand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="두 번째 수"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            tools:ignore="Autofill,HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="="
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="3dp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout> <!-- I/O UI -->
+
+    <GridLayout
+        android:id="@+id/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:columnCount="2"
+        android:rowCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/plusButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:background="@drawable/button_rectangle1"
+            android:text="+"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText,DuplicateSpeakableTextCheck" />
+
+        <Button
+            android:id="@+id/minusButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@drawable/button_rectangle2"
+            android:text="-"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/multiplyButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:background="@drawable/button_rectangle3"
+            android:text="*"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/divideButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:background="@drawable/button_rectangle4"
+            android:text="/"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+    </GridLayout> <!-- +, -, *, / -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
