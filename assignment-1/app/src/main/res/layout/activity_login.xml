@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_login.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/infoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textViewUserInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "유저 정보"
+            />
+        <TextView
+            android:id="@+id/textViewUserId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "passed ID"
+            />
+        <TextView
+            android:id="@+id/textViewUserPw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "passed PW"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/resultLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="300dp">
+
+        <EditText
+            android:id="@+id/editTextInputNumber1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="첫 번째 수"
+            />
+
+        <TextView
+            android:id="@+id/textViewOperator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "operator"
+            />
+
+        <EditText
+            android:id="@+id/editTextInputNumber2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="두 번째 수"
+            />
+
+        <TextView
+            android:id="@+id/textViewEquals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "="
+            />
+
+        <TextView
+            android:id="@+id/textViewAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11pt"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/calculatorLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            />
+        <Button
+            android:id="@+id/buttonSubtract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            />
+        <Button
+            android:id="@+id/buttonMultiply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*"
+            />
+        <Button
+            android:id="@+id/buttonDivide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
