@@ -14,7 +14,7 @@
 
 <img width="698" alt="image" src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/fd3f4c81-083e-4508-9fd3-7ae5af358313">
 
-
+이제,
 ```
 git remote add upstream https://github.com/wafflestudio/seminar-2023-android-assignment
 ```
@@ -29,9 +29,13 @@ git remote -v
 ```
 git fetch upstream
 git checkout assignment2
-git push --set-upstream origin 
 ```
-를 해 주면 fork한 레포에 assignment2 브랜치가 올라갑니다.
+를 해 주면, 와플 원본 레포에 있는 assignment2 브랜치를 가져와서 로컬 브랜치가 생성됩니다.
+
+```
+git push --set-upstream origin
+```
+그리고 위 커맨드를 입력하면 fork한 여러분의 레포에 assignment2 브랜치가 올라갑니다.
 
 ## 3. 작업 사항 푸시하기
 이제부터 이 assignment2 브랜치에서 작업을 하면 Github Desktop에서는 아래와 같이 보입니다.
