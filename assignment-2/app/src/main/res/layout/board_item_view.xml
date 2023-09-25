@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="25dp"
+    android:background="@drawable/round_rect">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/turn_num"
+        app:layout_constraintBottom_toTopOf="@id/go_to_here">
+
+        <TextView
+            android:id="@+id/cell_1"
+            style="@style/smaller_cell_style"
+            app:layout_constraintEnd_toStartOf="@id/cell_2"
+            app:layout_constraintBottom_toTopOf="@id/cell_4"/>
+
+        <TextView
+            android:id="@+id/cell_2"
+            style="@style/smaller_cell_style"
+            app:layout_constraintBottom_toTopOf="@id/cell_5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/cell_3"
+            style="@style/smaller_cell_style"
+            app:layout_constraintStart_toEndOf="@id/cell_2"
+            app:layout_constraintBottom_toTopOf="@id/cell_6"/>
+
+        <TextView
+            android:id="@+id/cell_4"
+            style="@style/smaller_cell_style"
+            app:layout_constraintTop_toTopOf="@id/cell_5"
+            app:layout_constraintBottom_toBottomOf="@id/cell_5"
+            app:layout_constraintEnd_toStartOf="@id/cell_5"/>
+
+        <TextView
+            android:id="@+id/cell_5"
+            style="@style/smaller_cell_style"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/cell_6"
+            style="@style/smaller_cell_style"
+            app:layout_constraintStart_toEndOf="@id/cell_5"
+            app:layout_constraintTop_toTopOf="@id/cell_5"
+            app:layout_constraintBottom_toBottomOf="@id/cell_5"/>
+
+        <TextView
+            android:id="@+id/cell_7"
+            style="@style/smaller_cell_style"
+            app:layout_constraintEnd_toStartOf="@id/cell_8"
+            app:layout_constraintTop_toBottomOf="@id/cell_4"/>
+
+        <TextView
+            android:id="@+id/cell_8"
+            style="@style/smaller_cell_style"
+            app:layout_constraintTop_toBottomOf="@id/cell_5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/cell_9"
+            style="@style/smaller_cell_style"
+            app:layout_constraintStart_toEndOf="@id/cell_8"
+            app:layout_constraintTop_toBottomOf="@id/cell_6"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/turn_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1턴"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/go_to_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="되돌아가기"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:background="@color/light_green"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

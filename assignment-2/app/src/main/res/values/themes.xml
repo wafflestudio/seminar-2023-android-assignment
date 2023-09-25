@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Assignment2" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -6,4 +6,24 @@
     </style>
 
     <style name="Theme.Assignment2" parent="Base.Theme.Assignment2" />
+
+    <style name="cell_style">
+        <item name="android:layout_height">@dimen/cell_size</item>
+        <item name="android:layout_width">@dimen/cell_size</item>
+        <item name="android:layout_margin">@dimen/cell_margin</item>
+        <item name="android:background">@color/gray</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/cell_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="smaller_cell_style">
+        <item name="android:layout_height">@dimen/smaller_cell_size</item>
+        <item name="android:layout_width">@dimen/smaller_cell_size</item>
+        <item name="android:layout_margin">@dimen/smaller_cell_margin</item>
+        <item name="android:background">@color/gray</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/cell_text_size_smaller</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

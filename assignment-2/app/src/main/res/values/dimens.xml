@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cell_size">90dp</dimen>
+    <dimen name="smaller_cell_size">45dp</dimen>
+    <dimen name="cell_margin">5dp</dimen>
+    <dimen name="smaller_cell_margin">2.5dp</dimen>
+    <dimen name="cell_text_size">36sp</dimen>
+    <dimen name="cell_text_size_smaller">18sp</dimen>
+</resources>
