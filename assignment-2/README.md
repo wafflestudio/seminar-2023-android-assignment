@@ -1,4 +1,4 @@
-# Wafflestudio Android Seminar Assignment 2
+# Android Seminar Assignment 2 : Tic-Tac-Toe 게임
 
 ## 과제 기한
 2023년 10월 5일(목) 자정까지  (목~금 넘어가는 밤)
