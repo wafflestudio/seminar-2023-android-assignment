@@ -48,8 +48,9 @@
    binding.root.openDrawer(binding.drawer)
    ```
 ### 2. 메인 화면
-   - 중앙에는 9개의 칸으로 구성된 틱택토 보드가 존재한다. [규칙](https://namu.wiki/w/%ED%8B%B1%ED%83%9D%ED%86%A0#toc)
+   - 중앙에는 9개의 칸으로 구성된 틱택토 보드가 존재한다. [틱택토 게임 규칙](https://namu.wiki/w/%ED%8B%B1%ED%83%9D%ED%86%A0#toc)
    - 상단에는 서랍을 여는 버튼, 상태 텍스트, 우상단 버튼이 존재한다.
+   - 승자가 생기면 빈 칸을 눌러도 더 이상 게임이 진행되지 않는다.
 
 ### 3. 서랍
    해당 판의 턴 별 기록을 서랍 안에 RecyclerView를 이용해서 그린다.
@@ -86,7 +87,7 @@
 
 # 과제 제출 방법
 
-[가이드](https://github.com/wafflestudio/seminar-2023-android-assignment/blob/main/assignment-git-guide.md)
+[가이드 << 꼭 읽어보세요](https://github.com/wafflestudio/seminar-2023-android-assignment/blob/main/assignment-git-guide.md)
 
 1. assignment 레포지토리를 fork한다.
 2. 로컬에 clone한 후, `assignment2`브랜치에서 개발을 진행한다. **(매우매우 중요!!!!!!!!!)**
