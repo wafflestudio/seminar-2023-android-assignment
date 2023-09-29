@@ -7,93 +7,84 @@ import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import androidx.activity.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
-
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: HistoryAdapter
+    private val viewModel: MyViewModel by viewModels()
 
+    private fun teamToString(team: Int): String {
+        return when (team) {
+            0 -> ""
+            1 -> "O"
+            2 -> "X"
+            else -> "ERROR"
+        }
+    }
     enum class Status {
         X_WIN, O_WIN, DRAW, CONTINUE
     }
 
-    private var board = Array<Int>(10) { 0 }
-    private var team = 1
-    private var gameStatus = Status.CONTINUE
+    private fun initGame() {
 
-    private fun stringTeam(): String {
-        return if (team == 1) "O" else "X"
+        viewModel.boardInit()
+
+        // initialize drawer
+        viewModel.boardData.clear()
+        viewModel.boardData.add(MyMultiData.GameStart(0))
+        adapter.notifyDataSetChanged()
+
+        // initialize game status
+        viewModel.team = 1
+        viewModel.liveGameStatus.value = Status.CONTINUE
     }
-    private fun stringTeamBefore(): String {
-        return if (team == 1) "X" else "O"
-    }
 
-    private fun initBoard() {
+    private fun boardMulti(idx1: Int, idx2: Int, idx3: Int): Int
+    = viewModel.board[idx1] * viewModel.board[idx2] * viewModel.board[idx3]
 
-        binding.gameButton.text = "초기화"
-        binding.gameButton.setBackgroundColor(Color.parseColor("#43000000"))
+    private fun clickedBoard(position: Int){
 
-        gameStatus = Status.CONTINUE
-        team = 1
-        binding.gameStatus.text = (stringTeam() + "의 차례입니다")
-        board[0] = -1
-        for (i in 1..9) {
-            board[i] = 0
+        if (viewModel.liveGameStatus.value != Status.CONTINUE) {
+            return
         }
-        binding.board1.text = ""
-        binding.board2.text = ""
-        binding.board3.text = ""
-        binding.board4.text = ""
-        binding.board5.text = ""
-        binding.board6.text = ""
-        binding.board7.text = ""
-        binding.board8.text = ""
-        binding.board9.text = ""
-    }
 
-    private fun changeBoard(position: Int): Boolean {
-        if (board[position] == 0) {
-            board[position] = team
-            team = if (team == 1) 2 else 1
+        if (viewModel.board[position] == 0) {
+
+            viewModel.changeBoard(position)
+
+            viewModel.boardData.add(MyMultiData.GameBoard(0))
+            adapter.notifyItemChanged(viewModel.boardData.lastIndex)
+
+            viewModel.team = if (viewModel.team == 1) 2 else 1
+            
             // Check Game Status
             val resultList = listOf<Int>(
-                board[1] * board[2] * board[3],
-                board[4] * board[5] * board[6],
-                board[7] * board[8] * board[9],
-                board[1] * board[4] * board[7],
-                board[2] * board[5] * board[8],
-                board[3] * board[6] * board[9],
-                board[1] * board[5] * board[9],
-                board[3] * board[5] * board[7]
+                boardMulti(1, 2, 3),
+                boardMulti(4, 5, 6),
+                boardMulti(7, 8, 9),
+                boardMulti(1, 4, 7),
+                boardMulti(2, 5, 8),
+                boardMulti(3, 6, 9),
+                boardMulti(1, 5, 9),
+                boardMulti(3, 5, 7)
             )
-            if (resultList.any { it == 1 }){
-                gameStatus = Status.O_WIN
-                binding.gameStatus.text = "게임 오버(O 승리)"
-                binding.gameButton.text = "한판 더"
-                binding.gameButton.setBackgroundColor(Color.parseColor("#2196F3"))
+            if (resultList.any { it == 1 }) {
+                viewModel.liveGameStatus.value = Status.O_WIN
             }
-            else if (resultList.any { it == 8 }){
-                gameStatus = Status.X_WIN
-                binding.gameStatus.text = "게임 오버(X 승리)"
-                binding.gameButton.text = "한판 더"
-                binding.gameButton.setBackgroundColor(Color.parseColor("#2196F3"))
+            else if (resultList.any { it == 8 }) {
+                viewModel.liveGameStatus.value = Status.X_WIN
             }
-            else if (board.any { it == 0 }) {
-                gameStatus = Status.CONTINUE
-                binding.gameStatus.text = (stringTeam() + "의 차례입니다")
+            else if (viewModel.board.any { it == 0 }) {
+                viewModel.liveGameStatus.value = Status.CONTINUE
             }
             else {
-                gameStatus = Status.DRAW
-                binding.gameStatus.text = "무승부"
-                binding.gameButton.text = "한판 더"
-                binding.gameButton.setBackgroundColor(Color.parseColor("#2196F3"))
+                viewModel.liveGameStatus.value = Status.DRAW
             }
-
-            return true
         }
-        return false      // not changed
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,53 +92,77 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        adapter = HistoryAdapter(viewModel.boardData, this)
 
-        initBoard()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        binding.gameButton.setOnClickListener {
-            initBoard()
-            // 서랍도 초기화
+        // board status changed -> change title and button
+        viewModel.liveGameStatus.observe(this) {
+            binding.gameStatus.text = when (it) {
+                Status.X_WIN -> "게임 오버(X 승리)"
+                Status.O_WIN -> "게임 오버(O 승리)"
+                Status.DRAW -> "무승부"
+                Status.CONTINUE -> teamToString(viewModel.team) + "의 차례입니다"
+            }
+            if (it == Status.CONTINUE) {
+                binding.initButton.text = "초기화"
+                binding.initButton.setBackgroundColor(Color.parseColor("#43000000"))
+            }
+            else {
+                binding.initButton.text = "한판 더"
+                binding.initButton.setBackgroundColor(Color.parseColor("#2196F3"))
+            }
+        }
+
+        // board status changed -> change board text
+        viewModel.liveBoard.observe(this) {
+            binding.board1.text = teamToString(it[1])
+            binding.board2.text = teamToString(it[2])
+            binding.board3.text = teamToString(it[3])
+            binding.board4.text = teamToString(it[4])
+            binding.board5.text = teamToString(it[5])
+            binding.board6.text = teamToString(it[6])
+            binding.board7.text = teamToString(it[7])
+            binding.board8.text = teamToString(it[8])
+            binding.board9.text = teamToString(it[9])
+        }
+
+        binding.initButton.setOnClickListener {
+            initGame()
         }
 
         binding.hamburgerMenu.setOnClickListener {
             binding.root.openDrawer(binding.drawer)
         }
 
+        // when each board is clicked
         binding.board1.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(1))
-                binding.board1.text = stringTeamBefore()
+            clickedBoard(1)
         }
         binding.board2.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(2))
-                binding.board2.text = stringTeamBefore()
+            clickedBoard(2)
         }
         binding.board3.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(3))
-                binding.board3.text = stringTeamBefore()
+            clickedBoard(3)
         }
         binding.board4.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(4))
-                binding.board4.text = stringTeamBefore()
+            clickedBoard(4)
         }
         binding.board5.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(5))
-                binding.board5.text = stringTeamBefore()
+            clickedBoard(5)
         }
         binding.board6.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(6))
-                binding.board6.text = stringTeamBefore()
+            clickedBoard(6)
         }
         binding.board7.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(7))
-                binding.board7.text = stringTeamBefore()
+            clickedBoard(7)
         }
         binding.board8.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(8))
-                binding.board8.text = stringTeamBefore()
+            clickedBoard(8)
         }
         binding.board9.setOnClickListener {
-            if (gameStatus == Status.CONTINUE && changeBoard(9))
-                binding.board9.text = stringTeamBefore()
+            clickedBoard(9)
         }
 
     }
