@@ -11,14 +11,60 @@
         android:layout_height="match_parent"
         >
 
-        <GridLayout
-            android:layout_margin="50dp"
-            android:layout_gravity="center"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/drawerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/material_dynamic_neutral50"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_gravity="start"
+                android:text="三"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="8"
+                android:layout_margin="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/initButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/material_dynamic_neutral50"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_gravity="end|center"
+                android:text="초기화"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <GridLayout
+            app:layout_constraintWidth_percent="0.5"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:columnCount="3"
             android:rowCount="3"
             >
@@ -30,7 +76,11 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
-                android:background="@drawable/cell" />
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"/>
 
             <TextView
                 android:id="@+id/cell2"
@@ -40,6 +90,10 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_margin="5dp"
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
                 />
             <TextView
                 android:id="@+id/cell3"
@@ -47,8 +101,12 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_margin="5dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 />
             <TextView
                 android:id="@+id/cell4"
@@ -56,8 +114,12 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_margin="5dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 />
             <TextView
                 android:id="@+id/cell5"
@@ -65,8 +127,12 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_margin="5dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 />
             <TextView
                 android:id="@+id/cell6"
@@ -74,8 +140,12 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_margin="5dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 />
             <TextView
                 android:id="@+id/cell7"
@@ -83,8 +153,12 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_margin="5dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 />
 
             <TextView
@@ -92,17 +166,25 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_columnWeight="1"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"/>
             <TextView
                 android:id="@+id/cell9"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-
+                android:background="@drawable/cell"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:layout_margin="5dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 />
 
 
@@ -115,7 +197,8 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
 
 
     </com.google.android.material.navigation.NavigationView>
