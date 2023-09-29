@@ -1,51 +1,21 @@
 package com.example.assignment2
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.GridLayout
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var gridLayout: GridLayout
+    private lateinit var bitmap: Bitmap
     private lateinit var binding: ActivityMainBinding
-    val mainViewModel : MainViewModel by viewModels()
-    private var turn = 1
-    private var flag = 0 // 게임 종료 여부
-    private var board: Array<Array<Int>> = Array(3){ Array(3) {0} }
-    private fun whoWins(newBoard: Array<Array<Int>>): String{
-        for (row in 0..2){
-            when(newBoard[row].sum()){
-                3 -> return "O"
-                -3 -> return "X"
-                else -> {}
-            }
-        }
-        for (col in 0..2){
-            var colSum = 0
-            for(row in 0..2){
-                colSum += newBoard[row][col]
-            }
-            when(colSum){
-                3 -> return "O"
-                -3 -> return "X"
-                else-> {}
-            }
-        }
-
-        for(step in 0..2 step 2){
-            var diagonalSum = 0
-            for(i in 0..2){
-                diagonalSum+= newBoard[abs(step-i)][i]
-            }
-            when(diagonalSum){
-                3 -> return "O"
-                -3 -> return "X"
-                else-> {}
-            }
-        }
-        return "Not yet"
-    }
+    private val mainViewModel : MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,141 +23,238 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.cell1.setOnClickListener{
-            if(flag == 0 && board[0][0] == 0){
-                board[0][0] = turn
-                when(turn) {
-                    1 -> binding.cell1.text = "O"
-                    -1 -> binding.cell1.text = "X"
+            when(mainViewModel.whoWins(1)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell1.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell1.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell1.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell1.text = "O"
                 }
             }
+            mainViewModel.boardLiveData.observe(this){
+                binding.cell1.text = it[0][0].toString()
+            }
+            /*gridLayout = binding.board
+            bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            gridLayout.draw(canvas)*/
         }
-/*
         binding.cell2.setOnClickListener{
-            if(flag == 0 && board[0][1] == 0){
-                board[0][1] = turn
-                when(turn) {
-                    1 -> binding.cell2.text = "O"
-                    -1 -> binding.cell2.text = "X"
+            when(mainViewModel.whoWins(2)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell2.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell2.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell2.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell2.text = "O"
                 }
             }
         }
         binding.cell3.setOnClickListener{
-            if(flag == 0 && board[0][2] == 0){
-                board[0][2] = turn
-                when(turn) {
-                    1 -> binding.cell3.text = "O"
-                    -1 -> binding.cell3.text = "X"
+            when(mainViewModel.whoWins(3)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell3.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell3.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell3.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell3.text = "O"
                 }
             }
         }
         binding.cell4.setOnClickListener{
-            if(flag == 0 && board[1][0] == 0){
-                board[1][0] = turn
-                when(turn) {
-                    1 -> binding.cell4.text = "O"
-                    -1 -> binding.cell4.text = "X"
+            when(mainViewModel.whoWins(4)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell4.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell4.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell4.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell4.text = "O"
                 }
             }
         }
         binding.cell5.setOnClickListener{
-            if(flag == 0 && board[1][1] == 0){
-                board[1][1] = turn
-                when(turn) {
-                    1 -> binding.cell5.text = "O"
-                    -1 -> binding.cell5.text = "X"
+            when(mainViewModel.whoWins(5)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell5.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell5.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell5.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell5.text = "O"
                 }
             }
         }
         binding.cell6.setOnClickListener{
-            if(flag == 0 && board[1][2] == 0){
-                board[1][2] = turn
-                when(turn) {
-                    1 -> binding.cell6.text = "O"
-                    -1 -> binding.cell6.text = "X"
+            when(mainViewModel.whoWins(6)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell6.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell6.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell6.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell6.text = "O"
                 }
             }
         }
         binding.cell7.setOnClickListener{
-            if(flag == 0 && board[2][0] == 0){
-                board[2][0] = turn
-                when(turn) {
-                    1 -> binding.cell7.text = "O"
-                    -1 -> binding.cell7.text = "X"
+            when(mainViewModel.whoWins(7)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell7.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell7.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell7.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell7.text = "O"
                 }
             }
         }
         binding.cell8.setOnClickListener{
-            if(flag == 0 && board[2][1] == 0){
-                board[2][1] = turn
-                when(turn) {
-                    1 -> binding.cell8.text = "O"
-                    -1 -> binding.cell8.text = "X"
+            when(mainViewModel.whoWins(8)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell8.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell8.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell8.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell8.text = "O"
                 }
             }
         }
         binding.cell9.setOnClickListener{
-            if(flag == 0 && board[2][2] == 0){
-                board[2][2] = turn
-                when(turn) {
-                    1 -> binding.cell9.text = "O"
-                    -1 -> binding.cell9.text = "X"
+            when(mainViewModel.whoWins(9)){
+                "O wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell9.text = "O"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
                 }
-                turn *= -1
-                when(whoWins(board)){
-                    "O" -> {flag = 1; }
-                    "X" -> {flag = -1;}
-                    else-> {}
+                "X wins"->{
+                    binding.info.text = "게임 오버"
+                    binding.cell9.text = "X"
+                    binding.resetButton.text = "한판 더"
+                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+                "its O turn now" -> {
+                    binding.info.text = "O의 차례입니다"
+                    binding.cell9.text = "X"
+                }
+                "its X turn now" -> {
+                    binding.info.text = "X의 차례입니다"
+                    binding.cell9.text = "O"
                 }
             }
         }
-*/
+
+        binding.drawerButton.setOnClickListener{
+            binding.root.openDrawer(binding.drawer)
+        }
+
+        val adapter = HistoryAdapter(listOf(
+            History.TypeA(3),
+            /*History.TypeB(bitmap)*/
+        ))
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
