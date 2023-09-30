@@ -9,6 +9,7 @@ import android.widget.GridLayout
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.drawToBitmap
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.TypeAViewBinding
 import com.example.assignment2.databinding.TypeBViewBinding

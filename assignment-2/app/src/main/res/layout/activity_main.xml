@@ -11,49 +11,51 @@
         android:layout_height="match_parent"
         >
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_margin="20dp"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
                 android:id="@+id/drawerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/material_dynamic_neutral50"
+                android:background="#808080"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="50sp"
+                android:textSize="50dp"
                 android:gravity="center"
-                android:layout_gravity="start"
-                android:text="三"
-                android:layout_weight="1"
+                android:text=" 三 "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 />
             <TextView
                 android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_weight="8"
                 android:layout_margin="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"/>
+                android:textSize="27dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/drawerButton"
+                app:layout_constraintEnd_toStartOf="@+id/resetButton"/>
             <TextView
                 android:id="@+id/resetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/material_dynamic_neutral50"
+                android:background="#808080"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:gravity="center"
-                android:layout_gravity="end|center"
-                android:text="초기화"
-                android:layout_weight="1"/>
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <GridLayout
@@ -204,7 +206,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
 
 
     </com.google.android.material.navigation.NavigationView>

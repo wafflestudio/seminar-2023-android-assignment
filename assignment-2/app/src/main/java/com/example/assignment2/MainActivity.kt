@@ -7,13 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.GridLayout
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gridLayout: GridLayout
-    private lateinit var bitmap: Bitmap
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,239 +22,137 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val adapter = HistoryAdapter(mainViewModel.historyData)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.cell1.setOnClickListener{
-            when(mainViewModel.whoWins(1)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell1.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell1.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell1.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell1.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(1)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
-            mainViewModel.boardLiveData.observe(this){
-                binding.cell1.text = it[0][0].toString()
-            }
-            /*gridLayout = binding.board
-            bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            gridLayout.draw(canvas)*/
         }
         binding.cell2.setOnClickListener{
-            when(mainViewModel.whoWins(2)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell2.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell2.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell2.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell2.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(2)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell3.setOnClickListener{
-            when(mainViewModel.whoWins(3)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell3.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell3.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell3.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell3.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(3)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell4.setOnClickListener{
-            when(mainViewModel.whoWins(4)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell4.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell4.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell4.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell4.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(4)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell5.setOnClickListener{
-            when(mainViewModel.whoWins(5)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell5.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell5.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell5.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell5.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(5)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell6.setOnClickListener{
-            when(mainViewModel.whoWins(6)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell6.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell6.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell6.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell6.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(6)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell7.setOnClickListener{
-            when(mainViewModel.whoWins(7)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell7.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell7.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell7.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell7.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(7)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell8.setOnClickListener{
-            when(mainViewModel.whoWins(8)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell8.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell8.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell8.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell8.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(8)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
         binding.cell9.setOnClickListener{
-            when(mainViewModel.whoWins(9)){
-                "O wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell9.text = "O"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "X wins"->{
-                    binding.info.text = "게임 오버"
-                    binding.cell9.text = "X"
-                    binding.resetButton.text = "한판 더"
-                    binding.resetButton.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-                "its O turn now" -> {
-                    binding.info.text = "O의 차례입니다"
-                    binding.cell9.text = "X"
-                }
-                "its X turn now" -> {
-                    binding.info.text = "X의 차례입니다"
-                    binding.cell9.text = "O"
-                }
+            if(mainViewModel.clickWhoWins(9)) {
+                gridLayout = binding.board
+                mainViewModel.clickAddData(gridLayout)
+                adapter.notifyItemChanged(mainViewModel.historyData.lastIndex)
             }
         }
-
         binding.drawerButton.setOnClickListener{
             binding.root.openDrawer(binding.drawer)
         }
+        binding.resetButton.setOnClickListener{
+            mainViewModel.resetData()
+            adapter.notifyDataSetChanged()
+        }
+        mainViewModel.boardLiveData.observe(this){
+            when(it[0][0]){
+                0 -> binding.cell1.text = ""
+                1 -> binding.cell1.text = "O"
+                -1 -> binding.cell1.text = "X"
+            }
+            when(it[0][1]){
+                0 -> binding.cell2.text = ""
+                1 -> binding.cell2.text = "O"
+                -1 -> binding.cell2.text = "X"
+            }
+            when(it[0][2]){
+                0 -> binding.cell3.text = ""
+                1 -> binding.cell3.text = "O"
+                -1 -> binding.cell3.text = "X"
+            }
+            when(it[1][0]){
+                0 -> binding.cell4.text = ""
+                1 -> binding.cell4.text = "O"
+                -1 -> binding.cell4.text = "X"
+            }
+            when(it[1][1]){
+                0 -> binding.cell5.text = ""
+                1 -> binding.cell5.text = "O"
+                -1 -> binding.cell5.text = "X"
+            }
+            when(it[1][2]){
+                0 -> binding.cell6.text = ""
+                1 -> binding.cell6.text = "O"
+                -1 -> binding.cell6.text = "X"
+            }
+            when(it[2][0]){
+                0 -> binding.cell7.text = ""
+                1 -> binding.cell7.text = "O"
+                -1 -> binding.cell7.text = "X"
+            }
+            when(it[2][1]){
+                0 -> binding.cell8.text = ""
+                1 -> binding.cell8.text = "O"
+                -1 -> binding.cell8.text = "X"
+            }
+            when(it[2][2]){
+                0 -> binding.cell9.text = ""
+                1 -> binding.cell9.text = "O"
+                -1 -> binding.cell9.text = "X"
+            }
 
-        val adapter = HistoryAdapter(listOf(
-            History.TypeA(3),
-            /*History.TypeB(bitmap)*/
-        ))
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        }
+        mainViewModel.infoText.observe(this){
+            binding.info.text = it.toString()
+        }
+        mainViewModel.resetText.observe(this){
+            binding.resetButton.text = it.toString()
+        }
+        mainViewModel.resetColor.observe(this){
+            binding.resetButton.setBackgroundColor(Color.parseColor(it))
+        }
+
+
     }
 }
