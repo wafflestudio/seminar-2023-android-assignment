@@ -1,18 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- 이 부분에는 메인 화면의 UI를 넣습니다. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Add your main UI elements here -->
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/menu"
+            android:clickable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/condition"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:text="O의 차례입니다"
+            app:layout_constraintStart_toEndOf="@+id/menu"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rectangle_gray"
+            android:text="초기화"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <GridLayout
+            android:id="@+id/tictacto"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:columnCount="3"
+            android:rowCount="3"
+            app:layout_constraintTop_toBottomOf="@+id/menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/square1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/square9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:background="#C0C0C0"
+                android:padding="10dp"
+                android:clickable="true"/>
+        </GridLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+
+        <!-- 이 부분에는 서랍 안 화면의 UI를 넣습니다. -->
+
+
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
