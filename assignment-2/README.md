@@ -35,7 +35,8 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
 
        <!-- 이 부분에는 서랍 안 화면의 UI를 넣습니다. -->
 
