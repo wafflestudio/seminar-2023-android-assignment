@@ -1,15 +1,19 @@
 package com.example.assignment2
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.widget.GridLayout
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlin.math.abs
 
 
-class MainViewModel: ViewModel() {
+class MainViewModel(): ViewModel() {
+    private var prevHistory = mutableListOf<Int>()
+    val textViewList: MutableList<TextView> = mutableListOf<TextView>()
     private lateinit var bitmap: Bitmap
     private var num = 0
     private var turn = 1
@@ -42,6 +46,7 @@ class MainViewModel: ViewModel() {
         val index = next - 1
         if(flag != 0) return false
         if(board[index / 3][index % 3] != 0) return false
+        prevHistory.add(next)
         board[index / 3][index % 3] = turn
         _boardLiveData.value = board
         for (row in 0..2){
@@ -106,15 +111,16 @@ class MainViewModel: ViewModel() {
         return false
     }
     fun clickAddData(source: GridLayout){
-        bitmap = Bitmap.createBitmap(700, 700, Bitmap.Config.ARGB_8888)
+        bitmap = Bitmap.createBitmap(550, 550, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         source.draw(canvas)
 
         num ++
         historyData.add(History.TypeA(num))
         historyData.add(History.TypeB(bitmap))
-
+        historyData.add(History.TypeC(num))
     }
+
     fun resetData(){
         num = 0
         flag = 0
@@ -129,6 +135,33 @@ class MainViewModel: ViewModel() {
         }
         _boardLiveData.value = board
         historyData.clear()
+    }
+    fun rewindData(prev: Int){
+
+        num = prev
+        when(prev%2){
+            0 -> turn = 1
+            1 -> turn = -1
+        }
+        flag = 0
+        _infoText.value = "과거"
+        _resetText.value = " 초기화 "
+        _resetColor.value = "#808080"
+        historyData.clear()
+        prevHistory = prevHistory.subList(0, prev)
+        for(row in 0..2){
+            for(col in 0..2){
+                board[row][col] = 0
+            }
+        }
+        for(index in 0..< prev){
+            var _turn = 1
+            val cell = prevHistory[index] - 1
+            board[cell/3][cell%3] = _turn
+            _turn *= -1
+
+        }
+        _boardLiveData.value = board
     }
 
 }

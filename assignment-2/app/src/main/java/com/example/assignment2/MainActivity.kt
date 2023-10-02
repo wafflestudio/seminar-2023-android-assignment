@@ -1,18 +1,21 @@
 package com.example.assignment2
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.GridLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
-import kotlin.math.abs
-
 class MainActivity : AppCompatActivity() {
+    fun addToList(textView: TextView){
+        mainViewModel.textViewList.add(textView)
+    }
+
+
     private lateinit var gridLayout: GridLayout
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels()
@@ -22,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = HistoryAdapter(mainViewModel.historyData)
+        val adapter = HistoryAdapter(mainViewModel,this, mainViewModel.historyData)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.cell1.setOnClickListener{
@@ -152,6 +155,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.resetColor.observe(this){
             binding.resetButton.setBackgroundColor(Color.parseColor(it))
         }
+
+
 
 
     }
