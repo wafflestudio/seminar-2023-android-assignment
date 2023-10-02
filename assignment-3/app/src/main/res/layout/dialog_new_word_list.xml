@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="새 단어장 만들기"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어장 소유자"
+        android:textSize="13sp"/>
+
+    <EditText
+        android:id="@+id/word_list_owner_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="소유자 이름을 입력하세요"
+        android:paddingHorizontal="5dp"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:inputType=""
+        android:layout_marginBottom="10dp"
+        android:privateImeOptions="defaultInputmode=korean"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어장 이름"
+        android:textSize="13sp"/>
+
+    <EditText
+        android:id="@+id/word_list_title_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="단어장 이름을 입력하세요"
+        android:paddingHorizontal="5dp"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:inputType=""
+        android:layout_marginBottom="10dp"
+        android:privateImeOptions="defaultInputmode=korean"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어장 비밀번호"
+        android:textSize="13sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/word_list_pw_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="단어장 비밀번호를 입력하세요"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/negative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="18sp"
+            android:layout_marginEnd="25dp"/>
+
+
+        <TextView
+            android:id="@+id/positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
