@@ -11,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import com.example.assignment2.databinding.ActivityMainBinding
 
-//다크모드에도 화면유지, 목록 만들기
+//서랍 만들기
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -19,26 +19,46 @@ class MainActivity : AppCompatActivity() {
 
     class MainViewModel : ViewModel() {
         var currentContext: Context? = null
+        var turn : Boolean = true
+        var count = 0
+        var O_lst = mutableListOf<Int>()
+        var X_lst = mutableListOf<Int>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var turn = true
+        var count = 0
+        var O_lst = mutableListOf<Int>()
+        var X_lst = mutableListOf<Int>()
+
+        //0. binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //1. viewmodel
+        val currentContext = viewModel.currentContext
+        if(currentContext!=null){
+            turn = viewModel.turn
+            count = viewModel.count
+            O_lst = viewModel.O_lst
+            X_lst = viewModel.X_lst
+            writeOX(O_lst, X_lst)
+        }
+
+        //2. clear button event
         val button = binding.button
         button.setOnClickListener{
-            val intent = getIntent()
-            finish()
-            startActivity(intent)
+            turn = true
+            count = 0
+            O_lst = mutableListOf<Int>()
+            X_lst = mutableListOf<Int>()
+            writeOX(null, null)
         }
-        
+
+        //3. tic-tac-to button event
         val gridLayout = binding.tictacto
-        var turn = true
-        var count = 0
-        val O_lst = mutableListOf<Int>()
-        val X_lst = mutableListOf<Int>()
         for(i in 0..8){
             var child = gridLayout.getChildAt(i) as TextView
             child.setOnClickListener{
@@ -66,7 +86,34 @@ class MainActivity : AppCompatActivity() {
                     turn = !turn
                 }
 
+                //recover
+                viewModel.turn = turn
+                viewModel.count = count
+                viewModel.O_lst = O_lst
+                viewModel.X_lst = X_lst
                 viewModel.currentContext = this
+            }
+        }
+    }
+
+    fun writeOX(O_lst : MutableList<Int>?, X_lst : MutableList<Int>?){
+        val gridLayout = binding.tictacto
+        if(O_lst==null || X_lst==null){
+            for(i in 0..8){
+                var child = gridLayout.getChildAt(i) as TextView
+                child.text = ""
+                child.isClickable = true
+            }
+        }else{
+            for(i in 1..O_lst.size){
+                val child = gridLayout.getChildAt(O_lst[i-1]) as TextView
+                child.text = "O"
+                child.isClickable = false
+            }
+            for(i in 1..X_lst.size){
+                val child = gridLayout.getChildAt(X_lst[i-1]) as TextView
+                child.text = "X"
+                child.isClickable = false
             }
         }
     }
