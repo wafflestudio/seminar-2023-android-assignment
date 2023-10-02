@@ -8,6 +8,11 @@ import com.example.assignment2.databinding.ActivityMainBinding
 class MyViewModel : ViewModel() {
 
     var team = 1
+    var liveTurn: MutableLiveData<Int> = MutableLiveData()
+    fun turnPlus() {
+        liveTurn.value = (liveTurn.value)?.plus(1)
+    }
+
     var liveGameStatus: MutableLiveData<MainActivity.Status> = MutableLiveData()
 
     // board

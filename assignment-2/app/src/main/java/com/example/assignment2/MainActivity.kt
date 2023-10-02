@@ -1,15 +1,18 @@
 package com.example.assignment2
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
+import com.example.assignment2.databinding.GameBoardItemViewBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +20,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: HistoryAdapter
     private val viewModel: MyViewModel by viewModels()
 
-    private fun teamToString(team: Int): String {
+    private var isGameEnd: Boolean = false
+
+    enum class Status {
+        X_WIN, O_WIN, DRAW, CONTINUE
+    }
+    fun teamToString(team: Int): String {
         return when (team) {
             0 -> ""
             1 -> "O"
@@ -25,8 +33,14 @@ class MainActivity : AppCompatActivity() {
             else -> "ERROR"
         }
     }
-    enum class Status {
-        X_WIN, O_WIN, DRAW, CONTINUE
+    fun statusToString(): String {
+        return when (viewModel.liveGameStatus.value) {
+            Status.X_WIN -> "게임 오버(X 승리)"
+            Status.O_WIN -> "게임 오버(O 승리)"
+            Status.DRAW -> "무승부"
+            Status.CONTINUE -> teamToString(viewModel.team) + "의 차례입니다"
+            else -> "ERROR"
+        }
     }
 
     private fun initGame() {
@@ -39,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
         // initialize game status
-        viewModel.team = 1
+        viewModel.liveTurn.value = 1
         viewModel.liveGameStatus.value = Status.CONTINUE
     }
 
@@ -55,11 +69,7 @@ class MainActivity : AppCompatActivity() {
         if (viewModel.board[position] == 0) {
 
             viewModel.changeBoard(position)
-
-            viewModel.boardData.add(MyMultiData.GameBoard(0))
-            adapter.notifyItemChanged(viewModel.boardData.lastIndex)
-
-            viewModel.team = if (viewModel.team == 1) 2 else 1
+            viewModel.turnPlus()
             
             // Check Game Status
             val resultList = listOf<Int>(
@@ -84,14 +94,25 @@ class MainActivity : AppCompatActivity() {
             else {
                 viewModel.liveGameStatus.value = Status.DRAW
             }
+
+            viewModel.boardData.add(MyMultiData.GameBoard(
+                viewModel.liveTurn.value?.minus(1),
+                isGameEnd,
+                viewModel.board))
+            adapter.notifyItemChanged(viewModel.boardData.lastIndex)
+
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var boardItemBinding = GameBoardItemViewBinding.inflate(layoutInflater)
+        setContentView(boardItemBinding.root)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         adapter = HistoryAdapter(viewModel.boardData, this)
 
         binding.recyclerView.adapter = adapter
@@ -99,19 +120,17 @@ class MainActivity : AppCompatActivity() {
 
         // board status changed -> change title and button
         viewModel.liveGameStatus.observe(this) {
-            binding.gameStatus.text = when (it) {
-                Status.X_WIN -> "게임 오버(X 승리)"
-                Status.O_WIN -> "게임 오버(O 승리)"
-                Status.DRAW -> "무승부"
-                Status.CONTINUE -> teamToString(viewModel.team) + "의 차례입니다"
-            }
+            binding.gameStatus.text = statusToString()
             if (it == Status.CONTINUE) {
+                isGameEnd = false
                 binding.initButton.text = "초기화"
                 binding.initButton.setBackgroundColor(Color.parseColor("#43000000"))
             }
             else {
+                isGameEnd = true
                 binding.initButton.text = "한판 더"
                 binding.initButton.setBackgroundColor(Color.parseColor("#2196F3"))
+
             }
         }
 
@@ -126,6 +145,15 @@ class MainActivity : AppCompatActivity() {
             binding.board7.text = teamToString(it[7])
             binding.board8.text = teamToString(it[8])
             binding.board9.text = teamToString(it[9])
+        }
+
+        viewModel.liveTurn.observe(this) {
+            boardItemBinding.textTurnNum.text = it.toString()
+            viewModel.team = when (it % 2) {
+                1 -> 1
+                0 -> 2
+                else -> -1
+            }
         }
 
         binding.initButton.setOnClickListener {

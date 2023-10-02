@@ -1,6 +1,7 @@
 package com.example.assignment2
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,8 +13,7 @@ import com.example.assignment2.databinding.GameStartItemViewBinding
 
 sealed class MyMultiData(val viewType: ViewType) {
     data class GameStart(val num: Int) : MyMultiData(ViewType.Start)
-    data class GameBoard(val num: Int) : MyMultiData(ViewType.Board)
-    data class GameEnd(val winner: Int) : MyMultiData(ViewType.End)
+    data class GameBoard(val nTurn: Int?, val gameEnd: Boolean, val boardInfo: IntArray?) : MyMultiData(ViewType.Board)
     enum class ViewType { Start, Board, End }
 }
 class HistoryAdapter(
@@ -26,7 +26,6 @@ class HistoryAdapter(
         return when (list[position]) {
             is MyMultiData.GameStart -> MyMultiData.ViewType.Start.ordinal
             is MyMultiData.GameBoard -> MyMultiData.ViewType.Board.ordinal
-            is MyMultiData.GameEnd -> MyMultiData.ViewType.End.ordinal
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,9 +35,6 @@ class HistoryAdapter(
             )
             MyMultiData.ViewType.Board.ordinal -> TypeBViewHolder(
                 GameBoardItemViewBinding.inflate(LayoutInflater.from(parent.context))
-            )
-            MyMultiData.ViewType.End.ordinal -> TypeCViewHolder(
-                GameEndItemViewBinding.inflate(LayoutInflater.from(parent.context))
             )
             else -> throw IllegalStateException("Invalid ViewType")
         }
@@ -53,9 +49,6 @@ class HistoryAdapter(
             is TypeBViewHolder -> {
                 holder.bind(data as MyMultiData.GameBoard)
             }
-            is TypeCViewHolder -> {
-                holder.bind(data as MyMultiData.GameEnd)
-            }
         }
 
     }
@@ -64,11 +57,27 @@ class HistoryAdapter(
         fun bind(data: MyMultiData.GameStart) { }
     }
     inner class TypeBViewHolder(private val binding: GameBoardItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: MyMultiData.GameBoard) { }
-    }
-    inner class TypeCViewHolder(private val binding: GameEndItemViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: MyMultiData.GameEnd) { }
+        private fun teamToString(team: Int, data: MyMultiData.GameBoard): String {
+            return MainActivity().teamToString(data.boardInfo?.get(team)?:0)
+        }
+        fun bind(data: MyMultiData.GameBoard) {
+            if (data.gameEnd) {
+                binding.textTurnNum.text = ""
+                binding.boardBackground.setBackgroundColor(Color.parseColor("#43FFA0A0"))
+                binding.button.text = MainActivity().statusToString()
+            }
 
+            binding.textTurnNum.text = data.nTurn.toString() + "턴"
+            binding.board1.text = teamToString(1, data)
+            binding.board2.text = teamToString(2, data)
+            binding.board3.text = teamToString(3, data)
+            binding.board4.text = teamToString(4, data)
+            binding.board5.text = teamToString(5, data)
+            binding.board6.text = teamToString(6, data)
+            binding.board7.text = teamToString(7, data)
+            binding.board8.text = teamToString(8, data)
+            binding.board9.text = teamToString(9, data)
+        }
     }
 
 }
