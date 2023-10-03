@@ -23,14 +23,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_menu_24"
+                android:layout_marginStart="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="게임 시작!"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:gravity="center"
                 app:layout_constraintEnd_toStartOf="@id/reset"
                 app:layout_constraintStart_toEndOf="@id/menu_bar"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +45,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/black"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="초기화"
+                android:textSize="24sp"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +61,7 @@
             android:id="@+id/tic_tac_toe_playground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -201,12 +212,20 @@
                 android:id="@+id/drawer_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
                 android:text="기록" />
 
             <TextView
                 android:id="@+id/drawer_start"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#00ffff"
+                android:textSize="24sp"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="3dp"
+                android:layout_margin="10dp"
                 android:text="게임 시작!" />
 
             <androidx.recyclerview.widget.RecyclerView
