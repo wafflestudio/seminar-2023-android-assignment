@@ -30,7 +30,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="O의 차례입니다"
+                android:text="게임 시작!"
                 app:layout_constraintEnd_toStartOf="@id/reset"
                 app:layout_constraintStart_toEndOf="@id/menu_bar"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,8 +62,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tic_tac_toe_3"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/tic_tac_toe_1"
@@ -76,8 +76,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tic_tac_toe_4"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/tic_tac_toe_2"
@@ -90,8 +90,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tic_tac_toe_5"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,8 +104,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tic_tac_toe_6"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/tic_tac_toe_4"
@@ -118,8 +118,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tic_tac_toe_7"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/tic_tac_toe_5"
@@ -132,8 +132,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tic_tac_toe_8"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -146,8 +146,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/tic_tac_toe_7"
@@ -160,8 +160,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/tic_tac_toe_8"
@@ -174,8 +174,8 @@
                 android:layout_height="0dp"
                 android:layout_margin="1dp"
                 android:background="#BDBDBD"
-                android:textSize="48sp"
                 android:gravity="center"
+                android:textSize="48sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -186,11 +186,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/drawer_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기록" />
+
+            <TextView
+                android:id="@+id/drawer_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="게임 시작!" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/game_history_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>
 

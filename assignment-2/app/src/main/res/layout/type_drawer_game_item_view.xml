@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_element"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="80dp"
+    android:padding="30dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/drawer_turn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/drawer_tic_tac_toe_playground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_tic_tac_toe_3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/drawer_tic_tac_toe_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_tic_tac_toe_4"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/drawer_tic_tac_toe_2"
+            app:layout_constraintStart_toEndOf="@id/drawer_tic_tac_toe_0"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_tic_tac_toe_5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/drawer_tic_tac_toe_1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_tic_tac_toe_6"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/drawer_tic_tac_toe_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drawer_tic_tac_toe_0" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_tic_tac_toe_7"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/drawer_tic_tac_toe_5"
+            app:layout_constraintStart_toEndOf="@id/drawer_tic_tac_toe_3"
+            app:layout_constraintTop_toBottomOf="@id/drawer_tic_tac_toe_1" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_tic_tac_toe_8"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/drawer_tic_tac_toe_4"
+            app:layout_constraintTop_toBottomOf="@id/drawer_tic_tac_toe_2" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/drawer_tic_tac_toe_7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drawer_tic_tac_toe_3" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/drawer_tic_tac_toe_8"
+            app:layout_constraintStart_toEndOf="@id/drawer_tic_tac_toe_6"
+            app:layout_constraintTop_toBottomOf="@id/drawer_tic_tac_toe_4" />
+
+        <TextView
+            android:id="@+id/drawer_tic_tac_toe_8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:background="#BDBDBD"
+            android:gravity="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/drawer_tic_tac_toe_7"
+            app:layout_constraintTop_toBottomOf="@id/drawer_tic_tac_toe_5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/drawer_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="되돌아가기"
+        android:layout_marginTop="5sp"
+        android:background="#00FF00"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="2dp"
+        android:textSize="16sp"/>
+
+</LinearLayout>
