@@ -65,7 +65,14 @@ http://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/admin 에서 
 
 | 단어장 목록 화면 | 단어장 상세 화면 |
 | ---- | ---- |
-| <video src="" /> | <video src="" /> |
+| <video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/b2fa027a-e91e-4a27-9376-c9647cda7e00" /> | <video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/b79ac2e2-e77e-477a-b146-f191c7abcb07" /> |
+
+
+
+
+
+
+
 
 # 과제 제출 방법
 [가이드 << 꼭 읽어보세요](https://github.com/wafflestudio/seminar-2023-android-assignment/blob/main/assignment-git-guide.md)
