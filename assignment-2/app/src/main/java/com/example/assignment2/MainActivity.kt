@@ -1,23 +1,17 @@
 package com.example.assignment2
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.GridLayout
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.core.view.size
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.ActivityMainBinding
-
-//서랍 만들기
+import com.example.assignment2.databinding.DrawerBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -36,26 +30,43 @@ class MainActivity : AppCompatActivity() {
         var X_lst = mutableListOf<Int>()
         var finished = false
         var conditionText = ""
+        var items = mutableListOf<MyData>()
     }
 
-    /*class MyMultiAdapter(private val data: List<MyData>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    class MyData(val num:Int, val O_lst: MutableList<Int>, val X_lst: MutableList<Int>)
+
+    class DrawerViewHolder(private val binding: DrawerBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data : MyData){
+            binding.turnNumber.text = data.num.toString() + "턴"
+
+            val gridLayout = binding.miniTictacto
+            for(i in 1..data.O_lst.size){
+                val child = gridLayout.getChildAt(data.O_lst[i-1]) as TextView
+                child.text = "O"
+            }
+            for(i in 1..data.X_lst.size){
+                val child = gridLayout.getChildAt(data.X_lst[i-1]) as TextView
+                child.text = "X"
+            }
+        }
+    }
+
+    class MyMultiAdapter(private val data: List<MyData>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         override fun getItemCount(): Int {
             return data.size
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            TODO("Not yet implemented")
+            return DrawerViewHolder(DrawerBinding.inflate(LayoutInflater.from(parent.context)))
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            TODO("Not yet implemented")
+            val info = data[position]
+            holder as DrawerViewHolder
+            holder.bind(info)
         }
 
     }
-
-    class MyData{
-
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +77,14 @@ class MainActivity : AppCompatActivity() {
         X_lst = mutableListOf<Int>()
         finished = false
 
-        //val items = mutableListOf<MyData>()
+        var items = mutableListOf<MyData>()
+        var adapter = MyMultiAdapter(items)
 
         //0. binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //1. viewmodel
+        //1. screen change
         val currentContext = viewModel.currentContext
         if(currentContext!=null){
             turn = viewModel.turn
@@ -86,6 +98,11 @@ class MainActivity : AppCompatActivity() {
 
             finished = viewModel.finished
             if(finished) changeViewFinish()
+
+            items = viewModel.items
+            adapter = MyMultiAdapter(items)
+            binding.recyclerView.adapter = adapter
+            binding.recyclerView.layoutManager = LinearLayoutManager(this)
         }
 
         //2. clear button event
@@ -100,6 +117,12 @@ class MainActivity : AppCompatActivity() {
             changeButton(-1)
             finished = false
 
+            //save for recycler view
+            items.clear()
+            adapter = MyMultiAdapter(items)
+            binding.recyclerView.adapter = adapter
+            binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
             //save for screen convert
             viewModel.turn = turn
             viewModel.count = count
@@ -107,6 +130,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.X_lst = X_lst
             viewModel.finished = finished
             viewModel.conditionText = binding.condition.text as String
+            viewModel.items = items
             viewModel.currentContext = this
         }
 
@@ -131,6 +155,7 @@ class MainActivity : AppCompatActivity() {
                     if(hasFinished(X_lst)) result = 1
                 }
 
+                //check result
                 if(result!=-1){
                     changeViewFinish()
                     finished = true
@@ -142,6 +167,13 @@ class MainActivity : AppCompatActivity() {
                     turn = !turn
                 }
 
+                //save for recycler view
+                val data = MyData(count, O_lst.toMutableList(), X_lst.toMutableList())
+                items.add(data)
+                adapter = MyMultiAdapter(items)
+                binding.recyclerView.adapter = adapter
+                binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
                 //save for screen convert
                 viewModel.turn = turn
                 viewModel.count = count
@@ -149,13 +181,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.X_lst = X_lst
                 viewModel.finished = finished
                 viewModel.conditionText = binding.condition.text as String
+                viewModel.items = items
                 viewModel.currentContext = this
-
-                //save for recycler view
-                /*val adapter = MyMultiAdapter(items)
-                binding.recyclerView.adapter = adapter
-                binding.recyclerView.layoutManager = LinearLayoutManager(this)*/
-
             }
         }
 
@@ -164,10 +191,6 @@ class MainActivity : AppCompatActivity() {
         drawerButton.setOnClickListener{
             binding.root.openDrawer(binding.drawer)
         }
-    }
-
-    fun writeCondition(turn : Boolean){
-
     }
 
     fun changeButton(num : Int){
@@ -184,7 +207,6 @@ class MainActivity : AppCompatActivity() {
     fun writeOX(O_lst : MutableList<Int>?, X_lst : MutableList<Int>?){
         val gridLayout = binding.tictacto
         if(O_lst==null || X_lst==null){
-            Log.d("null", "true")
             for(i in 0..8){
                 var child = gridLayout.getChildAt(i) as TextView
                 child.text = ""
@@ -210,7 +232,6 @@ class MainActivity : AppCompatActivity() {
         for(i in 1..gridLayout.childCount){
             var child = gridLayout.getChildAt(i-1) as TextView
             child.isClickable = false
-            Log.d("clickable", (i-1).toString())
         }
 
         //2. 한판더버튼 활성화
