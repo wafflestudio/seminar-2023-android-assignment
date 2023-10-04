@@ -1,6 +1,5 @@
 package com.example.assignment2
 
-import android.R
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -49,7 +48,6 @@ class HistoryAdapter(
                 holder.bind(data as MyMultiData.GameBoard)
             }
         }
-
     }
 
     inner class TypeAViewHolder(private val binding: GameStartItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -68,7 +66,7 @@ class HistoryAdapter(
             if (data.gameStatus == MainActivity.Status.CONTINUE) {
                 binding.textTurnNum.text = data.nTurn.toString() + "턴"
                 binding.boardBackground.background = ContextCompat.getDrawable(context, com.example.assignment2.R.drawable.round_square)
-                binding.button.text = "되돌아가기"
+                binding.button.text = ""
             }
             else {
                 binding.textTurnNum.text = ""

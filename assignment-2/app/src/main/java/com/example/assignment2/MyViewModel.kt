@@ -2,15 +2,13 @@ package com.example.assignment2
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.assignment2.databinding.ActivityMainBinding
-
 
 class MyViewModel : ViewModel() {
 
     var team = 1
     var liveTurn: MutableLiveData<Int> = MutableLiveData(1)
-    fun turnPlus() {
-        liveTurn.value = (liveTurn.value)?.plus(1)
+    fun turnAdd(num: Int) {
+        liveTurn.value = (liveTurn.value)?.plus(num)
     }
 
     var liveGameStatus: MutableLiveData<MainActivity.Status> = MutableLiveData(MainActivity.Status.CONTINUE)

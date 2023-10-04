@@ -1,17 +1,9 @@
 package com.example.assignment2
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
 import com.example.assignment2.databinding.GameBoardItemViewBinding
@@ -60,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         if (viewModel.board[position] == 0) {
 
             viewModel.changeBoard(position)
-            viewModel.turnPlus()
+            viewModel.turnAdd(1)
             
             // Check Game Status
             val resultList = listOf<Int>(
@@ -86,10 +78,15 @@ class MainActivity : AppCompatActivity() {
                 viewModel.liveGameStatus.value = Status.DRAW
             }
 
+            val copiedBoard = IntArray(10) { 0 }
+            for (idx in 0..9) {
+                copiedBoard[idx] = viewModel.board[idx]
+            }
+
             viewModel.boardData.add(MyMultiData.GameBoard(
                 viewModel.liveTurn.value?.minus(1),
                 viewModel.liveGameStatus.value!!,
-                viewModel.board))
+                copiedBoard))
             adapter.notifyItemChanged(viewModel.boardData.lastIndex)
 
         }
@@ -113,8 +110,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.liveGameStatus.observe(this) {
             binding.gameStatus.text = when (it) {
                 Status.CONTINUE -> teamToString(viewModel.team) + "의 차례입니다"
-                Status.O_WIN -> "게임 오버(O 승리)"
-                Status.X_WIN -> "게임 오버(X 승리)"
+                Status.O_WIN -> "게임 오버"
+                Status.X_WIN -> "게임 오버"
                 Status.DRAW  -> "무승부"
                 else -> "ERROR"
             }
@@ -125,7 +122,6 @@ class MainActivity : AppCompatActivity() {
             else {
                 binding.initButton.text = "한판 더"
                 binding.initButton.setBackgroundColor(Color.parseColor("#2196F3"))
-
             }
         }
 
