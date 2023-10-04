@@ -7,6 +7,10 @@ android {
     namespace = "com.example.assignment2"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.assignment2"
         minSdk = 24
@@ -44,4 +48,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.activity:activity-ktx:1.7.2")
+
 }
