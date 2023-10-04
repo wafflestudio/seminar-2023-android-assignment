@@ -22,21 +22,9 @@ class MainActivity : AppCompatActivity() {
     var O_lst = mutableListOf<Int>()
     var X_lst = mutableListOf<Int>()
     var finished = false
-    class MainViewModel : ViewModel() {
-        var currentContext: Context? = null
-        var turn : Boolean = true
-        var count = 0
-        var O_lst = mutableListOf<Int>()
-        var X_lst = mutableListOf<Int>()
-        var finished = false
-        var conditionText = ""
-        var items = mutableListOf<MyData>()
-    }
-
-    class MyData(val num:Int, val O_lst: MutableList<Int>, val X_lst: MutableList<Int>)
 
     class DrawerViewHolder(private val binding: DrawerBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data : MyData){
+        fun bind(data : MainActivity.MyData){
             binding.turnNumber.text = data.num.toString() + "턴"
 
             val gridLayout = binding.miniTictacto
@@ -51,22 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class MyMultiAdapter(private val data: List<MyData>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        override fun getItemCount(): Int {
-            return data.size
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            return DrawerViewHolder(DrawerBinding.inflate(LayoutInflater.from(parent.context)))
-        }
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            val info = data[position]
-            holder as DrawerViewHolder
-            holder.bind(info)
-        }
-
-    }
+    class MyData(val num:Int, val O_lst: MutableList<Int>, val X_lst: MutableList<Int>)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         finished = false
 
         var items = mutableListOf<MyData>()
-        var adapter = MyMultiAdapter(items)
+        var adapter = MyAdapter(items)
 
         //0. binding
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -100,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             if(finished) changeViewFinish()
 
             items = viewModel.items
-            adapter = MyMultiAdapter(items)
+            adapter = MyAdapter(items)
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
         }
@@ -119,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
             //save for recycler view
             items.clear()
-            adapter = MyMultiAdapter(items)
+            adapter = MyAdapter(items)
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -170,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 //save for recycler view
                 val data = MyData(count, O_lst.toMutableList(), X_lst.toMutableList())
                 items.add(data)
-                adapter = MyMultiAdapter(items)
+                adapter = MyAdapter(items)
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
