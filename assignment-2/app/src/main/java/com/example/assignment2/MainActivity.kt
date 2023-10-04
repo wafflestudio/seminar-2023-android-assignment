@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
@@ -20,25 +22,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: HistoryAdapter
     private val viewModel: MyViewModel by viewModels()
 
-    private var isGameEnd: Boolean = false
-
     enum class Status {
         X_WIN, O_WIN, DRAW, CONTINUE
     }
-    fun teamToString(team: Int): String {
+    private fun teamToString(team: Int): String {
         return when (team) {
             0 -> ""
             1 -> "O"
             2 -> "X"
-            else -> "ERROR"
-        }
-    }
-    fun statusToString(): String {
-        return when (viewModel.liveGameStatus.value) {
-            Status.X_WIN -> "게임 오버(X 승리)"
-            Status.O_WIN -> "게임 오버(O 승리)"
-            Status.DRAW -> "무승부"
-            Status.CONTINUE -> teamToString(viewModel.team) + "의 차례입니다"
             else -> "ERROR"
         }
     }
@@ -47,14 +38,14 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.boardInit()
 
+        // initialize game status
+        viewModel.liveTurn.value = 1
+        viewModel.liveGameStatus.value = Status.CONTINUE
+
         // initialize drawer
         viewModel.boardData.clear()
         viewModel.boardData.add(MyMultiData.GameStart(0))
         adapter.notifyDataSetChanged()
-
-        // initialize game status
-        viewModel.liveTurn.value = 1
-        viewModel.liveGameStatus.value = Status.CONTINUE
     }
 
     private fun boardMulti(idx1: Int, idx2: Int, idx3: Int): Int
@@ -97,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.boardData.add(MyMultiData.GameBoard(
                 viewModel.liveTurn.value?.minus(1),
-                isGameEnd,
+                viewModel.liveGameStatus.value!!,
                 viewModel.board))
             adapter.notifyItemChanged(viewModel.boardData.lastIndex)
 
@@ -120,14 +111,18 @@ class MainActivity : AppCompatActivity() {
 
         // board status changed -> change title and button
         viewModel.liveGameStatus.observe(this) {
-            binding.gameStatus.text = statusToString()
+            binding.gameStatus.text = when (it) {
+                Status.CONTINUE -> teamToString(viewModel.team) + "의 차례입니다"
+                Status.O_WIN -> "게임 오버(O 승리)"
+                Status.X_WIN -> "게임 오버(X 승리)"
+                Status.DRAW  -> "무승부"
+                else -> "ERROR"
+            }
             if (it == Status.CONTINUE) {
-                isGameEnd = false
                 binding.initButton.text = "초기화"
                 binding.initButton.setBackgroundColor(Color.parseColor("#43000000"))
             }
             else {
-                isGameEnd = true
                 binding.initButton.text = "한판 더"
                 binding.initButton.setBackgroundColor(Color.parseColor("#2196F3"))
 

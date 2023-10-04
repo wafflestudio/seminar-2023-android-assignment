@@ -1,20 +1,19 @@
 package com.example.assignment2
 
+import android.R
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.GameBoardItemViewBinding
-import com.example.assignment2.databinding.GameEndItemViewBinding
 import com.example.assignment2.databinding.GameStartItemViewBinding
+
 
 sealed class MyMultiData(val viewType: ViewType) {
     data class GameStart(val num: Int) : MyMultiData(ViewType.Start)
-    data class GameBoard(val nTurn: Int?, val gameEnd: Boolean, val boardInfo: IntArray?) : MyMultiData(ViewType.Board)
-    enum class ViewType { Start, Board, End }
+    data class GameBoard(val nTurn: Int?, val gameStatus: MainActivity.Status, val boardInfo: IntArray?) : MyMultiData(ViewType.Board)
+    enum class ViewType { Start, Board }
 }
 class HistoryAdapter(
     private val list: List<MyMultiData>,
@@ -44,7 +43,7 @@ class HistoryAdapter(
         val data = list[position]
         when (holder) {
             is TypeAViewHolder -> {
-                holder.bind(data as MyMultiData.GameStart)
+                holder.bind()
             }
             is TypeBViewHolder -> {
                 holder.bind(data as MyMultiData.GameBoard)
@@ -54,20 +53,33 @@ class HistoryAdapter(
     }
 
     inner class TypeAViewHolder(private val binding: GameStartItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: MyMultiData.GameStart) { }
+        fun bind() { }
     }
     inner class TypeBViewHolder(private val binding: GameBoardItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
         private fun teamToString(team: Int, data: MyMultiData.GameBoard): String {
-            return MainActivity().teamToString(data.boardInfo?.get(team)?:0)
+            return when (data.boardInfo?.get(team) ?: -1) {
+                0 -> ""
+                1 -> "O"
+                2 -> "X"
+                else -> "ERROR"
+            }
         }
         fun bind(data: MyMultiData.GameBoard) {
-            if (data.gameEnd) {
-                binding.textTurnNum.text = ""
-                binding.boardBackground.setBackgroundColor(Color.parseColor("#43FFA0A0"))
-                binding.button.text = MainActivity().statusToString()
+            if (data.gameStatus == MainActivity.Status.CONTINUE) {
+                binding.textTurnNum.text = data.nTurn.toString() + "턴"
+                binding.boardBackground.background = ContextCompat.getDrawable(context, com.example.assignment2.R.drawable.round_square)
+                binding.button.text = "되돌아가기"
             }
-
-            binding.textTurnNum.text = data.nTurn.toString() + "턴"
+            else {
+                binding.textTurnNum.text = ""
+                binding.boardBackground.background = ContextCompat.getDrawable(context, com.example.assignment2.R.drawable.red_round_square)
+                binding.button.text = when (data.gameStatus) {
+                    MainActivity.Status.O_WIN -> "O의 승리!!"
+                    MainActivity.Status.X_WIN -> "X의 승리!!"
+                    MainActivity.Status.DRAW -> "무승부!!"
+                    else -> "ERROR"
+                }
+            }
             binding.board1.text = teamToString(1, data)
             binding.board2.text = teamToString(2, data)
             binding.board3.text = teamToString(3, data)

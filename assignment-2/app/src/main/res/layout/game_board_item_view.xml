@@ -199,7 +199,6 @@
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="15dp"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
