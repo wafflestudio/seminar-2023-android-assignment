@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:focusable="true"
             android:textAlignment="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,10 +40,11 @@
         <TextView
             android:id="@+id/btn_init"
             android:text="초기화"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:textAlignment="center"
+            android:focusable="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/main_title"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +56,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:numColumns="3"
+            android:columnWidth="100dp"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:stretchMode="columnWidth"
             android:gravity="center"
             android:clickable="true"
             app:layout_constraintTop_toBottomOf="@+id/main_title"
@@ -71,7 +77,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
-        <!-- 이 부분에는 서랍 안 화면의 UI를 넣습니다. -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </com.google.android.material.navigation.NavigationView>
 
