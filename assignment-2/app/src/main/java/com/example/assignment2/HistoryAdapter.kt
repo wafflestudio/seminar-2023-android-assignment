@@ -88,12 +88,12 @@ class HistoryAdapter(
             binding.textview.text = "되돌아가기\n"
             binding.textview.id = data.turn
             textViewList.add(binding.textview)
-            for(index in 0..< textViewList.size){
-                if(binding.textview == textViewList[index]){
+            for(index in 1..textViewList.size){
+                if(binding.textview == textViewList[index - 1]){
                     binding.textview.setOnClickListener{
-                        textViewList = textViewList.subList(0, index + 1)
-                        mainViewModel.rewindData(index + 1)
-                        callback.onAdapterClickEvent()
+                        textViewList.subList(index, textViewList.size).clear()
+                        val (positionStart, itemCount) = mainViewModel.rewindData(index)
+                        callback.onAdapterClickEvent(positionStart, itemCount)
                     }
                 }
             }

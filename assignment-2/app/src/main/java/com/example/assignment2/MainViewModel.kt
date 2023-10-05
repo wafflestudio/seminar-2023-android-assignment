@@ -16,7 +16,6 @@ class MainViewModel(): ViewModel() {
     private var prevHistory = mutableListOf<Int>()
     private lateinit var bitmap: Bitmap
     private var num = 0
-    private var _turn = 1
     private var turn = 1
     private var flag = 0
     private var _infoText = MutableLiveData<String>("")
@@ -137,34 +136,36 @@ class MainViewModel(): ViewModel() {
         _boardLiveData.value = board
         historyData.clear()
     }
-    fun rewindData(prev: Int){
+    fun rewindData(prev: Int): Pair<Int, Int>{
 
         num = prev
+        flag = 0
         when(prev%2){
             0 -> turn = 1
             1 -> turn = -1
         }
-        flag = 0
-        _infoText.value = "과거"
+        when(turn){
+            1 -> _infoText.value = "O 차례입니다"
+            -1 -> _infoText.value = "X 차례입니다"
+        }
         _resetText.value = " 초기화 "
         _resetColor.value = "#808080"
-
-        prevHistory = prevHistory.subList(0, prev)
+        prevHistory.subList(prev, prevHistory.size).clear()
         for(row in 0..2){
             for(col in 0..2){
                 board[row][col] = 0
             }
         }
+        var _turn = 1
         for(index in 0..< prev){
-
             val cell = prevHistory[index] - 1
             board[cell/3][cell%3] = _turn
             _turn *= -1
-            _boardLiveData.value = board
+            Log.d(_turn.toString(), "aaaa")
         }
-        _turn = 1
-        historyData = historyData.subList(0, 3 * prev)
-        //Log.d(historyData[3*prev - 1].toString(), "ang")
+        _boardLiveData.value = board
+        historyData.subList(3 * prev, historyData.size).clear()
+        return Pair(3 * prev, historyData.size - 3 * prev)
     }
 
 }

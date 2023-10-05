@@ -12,16 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
 interface MainActivityCallback {
-    fun onAdapterClickEvent()
+    fun onAdapterClickEvent(positionStart: Int, itemCount: Int)
 }
 class MainActivity : AppCompatActivity(), MainActivityCallback{
     private lateinit var adapter: HistoryAdapter
     private lateinit var gridLayout: GridLayout
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels()
-    override fun onAdapterClickEvent() {
-        adapter = HistoryAdapter(mainViewModel,this, mainViewModel.historyData, this)
-        Log.d(mainViewModel.historyData[2].toString(),"aaa")
+    override fun onAdapterClickEvent(positionStart: Int, itemCount: Int) {
+        adapter.notifyDataSetChanged()
+        adapter.notifyItemRangeRemoved(positionStart, itemCount)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
