@@ -12,12 +12,12 @@ class MyAdapter(private val data: List<MainActivity.MyData>): RecyclerView.Adapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MainActivity.DrawerViewHolder(DrawerBinding.inflate(LayoutInflater.from(parent.context)))
+        return DrawerViewHolder(DrawerBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val info = data[position]
-        holder as MainActivity.DrawerViewHolder
+        holder as DrawerViewHolder
         holder.bind(info)
     }
 

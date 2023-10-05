@@ -17,94 +17,37 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
-    var turn = true
-    var count = 0
-    var O_lst = mutableListOf<Int>()
-    var X_lst = mutableListOf<Int>()
-    var finished = false
-
-    class DrawerViewHolder(private val binding: DrawerBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data : MainActivity.MyData){
-            binding.turnNumber.text = data.num.toString() + "턴"
-
-            val gridLayout = binding.miniTictacto
-            for(i in 1..data.O_lst.size){
-                val child = gridLayout.getChildAt(data.O_lst[i-1]) as TextView
-                child.text = "O"
-            }
-            for(i in 1..data.X_lst.size){
-                val child = gridLayout.getChildAt(data.X_lst[i-1]) as TextView
-                child.text = "X"
-            }
-        }
-    }
-
     class MyData(val num:Int, val O_lst: MutableList<Int>, val X_lst: MutableList<Int>)
 
+    //맨 마지막에 if(finished) 모두 unclickable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var adapter : MyAdapter
 
-        turn = true
-        count = 0
-        O_lst = mutableListOf<Int>()
-        X_lst = mutableListOf<Int>()
-        finished = false
-
-        var items = mutableListOf<MyData>()
-        var adapter = MyAdapter(items)
-
-        //0. binding
+        //1. binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //1. screen change
-        val currentContext = viewModel.currentContext
-        if(currentContext!=null){
-            turn = viewModel.turn
-            count = viewModel.count
-
-            O_lst = viewModel.O_lst
-            X_lst = viewModel.X_lst
-            writeOX(O_lst, X_lst)
-
-            binding.condition.text = viewModel.conditionText
-
-            finished = viewModel.finished
-            if(finished) changeViewFinish()
-
-            items = viewModel.items
-            adapter = MyAdapter(items)
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        }
 
         //2. clear button event
         val button = binding.button
         button.setOnClickListener {
-            turn = true
-            count = 0
-            O_lst = mutableListOf<Int>()
-            X_lst = mutableListOf<Int>()
+            viewModel.turn = true
+            viewModel.count = 0
+
+            viewModel.O_lst.clear()
+            viewModel.X_lst.clear()
             writeOX(null, null)
-            binding.condition.text = "O의 차례입니다"
-            changeButton(-1)
-            finished = false
+
+            viewModel.conditionText = "O의 차례입니다"
+            binding.condition.text = viewModel.conditionText
+            viewModel.finished = false
+            changeButton(viewModel.finished)
 
             //save for recycler view
-            items.clear()
-            adapter = MyAdapter(items)
+            viewModel.items.clear()
+            adapter = MyAdapter(viewModel.items)
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
-            //save for screen convert
-            viewModel.turn = turn
-            viewModel.count = count
-            viewModel.O_lst = O_lst
-            viewModel.X_lst = X_lst
-            viewModel.finished = finished
-            viewModel.conditionText = binding.condition.text as String
-            viewModel.items = items
-            viewModel.currentContext = this
         }
 
         //3. tic-tac-to button event
@@ -112,50 +55,48 @@ class MainActivity : AppCompatActivity() {
         for(i in 0..8){
             var child = gridLayout.getChildAt(i) as TextView
             child.setOnClickListener{
-                if(turn) binding.condition.text = "X의 차례입니다"
-                else binding.condition.text = "O의 차례입니다"
+                viewModel.conditionText =
+                    when(viewModel.turn) {
+                        false -> "X의 차례입니다"
+                        true -> "O의 차례입니다"
+                    }
+                binding.condition.text = viewModel.conditionText
 
                 var result : Int = -1 //1: someone wins, 0: draw
-                if(++count==9) result = 0
-                if(turn) {
+                if(++viewModel.count==9) result = 0
+                if(viewModel.turn) {
                     child.text = "O"
-                    O_lst.add(i)
-                    if(hasFinished(O_lst)) result = 1
+                    viewModel.O_lst.add(i)
+                    if(hasFinished(viewModel.O_lst)) result = 1
                 }
                 else {
                     child.text = "X"
-                    X_lst.add(i)
-                    if(hasFinished(X_lst)) result = 1
+                    viewModel.X_lst.add(i)
+                    if(hasFinished(viewModel.X_lst)) result = 1
                 }
 
                 //check result
                 if(result!=-1){
-                    changeViewFinish()
-                    finished = true
-                    if(result==0) binding.condition.text = "무승부"
-                    else binding.condition.text = "게임 오버"
+                    viewModel.finished = true
+                    changeViewFinish(viewModel.finished)
+                    viewModel.conditionText =
+                        when(result){
+                            0 -> "무승부"
+                            else -> "게임 오버"
+                        }
+                    binding.condition.text = viewModel.conditionText
                 }
                 else {
                     child.isClickable = false
-                    turn = !turn
+                    viewModel.turn = !viewModel.turn
                 }
 
                 //save for recycler view
-                val data = MyData(count, O_lst.toMutableList(), X_lst.toMutableList())
-                items.add(data)
-                adapter = MyAdapter(items)
+                val data = MyData(viewModel.count, viewModel.O_lst.toMutableList(), viewModel.X_lst.toMutableList())
+                viewModel.items.add(data)
+                adapter = MyAdapter(viewModel.items)
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
-                //save for screen convert
-                viewModel.turn = turn
-                viewModel.count = count
-                viewModel.O_lst = O_lst
-                viewModel.X_lst = X_lst
-                viewModel.finished = finished
-                viewModel.conditionText = binding.condition.text as String
-                viewModel.items = items
-                viewModel.currentContext = this
             }
         }
 
@@ -164,11 +105,20 @@ class MainActivity : AppCompatActivity() {
         drawerButton.setOnClickListener{
             binding.root.openDrawer(binding.drawer)
         }
+
+        //0. 기본 구성
+        adapter = MyAdapter(viewModel.items)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        binding.condition.text = viewModel.conditionText
+        writeOX(viewModel.O_lst, viewModel.X_lst)
+        changeViewFinish(viewModel.finished)
     }
 
-    fun changeButton(num : Int){
+    fun changeButton(finished : Boolean){
         val button = binding.button
-        if(num==1){
+        if(finished){
             button.text = "한판 더"
             button.setBackgroundResource(R.drawable.rectangle_blue)
         }else{
@@ -199,16 +149,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun changeViewFinish() {
-        //1. 모든 사각형 unclickable
-        val gridLayout = binding.tictacto
-        for(i in 1..gridLayout.childCount){
-            var child = gridLayout.getChildAt(i-1) as TextView
-            child.isClickable = false
-        }
+    fun changeViewFinish(finished : Boolean) {
+        if(finished) {
+            //1. 모든 사각형 unclickable
+            val gridLayout = binding.tictacto
+            for (i in 1..gridLayout.childCount) {
+                var child = gridLayout.getChildAt(i - 1) as TextView
+                child.isClickable = false
+            }
 
-        //2. 한판더버튼 활성화
-        changeButton(1)
+            //2. 한판더버튼 활성화
+            changeButton(true)
+        }
     }
 
     fun hasFinished(gameList : MutableList<Int>) : Boolean {
