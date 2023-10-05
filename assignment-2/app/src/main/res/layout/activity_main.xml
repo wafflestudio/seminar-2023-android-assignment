@@ -1,18 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id = "@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text = "@string/equal"
+            android:textSize = "50sp"
+            >
+        </TextView>
+        
+        <TextView
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize = "30sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:background="@android:color/holo_blue_light"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf= "parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize = "20sp"
+            android:layout_marginTop="10dp"
+            >
+
+        </TextView>
+
+        <GridLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin = "10dp"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:columnCount="3"
+            android:rowCount="3"
+            >
+
+            <TextView
+                android:id = "@+id/block0.0"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block0.1"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block0.2"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block1.0"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block1.1"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block1.2"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block2.0"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block2.1"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="2"
+                android:layout_row="1"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+
+            <TextView
+                android:id = "@+id/block2.2"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_column="2"
+                android:layout_row="2"
+                android:autoSizeTextType="uniform"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                >
+            </TextView>
+        </GridLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
