@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.example.tictac.databinding.ActivityMainBinding
+import com.example.tictac.databinding.HistoryBinding
 
 class MainViewModel: ViewModel() {
     var turn=1
@@ -21,6 +22,14 @@ class MainViewModel: ViewModel() {
         arrayOf(6,7,8))
     var gameEnded=false
     var count=0
+
+    val items = mutableListOf<MyData>(
+        // 데이터들
+    )
+    fun resetDrawer(){
+        items.clear()
+    }
+
     fun getButtonNum(textView: TextView,binding: ActivityMainBinding):Int{
         return when (textView){
             binding.button00->0
@@ -32,6 +41,20 @@ class MainViewModel: ViewModel() {
             binding.button20->6
             binding.button21->7
             binding.button22->8
+            else -> 0
+        }
+    }
+    fun getButtonNum2(textView: TextView,binding: HistoryBinding):Int{
+        return when (textView){
+            binding.historyButton0->0
+            binding.historyButton1->1
+            binding.historyButton2->2
+            binding.historyButton3->3
+            binding.historyButton4->4
+            binding.historyButton5->5
+            binding.historyButton6->6
+            binding.historyButton7->7
+            binding.historyButton8->8
             else -> 0
         }
     }

@@ -2,7 +2,6 @@ package com.example.tictac
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.forEach
@@ -24,16 +23,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*
-        //test
-        val items = mutableListOf<Data>(
-            // 데이터들
-        )
-        val adapter = MyMultiAdapter(items)
-        binding.history.adapter = adapter
-        binding.history.layoutManager = LinearLayoutManager(this)
 
+        //test
+
+        /*
+        items.add(1)
+        binding.history.adapter = MyMultiAdapter(items,viewModel)
+        binding.history.layoutManager = LinearLayoutManager(this)
         */
+
 
 
         //refresh
@@ -48,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 else->""
             }
         }
+        drawDrawer()
 
         //drawer
         binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -67,14 +66,22 @@ class MainActivity : AppCompatActivity() {
                 {
                     if(viewModel.turn==1)textView.text="X"
                     else textView.text="O"
+                    val newBoardArray=Array(9) { 0 }
+                    for(i in 0..buttonNum) newBoardArray[i]=viewModel.numbers[i]
+                    val new=MyData(viewModel.count,newBoardArray,viewModel.gameEnded)
+                    viewModel.items.add(new)
+                    drawDrawer()
+
                 }
             }
         }
+
         //리셋
         binding.reset.setOnClickListener {
 
             viewModel.gameEnded=false
-
+            viewModel.resetDrawer()
+            drawDrawer()
             binding.buttons.forEach {
                 val textView=it as TextView
                 textView.text=""
@@ -92,5 +99,9 @@ class MainActivity : AppCompatActivity() {
             viewModel.count=0
 
         }
+    }
+    fun drawDrawer(){
+        binding.history.adapter = MyMultiAdapter(viewModel.items,viewModel)
+        binding.history.layoutManager = LinearLayoutManager(this)
     }
 }

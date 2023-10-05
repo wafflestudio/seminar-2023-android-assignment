@@ -146,12 +146,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="게임 시작!"/>
+            android:text="게임 시작!"
+            android:textSize="30dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
