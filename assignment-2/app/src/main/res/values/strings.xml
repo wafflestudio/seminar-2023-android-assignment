@@ -2,4 +2,6 @@
     <string name="app_name">Assignment2</string>
 
     <string name="history_item_game_start">게임 시작!</string>
+    <string name="turn_text">%d턴</string>
+    <string name="winner_text">%s의 승리!!</string>
 </resources>

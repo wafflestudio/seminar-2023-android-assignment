@@ -2,6 +2,7 @@ package com.example.assignment2
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.BoardItemViewBinding
 import com.example.assignment2.databinding.EndItemViewBinding
@@ -13,7 +14,7 @@ private enum class ViewType {
 
 class HistoryAdapter(
     private val list: List<List<CellState>>,
-    private val onClickItem: (idx: Int, count: Int, List<CellState>) -> Unit,
+    private val onClickItem: (idx: Int, count: Int) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = list.size
@@ -32,22 +33,16 @@ class HistoryAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (ViewType.entries[viewType]) {
             ViewType.Start -> StartViewHolder(
-                StartItemViewBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    )
-                )
+                StartItemViewBinding.inflate(LayoutInflater.from(parent.context))
             )
 
             ViewType.Board -> BoardViewHolder(
-                BoardItemViewBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    )
-                )
+                BoardItemViewBinding.inflate(LayoutInflater.from(parent.context))
             )
 
-            ViewType.End -> EndViewHolder(EndItemViewBinding.inflate(LayoutInflater.from(parent.context)))
+            ViewType.End -> EndViewHolder(
+                EndItemViewBinding.inflate(LayoutInflater.from(parent.context))
+            )
         }
     }
 
@@ -60,10 +55,10 @@ class HistoryAdapter(
         }
     }
 
-    inner class StartViewHolder(binding: StartItemViewBinding) :
+    private inner class StartViewHolder(binding: StartItemViewBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    inner class BoardViewHolder(private val binding: BoardItemViewBinding) :
+    private inner class BoardViewHolder(private val binding: BoardItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int, board: List<CellState>) {
             val cells = listOf(
@@ -76,16 +71,16 @@ class HistoryAdapter(
             }
 
             val turnNum = board.count { it != CellState.E }
-            binding.turnNum.text = "${turnNum}턴"
+            binding.turnNum.text = binding.root.context.getString(R.string.turn_text, turnNum)
             binding.root.setOnClickListener {
                 if (position != list.lastIndex) {
-                    onClickItem(position + 1, list.size - position, board)
+                    onClickItem(position + 1, list.size - position)
                 }
             }
         }
     }
 
-    inner class EndViewHolder(private val binding: EndItemViewBinding) :
+    private inner class EndViewHolder(private val binding: EndItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(board: List<CellState>) {
             val cells = listOf(
@@ -97,19 +92,20 @@ class HistoryAdapter(
                 cells[index].text = cellState.text
             }
 
+            val context = binding.root.context
             when (getGameStateFromBoard(board)) {
                 GameState.Over -> {
                     val winner = if ((board.count { it != CellState.E } % 2) == 0) "X" else "O"
-                    binding.winner.text = "${winner}의 승리!!"
-                    if (winner == "O") {
-                        binding.root.background = binding.root.context.getDrawable(R.drawable.round_rect_pink)
-                    } else {
-                        binding.root.background = binding.root.context.getDrawable(R.drawable.round_rect_blue)
-                    }
+                    binding.winner.text = context.getString(R.string.winner_text, winner)
+                    binding.root.background = AppCompatResources.getDrawable(
+                        context,
+                        if (winner == "O") R.drawable.round_rect_pink
+                        else R.drawable.round_rect_blue
+                    )
                 }
                 GameState.Draw -> {
                     binding.winner.text = "무승부!!"
-                    binding.root.background = binding.root.context.getDrawable(R.drawable.round_rect_purple)
+                    binding.root.background = AppCompatResources.getDrawable(context, R.drawable.round_rect_purple)
                 }
                 else -> {}
             }

@@ -3,51 +3,39 @@ package com.example.assignment2
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 
 class MainViewModel : ViewModel() {
 
     private val _board: MutableLiveData<List<CellState>> = MutableLiveData(InitialBoardState)
     val board: LiveData<List<CellState>> = _board
 
-    var history: MutableList<List<CellState>> = mutableListOf(InitialBoardState)
-
-    val gameState: LiveData<GameState> = _board.map { board ->
-        if (isGameOver(board)) GameState.Over
-        else if (board.count { it != CellState.E } == 9) GameState.Draw
-        else if (board.count { it != CellState.E } % 2 == 0) GameState.O
-        else GameState.X
-    }
+    val history: MutableList<List<CellState>> = mutableListOf(InitialBoardState)
 
     fun handleClick(id: Int): Boolean {
-        val beforeClick = _board.value?.get(id) ?: return false
-        val turn: CellState = when (gameState.value) {
-            GameState.O -> CellState.O
-            GameState.X -> CellState.X
-            else -> return false
-        }
+        if (board.value!![id] != CellState.E) return false
 
-        if (beforeClick == CellState.E) {
-            val boardBefore = _board.value?.toMutableList() ?: return false
-            _board.value = boardBefore.apply {
-                set(id, turn)
-            }.also {
-                history.add(it)
-            }
-            return true
+        val gameState = getGameStateFromBoard(_board.value!!)
+        if (gameState == GameState.Draw || gameState == GameState.Over) return false
+
+        val newBoard = _board.value!!.toMutableList().apply {
+            if (gameState == GameState.O) set(id, CellState.O)
+            else set(id, CellState.X)
         }
-        return false
+        _board.value = newBoard
+        history.add(newBoard)
+        return true
     }
 
-    fun retry() {
+    fun retry(): Int {
+        val removed = history.size - 1
         history.subList(1, history.size).clear()
         _board.value = InitialBoardState
+        return removed
     }
 
-    fun goToPast(removeStart: Int, board: List<CellState>) {
-        _board.value = board
-
+    fun goToPast(removeStart: Int) {
         history.subList(removeStart, history.size).clear()
+        _board.value = history.last()
     }
 
     companion object {
