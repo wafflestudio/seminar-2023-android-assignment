@@ -3,6 +3,7 @@ package com.example.assignment2
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.util.Log
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -13,9 +14,9 @@ import kotlin.math.abs
 
 class MainViewModel(): ViewModel() {
     private var prevHistory = mutableListOf<Int>()
-    val textViewList: MutableList<TextView> = mutableListOf<TextView>()
     private lateinit var bitmap: Bitmap
     private var num = 0
+    private var _turn = 1
     private var turn = 1
     private var flag = 0
     private var _infoText = MutableLiveData<String>("")
@@ -27,7 +28,7 @@ class MainViewModel(): ViewModel() {
     private val board = Array(3){ Array(3) {0} }
     private val _boardLiveData = MutableLiveData<Array<Array<Int>>>(board)
     val boardLiveData : LiveData<Array<Array<Int>>> = _boardLiveData
-    val historyData: MutableList<History> = mutableListOf()
+    var historyData: MutableList<History> = mutableListOf()
     private fun oWins(){
         flag = 1
         _infoText.value = "O 승리"
@@ -147,7 +148,7 @@ class MainViewModel(): ViewModel() {
         _infoText.value = "과거"
         _resetText.value = " 초기화 "
         _resetColor.value = "#808080"
-        historyData.clear()
+
         prevHistory = prevHistory.subList(0, prev)
         for(row in 0..2){
             for(col in 0..2){
@@ -155,13 +156,15 @@ class MainViewModel(): ViewModel() {
             }
         }
         for(index in 0..< prev){
-            var _turn = 1
+
             val cell = prevHistory[index] - 1
             board[cell/3][cell%3] = _turn
             _turn *= -1
-
+            _boardLiveData.value = board
         }
-        _boardLiveData.value = board
+        _turn = 1
+        historyData = historyData.subList(0, 3 * prev)
+        //Log.d(historyData[3*prev - 1].toString(), "ang")
     }
 
 }

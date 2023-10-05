@@ -28,6 +28,7 @@ class HistoryAdapter(
     private val mainViewModel: MainViewModel,
     private val context : Context,
     private val list: List<History>,
+    private val callback: MainActivityCallback
     ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var textViewList: MutableList<TextView> = mutableListOf()
     override fun getItemCount(): Int {
@@ -92,6 +93,7 @@ class HistoryAdapter(
                     binding.textview.setOnClickListener{
                         textViewList = textViewList.subList(0, index + 1)
                         mainViewModel.rewindData(index + 1)
+                        callback.onAdapterClickEvent()
                     }
                 }
             }

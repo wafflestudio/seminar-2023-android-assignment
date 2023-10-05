@@ -3,6 +3,7 @@ package com.example.assignment2
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.GridLayout
 import android.widget.TextView
@@ -10,22 +11,25 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
-class MainActivity : AppCompatActivity() {
-    fun addToList(textView: TextView){
-        mainViewModel.textViewList.add(textView)
-    }
-
-
+interface MainActivityCallback {
+    fun onAdapterClickEvent()
+}
+class MainActivity : AppCompatActivity(), MainActivityCallback{
+    private lateinit var adapter: HistoryAdapter
     private lateinit var gridLayout: GridLayout
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels()
+    override fun onAdapterClickEvent() {
+        adapter = HistoryAdapter(mainViewModel,this, mainViewModel.historyData, this)
+        Log.d(mainViewModel.historyData[2].toString(),"aaa")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = HistoryAdapter(mainViewModel,this, mainViewModel.historyData)
+        adapter = HistoryAdapter(mainViewModel,this, mainViewModel.historyData, this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.cell1.setOnClickListener{
