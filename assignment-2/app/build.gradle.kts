@@ -4,13 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.assignment2"
-    compileSdk = 34
-
+    namespace = "com.example.tictac"
+    compileSdk = 33
+    buildFeatures {
+        viewBinding = true
+    }
     defaultConfig {
-        applicationId = "com.example.assignment2"
+        applicationId = "com.example.tictac"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -36,8 +38,9 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.activity:activity-ktx:1.7.2")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

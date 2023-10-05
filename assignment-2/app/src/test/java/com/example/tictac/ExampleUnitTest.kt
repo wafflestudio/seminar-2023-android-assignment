@@ -1,4 +1,4 @@
-package com.example.assignment2
+package com.example.tictac
 
 import org.junit.Test
 
