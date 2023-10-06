@@ -51,18 +51,18 @@
                 android:layout_margin="10dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <GridView
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/header"
+            android:id="@+id/game_board"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+
+            android:numColumns="3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/game_board"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numColumns="3"
-            android:horizontalSpacing="10dp"
             android:verticalSpacing="10dp"
-            android:gravity="center" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/header" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
