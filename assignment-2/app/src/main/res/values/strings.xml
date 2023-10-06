@@ -5,6 +5,7 @@
     <string name="restart">한번더</string>
     <string name="team1">O</string>
     <string name="team2">X</string>
+    <string name="empty"> </string>
     <string name="team1status">O의 차례입니다</string>
     <string name="team2status">X의 차례입니다</string>
     <string name="GameOver">게임 오버</string>
