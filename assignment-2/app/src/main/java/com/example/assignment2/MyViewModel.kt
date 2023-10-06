@@ -46,24 +46,29 @@ class MyViewModel() :ViewModel() {
 
     fun boardClick(column: Int, row: Int, block: TextView, reset: TextView, status: TextView) {
         if (count < 9 && board[column][row] == null && !isEnd) {
+            //status update
             board[column][row] = team
             record[count] = board
             count++
             team = !team
-
-            data.add(MyMultiData.TypeA(board,count))
 
             if (team) block.text = "O"
             else block.text = "X"
 
             checkEnd()
 
-            if (isEnd) reset.text = "한번더"
+            //if Game End
+            if(isEnd || count == 9){
+                reset.text = "한번더"
 
-            if (isEnd || count == 9) {
-                if (!isEnd) status.text = "무승부"
+                data.add(MyMultiData.TypeC(board,team,isEnd))
+
+                if(!isEnd) status.text = "무승부"
                 else status.text = "게임 오버"
-            } else {
+            }
+            //if Game not End
+            else{
+                data.add(MyMultiData.TypeA(board,count))
                 if (team) status.text = "X의 차례입니다"
                 else status.text = "O의 차례입니다"
             }

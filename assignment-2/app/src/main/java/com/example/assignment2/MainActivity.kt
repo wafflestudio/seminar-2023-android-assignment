@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-
         //basic set for Restart OnCreate
         viewModel.basicSet(0,0,binding.block00)
         viewModel.basicSet(0,1,binding.block01)
@@ -102,12 +101,12 @@ class MainActivity : AppCompatActivity() {
             binding.block22.text = getString(R.string.empty)
 
             binding.reset.text = getString(R.string.reset)
-
+            
+            //recycler View 초기화
             val newData = mutableListOf<MyMultiData>(MyMultiData.TypeB("게임 시작!"))
             viewModel.data  = newData
             adapter.setData(newData)
             adapter.notifyDataSetChanged()
-
         }
     }
 }
