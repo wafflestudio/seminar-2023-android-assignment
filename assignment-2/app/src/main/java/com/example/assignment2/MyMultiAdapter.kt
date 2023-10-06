@@ -2,6 +2,7 @@ package com.example.assignment2
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.TypeAItemViewBinding
@@ -9,14 +10,14 @@ import com.example.assignment2.databinding.TypeBItemViewBinding
 import com.example.assignment2.databinding.TypeCItemViewBinding
 
 sealed class MyMultiData(val viewType: ViewType) {
-    data class TypeA(val texts: List<String>) : MyMultiData(ViewType.A)
-    data class TypeB(@DrawableRes val imageRes: Int) : MyMultiData(ViewType.B)
-    data class TypeC(val num: Int) : MyMultiData(ViewType.C)
+    data class TypeA(val board : Array<Array<Boolean?>>, val count:Int) : MyMultiData(ViewType.A)
+    data class TypeB(val gameStart: String) : MyMultiData(ViewType.B)
+    data class TypeC(val count:Int) : MyMultiData(ViewType.C)
     enum class ViewType { A, B, C }
 }
 
 class MyMultiAdapter(
-    private val list:List<MyMultiData>
+    private var list:List<MyMultiData>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = list.size;
 
@@ -52,20 +53,36 @@ class MyMultiAdapter(
         }
     }
 
+    fun setData(newList: List<MyMultiData>) {
+        list = newList;
+    }
 
+    private fun fillBoard(column:Int, row:Int, block:TextView, board:Array<Array<Boolean?>>){
+        if(board[column][row] == true) block.text = "X"
+        else if (board[column][row] == false) block.text = "O"
+        else block.text = "    "
+    }
     inner class TypeAViewHolder(private val binding: TypeAItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(data:MyMultiData.TypeA){
-                data.texts.forEach(){
+                fillBoard(0,0,binding.block00,data.board)
+                fillBoard(0,1,binding.block01,data.board)
+                fillBoard(0,2,binding.block02,data.board)
+                fillBoard(1,0,binding.block10,data.board)
+                fillBoard(1,1,binding.block11,data.board)
+                fillBoard(1,2,binding.block12,data.board)
+                fillBoard(2,0,binding.block20,data.board)
+                fillBoard(2,1,binding.block21,data.board)
+                fillBoard(2,2,binding.block22,data.board)
 
-                }
+                binding.whatNumber.text = data.count.toString()
             }
     }
     inner class TypeBViewHolder(private val binding: TypeBItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(data:MyMultiData.TypeB){
-
-            }
+        fun bind(data:MyMultiData.TypeB){
+            binding.text.text = data.gameStart
+        }
     }
     inner class TypeCViewHolder(private val binding: TypeCItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {

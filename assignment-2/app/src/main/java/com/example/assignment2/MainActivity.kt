@@ -2,7 +2,6 @@ package com.example.assignment2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
@@ -17,109 +16,80 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var team: Boolean = true;
-        var isEnd: Boolean = false;
-        var record: Array<Array<Array<Boolean?>>> = Array(9){Array(3) { Array(3) { null } }}
-        var board: Array<Array<Boolean?>> = Array(3) { Array(3) { null } }
+        val adapter = MyMultiAdapter(viewModel.data)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        var count:Int = 0
 
-        fun checkEnd(){
-            // Check rows
-            for (i in 0 until 3) {
-                if (board[i][0] != null && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-                    isEnd = true;
-                }
-            }
+        //basic set for Restart OnCreate
+        viewModel.basicSet(0,0,binding.block00)
+        viewModel.basicSet(0,1,binding.block01)
+        viewModel.basicSet(0,2,binding.block02)
+        viewModel.basicSet(1,0,binding.block10)
+        viewModel.basicSet(1,1,binding.block11)
+        viewModel.basicSet(1,2,binding.block12)
+        viewModel.basicSet(2,0,binding.block20)
+        viewModel.basicSet(2,1,binding.block21)
+        viewModel.basicSet(2,2,binding.block22)
 
-            // Check columns
-            for (i in 0 until 3) {
-                if (board[0][i] != null && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-                    isEnd = true;
-                }
-            }
-
-            // Check diagonals
-            if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-                isEnd = true;
-            }
-            if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-                isEnd = true;
-            }
-        }
-
-        fun boardClick(column:Int, row:Int, block:TextView, reset:TextView, status:TextView ){
-            if(count<9 && board[column][row] == null && !isEnd){
-                board[column][row] = team
-                record[count] = board
-                count++
-                team = !team
-
-                if(team) block.text = "O"
-                else block.text = "X"
-
-                checkEnd()
-
-                if(isEnd) reset.text = getString(R.string.restart)
-                else reset.text = getString(R.string.reset)
-
-                if(isEnd || count==9){
-                    if(!isEnd) status.text = getString(R.string.NoWin)
-                    else status.text = getString(R.string.GameOver)
-                }
-                else{
-                    if(team) status.text = getString(R.string.team2status)
-                    else status.text = getString(R.string.team1status)
-                }
-            }
-        }
-
+        //SetOnClickListener - menu
         binding.menu.setOnClickListener{
             binding.root.openDrawer(binding.drawer)
         }
 
+        //SetOnClickListener - block
         binding.block00.setOnClickListener {
-            boardClick(0,0, binding.block00, binding.reset, binding.status)
+            viewModel.boardClick(0,0, binding.block00, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block01.setOnClickListener {
-            boardClick(0,1, binding.block01, binding.reset, binding.status)
+            viewModel.boardClick(0,1, binding.block01, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block02.setOnClickListener {
-            boardClick(0,2, binding.block02, binding.reset, binding.status)
+            viewModel.boardClick(0,2, binding.block02, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block10.setOnClickListener {
-            boardClick(1,0, binding.block10, binding.reset, binding.status)
+            viewModel.boardClick(1,0, binding.block10, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block11.setOnClickListener {
-            boardClick(1,1, binding.block11, binding.reset, binding.status)
+            viewModel.boardClick(1,1, binding.block11, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block12.setOnClickListener {
-            boardClick(1,2, binding.block12, binding.reset, binding.status)
+            viewModel.boardClick(1,2, binding.block12, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block20.setOnClickListener {
-            boardClick(2,0, binding.block20, binding.reset, binding.status)
+            viewModel.boardClick(2,0, binding.block20, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block21.setOnClickListener {
-            boardClick(2,1, binding.block21, binding.reset, binding.status)
+            viewModel.boardClick(2,1, binding.block21, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
         binding.block22.setOnClickListener {
-            boardClick(2,2, binding.block22, binding.reset, binding.status)
+            viewModel.boardClick(2,2, binding.block22, binding.reset, binding.status)
+            adapter.notifyItemChanged(viewModel.data.lastIndex)
         }
 
+        //SetOnClickListener - reset
         binding.reset.setOnClickListener {
-            team = true;
-            isEnd = false;
-            record = Array(9){Array(3) { Array(3) { null } }}
-            board = Array(3) { Array(3) { null } }
-            count = 0
+            viewModel.team = true
+            viewModel.isEnd = false
+            viewModel.record = Array(9){Array(3) { Array(3) { null } }}
+            viewModel.board = Array(3) { Array(3) { null } }
+            viewModel.count = 0
 
             binding.block00.text = getString(R.string.empty)
             binding.block01.text = getString(R.string.empty)
@@ -132,6 +102,11 @@ class MainActivity : AppCompatActivity() {
             binding.block22.text = getString(R.string.empty)
 
             binding.reset.text = getString(R.string.reset)
+
+            val newData = mutableListOf<MyMultiData>(MyMultiData.TypeB("게임 시작!"))
+            viewModel.data  = newData
+            adapter.setData(newData)
+            adapter.notifyDataSetChanged()
 
         }
     }
