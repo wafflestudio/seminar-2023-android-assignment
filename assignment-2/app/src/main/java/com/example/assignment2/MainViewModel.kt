@@ -23,9 +23,16 @@ class MainViewModel: ViewModel() {
     private val _board = MutableLiveData<MutableList<Mark>>(MutableList(9){Mark.EMPTY})
     val board : LiveData<MutableList<Mark>> = _board
 
+    private val _history = MutableLiveData<MutableList<HistoryData>>(mutableListOf(HistoryData.TurnNum(0)))
+    val history : LiveData<MutableList<HistoryData>> = _history
+
+    private var turnNum = 0
+
     fun init(){
         _state.value = State.PLAYER1
         _board.value = MutableList(9){Mark.EMPTY}
+        turnNum = 0
+        _history.value = mutableListOf(HistoryData.TurnNum(0))
     }
 
     private fun changeTurn(){
@@ -34,9 +41,8 @@ class MainViewModel: ViewModel() {
             State.PLAYER2 -> _state.value = State.PLAYER1
             else -> Log.d("changeTurn", "error")
         }
+        turnNum++
     }
-
-
 
 
     fun boardItemClickEvent(position : Int){
@@ -51,6 +57,7 @@ class MainViewModel: ViewModel() {
         }
         else if(_board.value!!.all{it !=Mark.EMPTY}) _state.value = State.DRAW
         else changeTurn()
+        addHistory()
     }
 
 
@@ -66,7 +73,11 @@ class MainViewModel: ViewModel() {
         return Mark.EMPTY
     }
 
-
+    private fun addHistory(){
+        Log.d("history", _history.value.toString())
+        _history.value!!.add(HistoryData.TurnNum(turnNum))
+        _history.value!!.add(HistoryData.BoardData(board.value!!))
+    }
 
 
 }

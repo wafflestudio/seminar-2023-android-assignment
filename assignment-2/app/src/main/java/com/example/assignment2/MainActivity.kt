@@ -2,9 +2,11 @@ package com.example.assignment2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assignment2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -41,8 +43,15 @@ class MainActivity : AppCompatActivity() {
                 else -> "초기화"
             }
         }
-
-
+        val items  = viewModel.history.value!!
+        val historyAdapter = HistoryAdapter(items)
+        binding.recyclerView.adapter = historyAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        viewModel.history.observe(this, Observer {
+            //여기가 안불리네
+            Log.d("observe", "I know")
+            historyAdapter.notifyDataSetChanged()
+        })
 
 
 
