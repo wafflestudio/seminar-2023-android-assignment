@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.button7.setOnClickListener { viewModel.changeGameState(2, 1) }
         binding.button8.setOnClickListener { viewModel.changeGameState(2, 2) }
         binding.reset.setOnClickListener {
-            viewModel.backTo(1)
+            viewModel.backTo(0)
             binding.reset.apply{
                 text = "초기화"
                 setBackgroundColor(Color.parseColor("#C2BEC0"))
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding.drawerIcon.setOnClickListener { binding.root.openDrawer(binding.drawer) }
 
         // RecyclerView에 adpater 연결
-        binding.recyclerView.adapter = MyMultiAdapter( viewModel.history.map{ it.toMyMultiData() }, { turn: Int -> viewModel.backTo(turn) } )
+        binding.recyclerView.adapter = MyMultiAdapter( viewModel.history, { turn: Int -> viewModel.backTo(turn) } )
 
         // currentGameState에 변화가 생기면 할 일들
         viewModel.currentGameState.observe(this) {

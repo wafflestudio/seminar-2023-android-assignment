@@ -18,16 +18,16 @@ class MyViewModel: ViewModel() {
         // 게임이 끝났는지 확인
         if (_currentGameState.value!!.progress.isFinished()) return
 
-        // history에 현재 상태 저장
-        history.add(_currentGameState.value!!)
-
         // gameState 바꾸기
         _currentGameState.value = _currentGameState.value!!.nextGameState(row, col)
+
+        // history에 현재 상태 저장
+        history.add(_currentGameState.value!!)
     }
 
     // 이전 GameState로 돌아가고 게임 진행 상태를 변경해주는 함수
     fun backTo(turn: Int) {
-        history.subList(turn, history.size).clear()
+        history.subList(turn + 1, history.size).clear()
         _currentGameState.value = history.last()
     }
 
