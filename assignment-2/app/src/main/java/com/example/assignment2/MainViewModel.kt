@@ -23,7 +23,7 @@ class MainViewModel: ViewModel() {
     private val _board = MutableLiveData<MutableList<Mark>>(MutableList(9){Mark.EMPTY})
     val board : LiveData<MutableList<Mark>> = _board
 
-    private val _history = MutableLiveData<MutableList<HistoryData>>(mutableListOf())
+    private val _history = MutableLiveData<MutableList<HistoryData>>(mutableListOf(HistoryData.Comment("게임 시작")))
     val history : LiveData<MutableList<HistoryData>> = _history
 
     private var turnNum = 0
@@ -33,6 +33,7 @@ class MainViewModel: ViewModel() {
         _board.value = MutableList(9){Mark.EMPTY}
         turnNum = 0
         _history.value!!.clear()
+        _history.value!!.add(HistoryData.Comment("게임 시작"))
     }
 
     private fun changeTurn(){
@@ -55,12 +56,19 @@ class MainViewModel: ViewModel() {
             }
             else -> return
         }
+        addHistory()
         if(isGameover()!=Mark.EMPTY){
+            val winnerMark = when(state.value){
+                State.PLAYER1 -> "O"
+                State.PLAYER2 -> "X"
+                else -> " "
+            }
             _state.value = State.GAMEOVER
+            _history.value!!.add(HistoryData.Comment(winnerMark + "의 승리!"))
         }
         else if(_board.value!!.all{it !=Mark.EMPTY}) _state.value = State.DRAW
         else changeTurn()
-        addHistory()
+
     }
 
 

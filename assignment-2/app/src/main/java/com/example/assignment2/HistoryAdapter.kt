@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.BoardDataBinding
+import com.example.assignment2.databinding.CommentBinding
 import com.example.assignment2.databinding.TurnNumBinding
 import org.w3c.dom.Text
 
@@ -52,12 +53,18 @@ class HistoryAdapter(private val context : Context,private val data: List<Histor
 
         }
     }
+    inner class CommentViewHolder(private val binding: CommentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
+        fun bind(item: HistoryData.Comment) {
+            binding.comment.text = item.comment.toString()
+        }
+    }
     override fun getItemViewType(position: Int): Int {
         return when(data[position]) {
             is HistoryData.BoardData -> return HistoryData.ViewType.BOARD_DATA.ordinal
             is HistoryData.TurnNum -> return HistoryData.ViewType.TURN_NUM.ordinal
-            else -> -1
+            is HistoryData.Comment -> return HistoryData.ViewType.COMMENT.ordinal
         }
     }
 
@@ -77,6 +84,10 @@ class HistoryAdapter(private val context : Context,private val data: List<Histor
                 val item = data[position] as HistoryData.BoardData
                 holder.bind(item)
             }
+            is CommentViewHolder ->{
+                val item = data[position] as HistoryData.Comment
+                holder.bind(item)
+            }
         }
     }
 
@@ -93,6 +104,11 @@ class HistoryAdapter(private val context : Context,private val data: List<Histor
             HistoryData.ViewType.BOARD_DATA.ordinal -> {
                 val binding = BoardDataBinding.inflate(inflater, parent, false)
                 BoardDataViewHolder(binding)
+            }
+
+            HistoryData.ViewType.COMMENT.ordinal -> {
+                val binding = CommentBinding.inflate(inflater, parent, false)
+                CommentViewHolder(binding)
             }
 
             else -> throw IllegalArgumentException("Invalid viewType")
