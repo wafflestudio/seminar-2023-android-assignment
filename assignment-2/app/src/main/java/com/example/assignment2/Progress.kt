@@ -32,7 +32,7 @@ enum class Progress {
         return when (this) {
             OPLAYING -> Color.parseColor("#2A27FF")
             XPLAYING -> Color.parseColor("#FF3134")
-            else -> Color.parseColor("#FFFFFF")
+            else -> Color.parseColor("#C2BEC0")
         }
     }
 
