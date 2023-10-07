@@ -1,24 +1,63 @@
 package com.example.assignment2
 
+import android.content.Context
+import android.graphics.Color
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.BoardDataBinding
 import com.example.assignment2.databinding.TurnNumBinding
+import org.w3c.dom.Text
 
-class HistoryAdapter(private val data: List<HistoryData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+class HistoryAdapter(private val context : Context,private val data: List<HistoryData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
     inner class TurnNumViewHolder(private val binding: TurnNumBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HistoryData.TurnNum) {
-            binding.num.text = item.toString()
+            binding.num.text = item.num.toString() + "턴"
         }
     }
     inner class BoardDataViewHolder(private val binding: BoardDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HistoryData.BoardData) {
-            binding.miniBoard.text = item.toString()
+            binding.miniBoard.removeAllViews()
+            for(i in 0 until 9){
+                val cell = TextView(context)
+                cell.text = when(item.board[i]){
+                    Mark.PLAYER1 -> "O"
+                    Mark.PLAYER2 -> "X"
+                    Mark.EMPTY -> ""
+                }
+                cell.textSize = 30f
+                cell.width = 150
+                cell.height = 150
+                cell.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                cell.gravity = Gravity.CENTER
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                layoutParams.setMargins(10,10,10,10)
+                cell.layoutParams = layoutParams
+                cell.setBackgroundColor(Color.GRAY)
+
+                binding.miniBoard.addView(cell)
+            }
+
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when(data[position]) {
+            is HistoryData.BoardData -> return HistoryData.ViewType.BOARD_DATA.ordinal
+            is HistoryData.TurnNum -> return HistoryData.ViewType.TURN_NUM.ordinal
+            else -> -1
         }
     }
 
@@ -59,4 +98,5 @@ class HistoryAdapter(private val data: List<HistoryData>) : RecyclerView.Adapter
             else -> throw IllegalArgumentException("Invalid viewType")
         }
     }
+
 }

@@ -23,7 +23,7 @@ class MainViewModel: ViewModel() {
     private val _board = MutableLiveData<MutableList<Mark>>(MutableList(9){Mark.EMPTY})
     val board : LiveData<MutableList<Mark>> = _board
 
-    private val _history = MutableLiveData<MutableList<HistoryData>>(mutableListOf(HistoryData.TurnNum(0)))
+    private val _history = MutableLiveData<MutableList<HistoryData>>(mutableListOf())
     val history : LiveData<MutableList<HistoryData>> = _history
 
     private var turnNum = 0
@@ -32,24 +32,27 @@ class MainViewModel: ViewModel() {
         _state.value = State.PLAYER1
         _board.value = MutableList(9){Mark.EMPTY}
         turnNum = 0
-        _history.value = mutableListOf(HistoryData.TurnNum(0))
+        _history.value = mutableListOf()
     }
 
     private fun changeTurn(){
-        when(_state.value!!){
+        when(_state.value){
             State.PLAYER1 -> _state.value = State.PLAYER2
             State.PLAYER2 -> _state.value = State.PLAYER1
             else -> Log.d("changeTurn", "error")
         }
-        turnNum++
     }
 
 
     fun boardItemClickEvent(position : Int){
-
+        turnNum++
         when(state.value){
-            State.PLAYER1 -> _board.value!![position] = Mark.PLAYER1
-            State.PLAYER2 -> _board.value!![position] = Mark.PLAYER2
+            State.PLAYER1 -> _board.value = _board.value!!.toMutableList().apply {
+                this[position] = Mark.PLAYER1
+            }
+            State.PLAYER2 -> _board.value = _board.value!!.toMutableList().apply {
+                this[position] = Mark.PLAYER2
+            }
             else -> return
         }
         if(isGameover()!=Mark.EMPTY){
@@ -74,9 +77,10 @@ class MainViewModel: ViewModel() {
     }
 
     private fun addHistory(){
-        Log.d("history", _history.value.toString())
-        _history.value!!.add(HistoryData.TurnNum(turnNum))
-        _history.value!!.add(HistoryData.BoardData(board.value!!))
+        val newHistory = _history.value
+        newHistory!!.add(HistoryData.TurnNum(turnNum))
+        newHistory!!.add(HistoryData.BoardData(board.value!!))
+        _history.value = newHistory
     }
 
 

@@ -43,14 +43,14 @@ class MainActivity : AppCompatActivity() {
                 else -> "초기화"
             }
         }
-        val items  = viewModel.history.value!!
-        val historyAdapter = HistoryAdapter(items)
+
+
+        val historyAdapter = HistoryAdapter(this, viewModel.history.value!!)
         binding.recyclerView.adapter = historyAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewModel.history.observe(this, Observer {
-            //여기가 안불리네
-            Log.d("observe", "I know")
             historyAdapter.notifyDataSetChanged()
+
         })
 
 
