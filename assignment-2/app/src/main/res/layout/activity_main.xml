@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/turnInformation"
-                android:textSize="20dp"
+                android:textSize="28dp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"

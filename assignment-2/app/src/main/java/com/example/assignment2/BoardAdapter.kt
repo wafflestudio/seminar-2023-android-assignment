@@ -22,15 +22,15 @@ class BoardAdapter(private val context: Context, private val viewModel: MainView
         val binding = BoardItemBinding.inflate(LayoutInflater.from(context))
 
         binding.boardItem.text = when(mark){
-            Mark.EMPTY -> "empty"
+            Mark.EMPTY -> ""
             Mark.PLAYER1 -> "O"
             Mark.PLAYER2 -> "X"
         }
         binding.boardItem.setOnClickListener() {
-            if (binding.boardItem.text == "empty") {
+            if (binding.boardItem.text == "") {
                 viewModel.boardItemClickEvent(position)
                 binding.boardItem.text = when(mark){
-                    Mark.EMPTY -> "empty"
+                    Mark.EMPTY -> ""
                     Mark.PLAYER1 -> "O"
                     Mark.PLAYER2 -> "X"
                 }

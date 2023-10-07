@@ -9,7 +9,7 @@
     android:id="@+id/board_item"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:textSize = "24dp"
+    android:textSize = "36dp"
     android:background="#888888"
     android:gravity="center"
     android:textStyle="bold"

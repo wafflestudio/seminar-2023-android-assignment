@@ -32,7 +32,7 @@ class MainViewModel: ViewModel() {
         _state.value = State.PLAYER1
         _board.value = MutableList(9){Mark.EMPTY}
         turnNum = 0
-        _history.value = mutableListOf()
+        _history.value!!.clear()
     }
 
     private fun changeTurn(){
