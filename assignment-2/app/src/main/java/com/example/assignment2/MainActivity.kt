@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val historyAdapter = HistoryAdapter(this, viewModel.history.value!!)
+        val historyAdapter = HistoryAdapter(this, viewModel.history.value!!, viewModel)
         binding.recyclerView.adapter = historyAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -58,8 +58,6 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
         })
-
-
 
     }
 

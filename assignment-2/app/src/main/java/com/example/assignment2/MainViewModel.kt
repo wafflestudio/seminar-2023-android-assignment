@@ -66,7 +66,10 @@ class MainViewModel: ViewModel() {
             _state.value = State.GAMEOVER
             _history.value!!.add(HistoryData.Comment(winnerMark + "의 승리!"))
         }
-        else if(_board.value!!.all{it !=Mark.EMPTY}) _state.value = State.DRAW
+        else if(_board.value!!.all{it !=Mark.EMPTY}) {
+            _state.value = State.DRAW
+            _history.value!!.add(HistoryData.Comment("무승부!"))
+        }
         else changeTurn()
 
     }
@@ -91,5 +94,20 @@ class MainViewModel: ViewModel() {
         _history.value = newHistory
     }
 
-
+    fun goBack(position : Int){
+        // 피 땀 눈물이 담긴 깊은복사 얕은복사 passbyreference, passbyvalue 등등 써가면서 구현한 되돌아가기 기능 ㅜㅜ
+        val newHistory : MutableList<HistoryData> = mutableListOf()
+        for(i in 0 ..2*position){
+            if(_history.value!![i] is HistoryData.BoardData){
+                newHistory.add(HistoryData.BoardData((_history.value!![i] as HistoryData.BoardData).board.toMutableList()))
+            }
+            else newHistory.add(_history.value!![i])
+        }
+        _history.value!!.clear()
+        for(item in newHistory){
+            _history.value!!.add(item)
+        }
+        _board.value = (_history.value!!.last() as HistoryData.BoardData).board.toMutableList()
+        turnNum = position
+    }
 }

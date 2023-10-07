@@ -2,6 +2,7 @@ package com.example.assignment2
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,19 @@ import com.example.assignment2.databinding.CommentBinding
 import com.example.assignment2.databinding.TurnNumBinding
 import org.w3c.dom.Text
 
-class HistoryAdapter(private val context : Context,private val data: List<HistoryData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+//되돌아가기 기능을 구현하기 위해서, Adapter에 viewModel을 인수로 전달했는데,
+//MVVM 패턴이 깨지는게 아닌지 걱정입니다.
+//adapter도 mainactivity랑 똑같이 뷰라고 생각해서, 모델의 직접적인 데이터만 조작하지 않고,
+//조작을 일어나게 하는 함수를 호출하면 MVVM이 지켜지는걸까요?
+class HistoryAdapter(private val context : Context,private val data: List<HistoryData>, private val viewModel: MainViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
     inner class TurnNumViewHolder(private val binding: TurnNumBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HistoryData.TurnNum) {
             binding.num.text = item.num.toString() + "턴"
+            binding.goBack.setOnClickListener {
+                viewModel.goBack(item.num)
+            }
         }
     }
     inner class BoardDataViewHolder(private val binding: BoardDataBinding) :
