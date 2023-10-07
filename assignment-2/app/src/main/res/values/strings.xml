@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Assignment2</string>
+
+    <!-- activity_main.xml -->
+    <string name="main_information_start">O의 차례입니다</string>
+    <string name="initializing">초기화</string>
+    <string name="one_more_game">한판 더</string>
+    <string name="drawer">drawer</string>
+    <string name="record">기록</string>
+
+    <!-- type_start_view.xml -->
+    <string name="game_start">게임 시작!</string>
+
+    <!-- type_main_view.xml -->
+    <string name="back_to">되돌아가기</string>
+
+    <!-- type_finish_view.xml -->
+    <string name="game_over">게임 오버!</string>
 </resources>

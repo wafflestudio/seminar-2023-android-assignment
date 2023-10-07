@@ -1,18 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/information_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/drawer_icon"
+                android:contentDescription="@string/drawer"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="start|center"
+                android:src="@drawable/baseline_menu_24" />
+
+            <TextView
+                android:id="@+id/information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_information_start"
+                android:textSize="30sp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/initializing"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:padding="7dp"
+                android:layout_gravity="end|center"
+                android:background="#C2BEC0"/>
+
+        </FrameLayout>
+
+        <GridLayout
+            android:id="@+id/grid_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/information_frame"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/button_0"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_1"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_2"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_3"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_4"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_5"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_6"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_7"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+            <TextView
+                android:id="@+id/button_8"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="2dp"
+                android:textSize="50sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/default_grid"/>
+
+        </GridLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/record"
+                android:textSize="50sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
