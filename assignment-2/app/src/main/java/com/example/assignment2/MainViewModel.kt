@@ -1,6 +1,7 @@
 package com.example.assignment2
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -88,13 +89,14 @@ class MainViewModel: ViewModel() {
     }
 
     private fun addHistory(){
-        val newHistory = _history.value
-        newHistory!!.add(HistoryData.TurnNum(turnNum))
-        newHistory!!.add(HistoryData.BoardData(board.value!!))
-        _history.value = newHistory
+        _history.value!!.add(HistoryData.TurnNum(turnNum))
+        _history.value!!.add(HistoryData.BoardData(board.value!!))
     }
 
     fun goBack(position : Int){
+        if(2*position+2 == _history.value!!.size){
+            return
+        }
         // 피 땀 눈물이 담긴 깊은복사 얕은복사 passbyreference, passbyvalue 등등 써가면서 구현한 되돌아가기 기능 ㅜㅜ
         val newHistory : MutableList<HistoryData> = mutableListOf()
         for(i in 0 ..2*position){
@@ -109,5 +111,10 @@ class MainViewModel: ViewModel() {
         }
         _board.value = (_history.value!!.last() as HistoryData.BoardData).board.toMutableList()
         turnNum = position
+        _state.value = when(position%2){
+            0 -> State.PLAYER1
+            1 -> State.PLAYER2
+            else -> throw error("state setting error")
+        }
     }
 }
