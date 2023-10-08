@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +25,7 @@ class BoardHistoryAdapter(private val context: Context, private val viewModel: M
 
         fun bind(item: BoardData.TurnNumber) {
             val turnNumber = item.num.toString()
-            binding.turnNumberText.text = turnNumber
+            binding.turnNumberText.text = turnNumber + "턴"
         }
     }
 
@@ -31,7 +34,14 @@ class BoardHistoryAdapter(private val context: Context, private val viewModel: M
 
         fun bind(item: BoardData.BoardValue) {
             val board = item.board
-            binding.boardViewText.text = board.toString()
+            var index = 0
+            binding.boardView.children.forEach { child ->
+                if (child is TextView) {
+                    child.text = board[index].toString()
+                    index++
+                }
+            }
+
         }
     }
 
@@ -40,7 +50,7 @@ class BoardHistoryAdapter(private val context: Context, private val viewModel: M
 
         fun bind(item: BoardData.ButtonText) {
             val btnText = item.btnText
-            binding.buttonTextView.text = btnText.toString()
+            binding.buttonTextView.text = btnText
         }
     }
 

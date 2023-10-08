@@ -96,17 +96,21 @@ class MainViewModel() : ViewModel() {
         _data.value = dataModel.fetchDataList() // _data의 값을 설정합니다.
 
         val newBoardDataList = mutableListOf<BoardData>() // 새로운 BoardData 리스트를 만듭니다.
-        newBoardDataList.add(BoardData.ButtonText(false)) // 초기 데이터를 추가합니다.
+        newBoardDataList.add(BoardData.ButtonText("게임 시작!")) // 초기 데이터를 추가합니다.
         _boardData.value = newBoardDataList // _boardData의 값을 설정합니다.
     }
 
     fun addBoardDatas() {
         val turn = getTurn()
         val tempBoardData = _boardData.value
+        var buttonText = getTitle()
         tempBoardData!!.add(BoardData.TurnNumber(turn))
         Log.d("MV", "${getBoard(turn)}")
         tempBoardData!!.add(BoardData.BoardValue(getBoard(turn)))
-        tempBoardData!!.add(BoardData.ButtonText(getGameStat(turn).isGameFinished()))
+        if (getGameStat(turn) == MainModel.GameStats.P) {
+            buttonText = "되돌아가기"
+        }
+        tempBoardData!!.add(BoardData.ButtonText(buttonText))
         _boardData.setValue(tempBoardData)
     }
 

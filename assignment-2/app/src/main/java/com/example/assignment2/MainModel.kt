@@ -83,7 +83,7 @@ class MainModel {
 
     fun updateGameStat(turn:Int) {
         val board = getBoard(turn)
-        dataList[turn][2][0] = checkGameStat(board)
+        dataList[turn][2] = Array<Int>(1){checkGameStat(board)}
     }
 
     fun checkGameStat(board: Array<Int>): Int {

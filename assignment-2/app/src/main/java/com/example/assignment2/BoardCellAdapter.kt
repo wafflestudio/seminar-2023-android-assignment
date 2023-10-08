@@ -13,6 +13,7 @@ import com.example.assignment2.databinding.GridItemBinding
 class BoardCellAdapter (private val context: Context, private val viewModel: MainViewModel): BaseAdapter() {
 
     private var list: List<Char> = emptyList() // LiveData의 변경을 반영하기 위한 리스트
+    private var flag: String = "false"
 
     init {
         // LiveData를 관찰하고 변경될 때마다 list를 업데이트
@@ -26,6 +27,7 @@ class BoardCellAdapter (private val context: Context, private val viewModel: Mai
                     else -> ' ' // 예외 처리 - 유효하지 않은 경우 공백 문자
                 }
             }
+            flag = viewModel.getGameStat().isGameFinished().toString()
             notifyDataSetChanged() // 어댑터에게 데이터 변경을 알림
         }
     }
@@ -36,6 +38,7 @@ class BoardCellAdapter (private val context: Context, private val viewModel: Mai
 
     fun setItems(newList: List<Char>) {
         list = newList.toMutableList()
+        flag = viewModel.getGameStat().isGameFinished().toString()
         notifyDataSetChanged()
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -54,8 +57,8 @@ class BoardCellAdapter (private val context: Context, private val viewModel: Mai
         // 2. 해당 셀의 데이터를 설정함
         binding.textViewGridItem.text = list.get(position).toString()
         binding.textViewGridItem.setOnClickListener() {
-            if (!viewModel.getGameStat().isGameFinished()) {
-                Log.d("BCA", "clicked well")
+            if (flag == "false") {
+                Log.d("BCA", "clicked well, ${viewModel.getGameStat().isGameFinished().toString()}")
                 viewModel.handleClickEvent(position)
                 val newList = viewModel.getBoard().toList()
                 binding.textViewGridItem.text = getItem(position, newList).toString()
