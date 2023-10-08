@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/text_view_grid_item"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:textSize = "20sp"
         android:textColor = "#ffffff"
         android:background="#13bf80"
