@@ -119,6 +119,14 @@ class MainViewModel() : ViewModel() {
         return _boardData.value
     }
 
+    fun changeInitButtonText(): String {
+        val gameStatus = dataModel.getGameStat(getTurn())
+        return when (gameStatus.isGameFinished()) {
+            true -> "한 판 더!"
+            else -> "초기화"
+        }
+    }
+
     fun observeBoardData(owner: LifecycleOwner, observer: Observer<MutableList<BoardData>>) {
         boardData.observe(owner, observer)
     }

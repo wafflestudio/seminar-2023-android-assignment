@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.data.observe(this, { updatedData ->
             // LiveData가 업데이트될 때마다 호출되는 부분
             binding.mainTitle.text = viewModel.getTitle()
+            binding.btnInit.text = viewModel.changeInitButtonText()
             val list = updatedData[viewModel.getTurn()][1].map { cell ->
                 when (cell) {
                     0 -> ' '
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                     else -> ' ' // 예외 처리 - 유효하지 않은 경우 공백 문자
                 }
             }
+
         })
 
         viewModel.boardData.observe(this, { updatedData ->
