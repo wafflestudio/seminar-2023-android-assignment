@@ -72,7 +72,7 @@ class HistoryAdapter(
 
             val turnNum = board.count { it != CellState.E }
             binding.turnNum.text = binding.root.context.getString(R.string.turn_text, turnNum)
-            binding.root.setOnClickListener {
+            binding.goToHere.setOnClickListener {
                 if (position != list.lastIndex) {
                     onClickItem(position + 1, list.size - position)
                 }
