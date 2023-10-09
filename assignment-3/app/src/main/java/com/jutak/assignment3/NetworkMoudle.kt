@@ -29,7 +29,7 @@ class NetworkMoudle {
         okHttpClient: OkHttpClient,
         moshi: Moshi,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl("server-url")
+        return Retrofit.Builder().baseUrl("ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/myapp")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
