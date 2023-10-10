@@ -15,7 +15,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private val viewModel:MyViewModel by viewModels()
@@ -23,22 +23,47 @@ class MainActivity : AppCompatActivity() {
     lateinit var api:MyRestAPI
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("aaaa","a")
 
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val response=api.word_list_create(Data("a","b","c"))
-            response.enqueue(object :Callback<PostResult>{
-                override fun onFailure(call: Call<PostResult>,t:Throwable){
-                    // TODO:
-                }
-                override fun onResponse(call:Call<PostResult>,response:Response<PostResult>){
-                    val responseBody=response.body()
-                    // TODO:
-                }
-            })
+        binding.text.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = api.word_list_create(Data1("Test1", "이현도", "123456"))
+                response.enqueue(object : Callback<PostResult> {
+                    override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                        // TODO:
+                    }
+
+                    override fun onResponse(
+                        call: Call<PostResult>,
+                        response: Response<PostResult>
+                    ) {
+                        val responseBody = response.body()
+                        Log.d("aaaa","s")
+                        binding.text.text=responseBody.toString()
+                    }
+                })
+            }
+        }
+        binding.text2.setOnClickListener{
+            CoroutineScope(Dispatchers.IO).launch {
+                val response2=api.word_list_read(9)
+                response2.enqueue(object : Callback<GetModel> {
+                    override fun onFailure(call: Call<GetModel>, t: Throwable) {
+                        // TODO:
+                    }
+
+                    override fun onResponse(
+                        call: Call<GetModel>,
+                        response: Response<GetModel>
+                    ) {
+                        //val responseBody2 = response2
+                        Log.d("aaaa","ss")
+                        binding.text2.text=response.body().toString()
+                    }
+                })
+            }
         }
     }
 }
