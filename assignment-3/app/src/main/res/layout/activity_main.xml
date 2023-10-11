@@ -33,9 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/vocabulary_list"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/title"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
