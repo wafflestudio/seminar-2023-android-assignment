@@ -1,10 +1,10 @@
 package com.jutak.assignment3
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jutak.assignment3.model.CreateWordListRequest
 import com.jutak.assignment3.model.WordListBrief
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +28,16 @@ class MainViewModel @Inject constructor(
     fun fetchWordLists() {
         viewModelScope.launch(Dispatchers.IO) {
             val resp = api.getWordLists()
+            withContext(Dispatchers.Main) {
+                _wordLists.value = resp
+            }
+        }
+    }
+
+    fun createWordList(ownerName: String, wordListName: String, password: String) {
+        val request = CreateWordListRequest(name = wordListName, owner = ownerName, password = password)
+        viewModelScope.launch(Dispatchers.IO) {
+            val resp = api.createWordList(request)
             withContext(Dispatchers.Main) {
                 _wordLists.value = resp
             }

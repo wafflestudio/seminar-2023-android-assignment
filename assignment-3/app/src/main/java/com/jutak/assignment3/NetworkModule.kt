@@ -19,7 +19,7 @@ class NetworkModule {
     @Provides
     fun okHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(
-            HttpLoggingInterceptor { log -> Log.d("okhttp3", "HTTP: $log") }
+            HttpLoggingInterceptor { log -> Log.d("okhttp3", "HTTP:vib $log") }
                 .setLevel(HttpLoggingInterceptor.Level.BASIC)
         )
         .build()
