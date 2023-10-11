@@ -1,13 +1,12 @@
 package com.jutak.assignment3;
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jutak.assignment3.databinding.VocabularyListBinding
 
 
-class MyAdapter(private val data: List<Voca>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(private val data: List<MyMultiData.Voca>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int {
         return data.size
     }
@@ -22,7 +21,7 @@ class MyAdapter(private val data: List<Voca>): RecyclerView.Adapter<RecyclerView
     }
 
     private inner class MyViewHolder(private val binding: VocabularyListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(data: Voca){
+        fun bind(data: MyMultiData.Voca){
             binding.owner.text = data.owner
             binding.name.text = data.name
             //Log.d("voca_list", data.owner)

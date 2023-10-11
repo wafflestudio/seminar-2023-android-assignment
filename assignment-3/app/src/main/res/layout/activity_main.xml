@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/addButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_margin="10dp"
