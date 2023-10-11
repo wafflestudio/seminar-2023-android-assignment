@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private val viewModel:MyViewModel by viewModels()
+
     @Inject
     lateinit var api:MyRestAPI
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,34 @@ class MainActivity : AppCompatActivity() {
 
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //var resb=emptyList<MyModels.Wordlists>()
+        //val adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(resb)),this)
+        val adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(viewModel.resbody)),this)
+        binding.wordlists.adapter=adapter
+        binding.wordlists.layoutManager= LinearLayoutManager(this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response6=api.word_lists_list()
+            response6.enqueue(object : Callback<List<MyModels.Wordlists>> {
+                override fun onFailure(call: Call<List<MyModels.Wordlists>>, t: Throwable) {
+                    // TODO:
+                }
+
+                override fun onResponse(
+                    call: Call<List<MyModels.Wordlists>>,
+                    response: Response<List<MyModels.Wordlists>>
+                ) {
+                    Log.d("aaaa",response.body().toString())
+                    binding.text6.text=response.body().toString()
+                    if (response.body()!=null){
+                        viewModel.resbody.clear()
+                        viewModel.resbody.addAll(response.body()!!)
+                        Log.d("aaaa",viewModel.resbody.toString())
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            })
+        }
 
         binding.text.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
@@ -122,23 +152,6 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-        binding.text6.setOnClickListener{
-            CoroutineScope(Dispatchers.IO).launch {
-                val response6=api.word_lists_list()
-                response6.enqueue(object : Callback<List<MyModels.Wordlists>> {
-                    override fun onFailure(call: Call<List<MyModels.Wordlists>>, t: Throwable) {
-                        // TODO:
-                    }
 
-                    override fun onResponse(
-                        call: Call<List<MyModels.Wordlists>>,
-                        response: Response<List<MyModels.Wordlists>>
-                    ) {
-                        Log.d("aaaa","sssssss")
-                        binding.text6.text=response.body().toString()
-                    }
-                })
-            }
-        }
     }
 }
