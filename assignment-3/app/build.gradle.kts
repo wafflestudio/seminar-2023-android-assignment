@@ -63,6 +63,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.47")
-
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
 }
 

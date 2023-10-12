@@ -1,3 +1,5 @@
+package com.jutak.assignment3
+import android.util.Log
 import com.jutak.assignment3.MyRestAPI
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -6,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -25,7 +28,8 @@ class NetworkModule{
         okHttpClient: OkHttpClient,
         moshi: Moshi,
     ):Retrofit{
-        return Retrofit.Builder().baseUrl("http://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/")
+        return Retrofit.Builder().
+        baseUrl("http://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
