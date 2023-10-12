@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 상세보기"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닫기"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/spell_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="단어"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        android:id="@+id/spell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="apple"
+        app:layout_constraintTop_toBottomOf="@id/spell_label" />
+
+    <TextView
+        android:id="@+id/meaning_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="뜻"
+        app:layout_constraintTop_toBottomOf="@id/spell" />
+
+    <TextView
+        android:id="@+id/meaning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사과"
+        app:layout_constraintTop_toBottomOf="@id/meaning_label" />
+
+    <TextView
+        android:id="@+id/synonym_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="유의어"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meaning"
+        app:layout_constraintEnd_toStartOf="@id/antonym_label"/>
+
+    <TextView
+        android:id="@+id/antonym_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="반의어"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/synonym_label"
+        app:layout_constraintTop_toBottomOf="@id/meaning"/>
+
+    <TextView
+        android:id="@+id/synonym"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="banana"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/synonym_label"
+        app:layout_constraintEnd_toStartOf="@id/antonym"/>
+
+    <TextView
+        android:id="@+id/antonym"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="banana"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/antonym_label"
+        app:layout_constraintStart_toEndOf="@id/synonym"/>
+
+    <TextView
+        android:id="@+id/sentence_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예문"
+        app:layout_constraintTop_toBottomOf="@id/synonym" />
+
+    <TextView
+        android:id="@+id/sentence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hello, worldhello, world"
+        app:layout_constraintTop_toBottomOf="@id/sentence_label" />
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

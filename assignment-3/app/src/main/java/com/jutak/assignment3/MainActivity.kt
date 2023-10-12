@@ -1,10 +1,9 @@
 package com.jutak.assignment3
 
 import android.content.Context
-import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +29,12 @@ class MainActivity : AppCompatActivity() {
             showAddWordListDialog(this)
         }
 
-        val adapter = WordListAdapter(viewModel.wordLists)
+        val adapter = WordListsAdapter(viewModel.wordLists) { id ->
+            val intent = Intent(this, WordListDetailActivity::class.java).apply {
+                putExtra("id", id)
+            }
+            this.startActivity(intent)
+        }
         binding.wordListRecyclerView.adapter = adapter
         binding.wordListRecyclerView.layoutManager = LinearLayoutManager(this)
 
