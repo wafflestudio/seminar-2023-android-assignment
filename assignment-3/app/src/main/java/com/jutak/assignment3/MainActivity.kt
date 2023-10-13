@@ -25,19 +25,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.getWordListsInfo() //단어장 목록 GET
-        Log.d(viewModel.wordListsInfo.value.toString(),"aaaa")
-        adapter = WordListsInfoAdapter(list = viewModel.wordListsInfo.value.orEmpty())
+        Log.d(viewModel.wordListsInfo.toString(),"aaaa") //빈 list 도출
+        adapter = WordListsInfoAdapter(list = viewModel.wordListsInfo)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        /*binding.addListButton.setOnClickListener{
-            //Dialog 써야 함
-        }*/
-
-        viewModel.wordListsInfo.observe(this){
-            //adapter.notifyItemChanged(viewModel.wordListsInfo.value!!.lastIndex)
-            adapter.notifyDataSetChanged()
-            Log.d("iun","aaaa")
+        binding.addListButton.setOnClickListener{
+            viewModel.showAlertDialog(this)
         }
+
+        /*viewModel.wordListsLiveData.observe(this){
+            //adapter.notifyItemChanged(viewModel.wordListsInfo.lastIndex)
+            adapter.notifyDataSetChanged()
+        }*/
     }
 }
