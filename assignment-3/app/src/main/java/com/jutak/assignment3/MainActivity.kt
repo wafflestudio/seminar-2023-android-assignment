@@ -1,12 +1,12 @@
 package com.jutak.assignment3
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import android.util.Log
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MyDialogVoca.DialogListener {
@@ -19,11 +19,14 @@ class MainActivity : AppCompatActivity(), MyDialogVoca.DialogListener {
         setContentView(binding.root)
 
         viewModel.loadVoca()
-        viewModel.vocaList.observe(this, { vocaList ->
-            val adapter = MyAdapter(viewModel.vocaList.value!!)
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        })
+        val adapter = MyAdapter(viewModel.vocaList.value!!)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        viewModel.vocaList.observe(this) { vocaList ->
+            Log.d("notifyDataSetChanged", "called")
+            adapter.notifyDataSetChanged()
+        }
 
         binding.addButton.setOnClickListener{
             val dialog = MyDialogVoca()

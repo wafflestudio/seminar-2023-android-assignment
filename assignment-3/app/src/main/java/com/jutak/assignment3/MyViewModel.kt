@@ -18,14 +18,15 @@ class MyViewModel @Inject constructor(
     @Inject
     lateinit var api: MyRestAPI
 
-    private val _vocaList: MutableLiveData<List<MyMultiData.Voca>> = MutableLiveData(listOf())
-    val vocaList: LiveData<List<MyMultiData.Voca>> = _vocaList
+    private val _vocaList: MutableLiveData<ArrayList<MyMultiData.Voca>> = MutableLiveData(arrayListOf())
+    val vocaList: LiveData<ArrayList<MyMultiData.Voca>> = _vocaList
 
     fun loadVoca(){
         viewModelScope.launch(Dispatchers.IO) {
-            val temp = api.getVocaListSuspend().toMutableList()
+            val temp = api.getVocaListSuspend()
             withContext(Dispatchers.Main) {
-                _vocaList.value = temp
+                _vocaList.value!!.addAll(temp)
+                Log.d("number of vocalist", _vocaList.value!!.size.toString())
             }
         }
     }
@@ -37,8 +38,7 @@ class MyViewModel @Inject constructor(
             val response = api.addVoca(vocaAdd)
             Log.d("get response", "passed")
             withContext(Dispatchers.Main) {
-                Log.d("final", _vocaList.value.toString())
-                _vocaList.value = response
+                //_vocaList.value!!.addAll(response.body())
             }
         }
     }

@@ -9,6 +9,6 @@ interface MyRestAPI {
     @GET("/myapp/v1/word_lists")
     public abstract suspend fun getVocaListSuspend(): List<MyMultiData.Voca>
 
-    @POST("myapp/v1/word_list")
+    @POST("/myapp/v1/word_list")
     public abstract suspend fun addVoca(@Body data : MyMultiData.VocaAdd): Response<List<MyMultiData.Voca>>
 }
