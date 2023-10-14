@@ -10,7 +10,7 @@ import com.jutak.assignment3.databinding.DialogVocaBinding
 
 class MyDialogVoca : DialogFragment() {
     interface DialogListener {
-        fun onInputReceived(owner:String, name:String, pw:String){}
+        fun onInputReceived(name:String, owner:String, pw:String){}
     }
 
     override fun onCreateView(

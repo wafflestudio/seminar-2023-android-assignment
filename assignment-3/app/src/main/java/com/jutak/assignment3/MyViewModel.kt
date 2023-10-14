@@ -18,27 +18,36 @@ class MyViewModel @Inject constructor(
     @Inject
     lateinit var api: MyRestAPI
 
-    private val _vocaList: MutableLiveData<ArrayList<MyMultiData.Voca>> = MutableLiveData(arrayListOf())
-    val vocaList: LiveData<ArrayList<MyMultiData.Voca>> = _vocaList
+    private val _vocaList: MutableLiveData<List<MyMultiData.Voca>> = MutableLiveData(listOf())
+    val vocaList: LiveData<List<MyMultiData.Voca>> = _vocaList
+
+    private val _wordList: MutableLiveData<List<MyMultiData.Word>> = MutableLiveData(listOf())
+    val wordList: LiveData<List<MyMultiData.Word>> = _wordList
 
     fun loadVoca(){
         viewModelScope.launch(Dispatchers.IO) {
             val temp = api.getVocaListSuspend()
             withContext(Dispatchers.Main) {
-                _vocaList.value!!.addAll(temp)
-                Log.d("number of vocalist", _vocaList.value!!.size.toString())
+                _vocaList.value = temp
             }
         }
     }
 
-    fun updateVoca(owner:String, name:String, pw:String) {
+    fun loadVocaInfo(id: String?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val temp = api.getWordListSuspend(id)
+            withContext(Dispatchers.Main) {
+                _wordList.value = temp.word_list
+            }
+        }
+    }
+
+    fun updateVoca(name:String, owner:String, pw:String) {
         val vocaAdd = MyMultiData.VocaAdd(name, owner, pw)
-        Log.d("update voca", vocaAdd.name)
         viewModelScope.launch(Dispatchers.IO) {
             val response = api.addVoca(vocaAdd)
-            Log.d("get response", "passed")
             withContext(Dispatchers.Main) {
-                //_vocaList.value!!.addAll(response.body())
+                if(response.body()!=null) _vocaList.value = response.body()!!
             }
         }
     }
