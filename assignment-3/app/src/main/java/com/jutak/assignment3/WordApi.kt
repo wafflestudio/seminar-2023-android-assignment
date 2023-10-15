@@ -1,6 +1,8 @@
 package com.jutak.assignment3
 
 import com.jutak.assignment3.model.CreateWordListRequest
+import com.jutak.assignment3.model.PermissionRequest
+import com.jutak.assignment3.model.PermissionResponse
 import com.jutak.assignment3.model.Word
 import com.jutak.assignment3.model.WordListBrief
 import com.jutak.assignment3.model.WordResponse
@@ -19,5 +21,8 @@ interface WordApi {
 
     @GET("/myapp/v1/word_list/{id}")
     suspend fun getWords(@Path("id") id: Int): WordResponse
+
+    @POST("/myapp/v1/word_list/{id}/permission")
+    suspend fun checkPermission(@Path("id") id: Int, @Body request: PermissionRequest): PermissionResponse
 
 }
