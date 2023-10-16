@@ -2,17 +2,11 @@ package com.jutak.assignment3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Request
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -20,14 +14,30 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
-    @Inject
-    lateinit var api: MyRestAPI
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val adapter = WordListAdapter()
+        binding.recyclerViewWordList.adapter = adapter
+        binding.recyclerViewWordList.layoutManager = LinearLayoutManager(this)
+
+
+        viewModel.fetchWordLists()
+
+        viewModel.wordLists.observe(this, Observer {
+            adapter.submitList(it)
+            adapter.notifyDataSetChanged()
+        })
+        val wordListDialog = WordListDialog(viewModel)
+        binding.wordListCreateBtn.setOnClickListener {
+            wordListDialog.show(supportFragmentManager, "wordListDialogShow")
+        }
 //        val response = api.getVocaBookList()
 //        response.enqueue(object : Callback<List<Vocabook>>{
 //            override fun onResponse(call: Call<List<Vocabook>>, response: Response<List<Vocabook>>) {

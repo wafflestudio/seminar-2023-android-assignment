@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")
