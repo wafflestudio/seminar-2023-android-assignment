@@ -17,7 +17,7 @@ import kotlin.properties.Delegates
 
 
 @AndroidEntryPoint
-class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener, DeleteListDialog.DeleteListDialogListener {
+class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener, DeleteListDialog.DeleteListDialogListener, AddWordDialog.AddWordDialogListener {
 
     private lateinit var binding: ActivityWordBinding
     private val viewModel : WordViewModel by viewModels()
@@ -67,6 +67,11 @@ class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener
         }
 
 
+        val addWordDialog = AddWordDialog()
+        binding.plusBtn.setOnClickListener {
+            addWordDialog.show(supportFragmentManager, "AddWordDialogShow")
+        }
+
 
 
     }
@@ -85,5 +90,9 @@ class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener
         val intent = Intent(this, MainActivity::class.java)
         setResult(RESULT_OK,intent)
         finish()
+    }
+
+    override fun addWord(newWord : Word){
+        val response = viewModel.addWord(wordListId, newWord)
     }
 }

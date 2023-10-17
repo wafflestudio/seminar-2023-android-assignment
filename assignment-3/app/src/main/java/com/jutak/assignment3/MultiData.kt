@@ -42,3 +42,9 @@ data class Password(
 data class Valid(
     @Json(name = "valid") val valid : Boolean
 )
+
+@JsonClass(generateAdapter = true)
+data class AddWord(
+    @Json(name = "password") val password: String,
+    @Json(name = "word") val word : Word
+)

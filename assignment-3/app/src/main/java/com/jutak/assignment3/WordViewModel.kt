@@ -57,4 +57,15 @@ class WordViewModel @Inject constructor(
         }
     }
 
+    fun addWord(id : Int, newWord : Word){
+        viewModelScope.launch(Dispatchers.IO){
+            val response = api.addWord(id.toString(), AddWord(_password,newWord))
+            if(response.isSuccessful){
+                withContext(Dispatchers.Main){
+                   _words.value = response.body()
+                }
+            }
+        }
+    }
+
 }

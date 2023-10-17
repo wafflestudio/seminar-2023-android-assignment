@@ -9,6 +9,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 
@@ -27,5 +28,8 @@ interface MyRestAPI {
 
     @HTTP(method = "DELETE", path = "/myapp/v1/word_list/{id}", hasBody = true )
     suspend fun deleteList(@Path("id") id : String, @Body data : Password) : Response<Unit>
+
+    @PUT("/myapp/v1/word_list/{id}")
+    suspend fun addWord(@Path("id") id : String, @Body data : AddWord) : Response<WordListDetail>
 
 }
