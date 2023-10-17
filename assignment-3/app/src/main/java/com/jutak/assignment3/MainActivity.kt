@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), WordListDialog.WordListDialogListener {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         })
-        val wordListDialog = WordListDialog(viewModel)
+        val wordListDialog = WordListDialog()
         binding.wordListCreateBtn.setOnClickListener {
             wordListDialog.show(supportFragmentManager, "wordListDialogShow")
         }
@@ -58,5 +58,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, WordActivity::class.java)
         intent.putExtra("word_list_id", id)
         activityResultLauncher.launch(intent)
+    }
+
+    override fun createWordList(newWordList: WordListWrite) {
+        viewModel.createWordList(newWordList)
     }
 }

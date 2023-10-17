@@ -27,9 +27,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun createWordList(owner : String, name : String, password : String){
+    fun createWordList(newWordList : WordListWrite){
         viewModelScope.launch(Dispatchers.IO){
-            val newWordList = WordListWrite(owner = owner,name = name,password = password)
             val response = api.createWordList(newWordList)
             if(response.isSuccessful){
                 withContext(Dispatchers.Main) {
