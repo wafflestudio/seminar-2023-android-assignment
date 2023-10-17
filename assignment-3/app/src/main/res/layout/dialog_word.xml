@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 상세보기"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        android:textSize="20sp"
+        android:textColor="#AAAAAA"
+        android:padding="10dp"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/spelling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="단어"
+        style="@style/DIALOG_TEXT_BLUE"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/spelling_fill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/DIALOG_TEXT"
+        app:layout_constraintTop_toBottomOf="@+id/spelling"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/meaning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="뜻"
+        style="@style/DIALOG_TEXT_BLUE"
+        app:layout_constraintTop_toBottomOf="@+id/spelling_fill"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/meaning_fill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/DIALOG_TEXT"
+        app:layout_constraintTop_toBottomOf="@+id/meaning"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/synonym"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="유의어"
+        style="@style/DIALOG_TEXT_BLUE"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintTop_toBottomOf="@+id/meaning_fill"
+        app:layout_constraintEnd_toStartOf="@+id/antonym"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/synonym_fill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/DIALOG_TEXT"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintTop_toBottomOf="@+id/synonym"
+        app:layout_constraintEnd_toStartOf="@+id/antonym_fill"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/antonym"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="반의어"
+        style="@style/DIALOG_TEXT_BLUE"
+        app:layout_constraintTop_toBottomOf="@+id/meaning_fill"
+        app:layout_constraintStart_toEndOf="@+id/synonym"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/antonym_fill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/DIALOG_TEXT"
+        app:layout_constraintTop_toBottomOf="@+id/antonym"
+        app:layout_constraintStart_toEndOf="@+id/synonym_fill"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/sentence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예문"
+        style="@style/DIALOG_TEXT_BLUE"
+        app:layout_constraintTop_toBottomOf="@+id/synonym_fill"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/sentence_fill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/DIALOG_TEXT"
+        app:layout_constraintTop_toBottomOf="@+id/sentence"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
