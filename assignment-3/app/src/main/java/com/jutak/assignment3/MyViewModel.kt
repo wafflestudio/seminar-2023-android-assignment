@@ -13,16 +13,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
+    private var api : MyRestAPI
 ): ViewModel() {
-
-    @Inject
-    lateinit var api: MyRestAPI
 
     private val _vocaList: MutableLiveData<List<MyMultiData.Voca>> = MutableLiveData(listOf())
     val vocaList: LiveData<List<MyMultiData.Voca>> = _vocaList
 
     private val _wordList: MutableLiveData<List<MyMultiData.Word>> = MutableLiveData(listOf())
     val wordList: LiveData<List<MyMultiData.Word>> = _wordList
+
+    private var _vocaInfo = MutableLiveData<MyMultiData.VocaInfo>()
+    var vocaInfo: LiveData<MyMultiData.VocaInfo> = _vocaInfo
+
+    var word: MyMultiData.Word? = null
 
     fun loadVoca(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -35,9 +38,9 @@ class MyViewModel @Inject constructor(
 
     fun loadVocaInfo(id: String?) {
         viewModelScope.launch(Dispatchers.IO) {
-            val temp = api.getWordListSuspend(id)
             withContext(Dispatchers.Main) {
-                _wordList.value = temp.word_list
+                _vocaInfo!!.value = api.getVocaInfoSuspend(id!!.toInt())
+                _wordList.value = vocaInfo!!.value!!.word_list
             }
         }
     }
@@ -50,5 +53,13 @@ class MyViewModel @Inject constructor(
                 if(response.body()!=null) _vocaList.value = response.body()!!
             }
         }
+    }
+
+    fun loadWord(position : Int){
+        word = _wordList.value!![position];
+    }
+
+    fun writeWord(){
+
     }
 }

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), MyDialogVoca.DialogListener {
         adapter.setItemClickListener(object: MyAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val intent = Intent(this@MainActivity, VocaActivity::class.java)
-                intent.putExtra("id", viewModel.vocaList.value!![position].id)
+                intent.putExtra("id", viewModel.vocaList.value!![position].id.toString())
                 startActivity(intent)
             }
         })
