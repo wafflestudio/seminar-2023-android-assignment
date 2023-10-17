@@ -34,9 +34,16 @@ class WordActivity(): AppCompatActivity() {
         viewModel.fetchWords(wordListId)
 
         viewModel.words.observe(this, Observer {
+            binding.wordListTitle.text = it.name
             adapter.submitList(it.words)
             adapter.notifyDataSetChanged()
         })
+
+        binding.backBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            setResult(RESULT_OK,intent)
+            finish()
+        }
 
 
     }
