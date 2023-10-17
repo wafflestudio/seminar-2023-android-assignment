@@ -20,4 +20,7 @@ interface MyRestAPI {
     @GET("/myapp/v1/word_list/{id}")
     suspend fun getWords(@Path("id") id : String?): Response<WordListDetail>
 
+    @POST("/myapp/v1/word_list/{id}/permission")
+    suspend fun confirmPassword(@Path("id") id : String, @Body data : Password) : Response<Valid>
+
 }

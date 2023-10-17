@@ -31,3 +31,14 @@ data class Word(
     @Json(name = "antonym") val antonym: String?,
     @Json(name = "sentence") val sentence: String?,
 )
+
+@JsonClass(generateAdapter = true)
+data class Password(
+    @Json(name = "password") val password : String
+)
+
+
+@JsonClass(generateAdapter = true)
+data class Valid(
+    @Json(name = "valid") val valid : Boolean
+)
