@@ -23,6 +23,8 @@ class WordViewModel @Inject constructor(
     private val _valid : MutableLiveData<Boolean> = MutableLiveData(false)
     val valid : LiveData<Boolean> = _valid
 
+    private var _password : String = ""
+
     fun fetchWords(id : Int){
         viewModelScope.launch(Dispatchers.IO){
             val response = api.getWords(id.toString())
@@ -41,10 +43,17 @@ class WordViewModel @Inject constructor(
                 withContext(Dispatchers.Main){
                     if(response.body()==Valid(true)){
                         _valid.value = true
+                        _password = password
                     }
                     else Toast.makeText(context,"비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    fun deleteDialog(id : Int){
+        viewModelScope.launch(Dispatchers.IO){
+            val response = api.deleteList(id.toString(), Password(_password))
         }
     }
 

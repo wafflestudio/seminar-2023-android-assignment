@@ -17,7 +17,7 @@ import kotlin.properties.Delegates
 
 
 @AndroidEntryPoint
-class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener {
+class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener, DeleteListDialog.DeleteListDialogListener {
 
     private lateinit var binding: ActivityWordBinding
     private val viewModel : WordViewModel by viewModels()
@@ -61,6 +61,11 @@ class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener
             }
         })
 
+        val deleteListDialog = DeleteListDialog()
+        binding.deleteBtn.setOnClickListener {
+            deleteListDialog.show(supportFragmentManager, "DeleteListDialogShow")
+        }
+
 
 
 
@@ -73,5 +78,12 @@ class WordActivity(): AppCompatActivity(), EditListDialog.EditListDialogListener
 
     override fun onDialogPasswordReceived(password: String) {
         val response = viewModel.confirmPassword(this, wordListId,password)
+    }
+
+    override fun deleteDialog() {
+        val response = viewModel.deleteDialog(wordListId)
+        val intent = Intent(this, MainActivity::class.java)
+        setResult(RESULT_OK,intent)
+        finish()
     }
 }
