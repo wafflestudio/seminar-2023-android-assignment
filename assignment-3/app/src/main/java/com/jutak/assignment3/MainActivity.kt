@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
-
+    @Inject
+    lateinit var api: MyRestAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        val factory = SharedMainViewModelFactory(api)
+        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+
 
         val adapter = WordListAdapter(::onWordListClick)
         binding.recyclerViewWordList.adapter = adapter
