@@ -39,27 +39,4 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
-    //wordLists 어댑터에 onClick을 인수로 전달 -> onCLick하면,
-    //secondActivity로 전환 + viewModeml의 words fetch해오기
-    //fetch받은 words를 secondActivity adapter에 넣어주기
-    //
-    private val _words : MutableLiveData<WordListDetail> = MutableLiveData()
-    val words : LiveData<WordListDetail> = _words
-
-    fun fetchWords(id : Int){
-        viewModelScope.launch(Dispatchers.IO){
-            val response = api.getWords(id.toString())
-            if(response.isSuccessful){
-                withContext(Dispatchers.Main){
-                    _words.value = response.body()
-                }
-            }
-        }
-    }
-
-
-
-
-
 }

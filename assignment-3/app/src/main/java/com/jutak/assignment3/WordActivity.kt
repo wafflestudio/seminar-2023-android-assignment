@@ -17,29 +17,26 @@ import javax.inject.Inject
 class WordActivity(): AppCompatActivity() {
 
     private lateinit var binding: ActivityWordBinding
-    private lateinit var viewModel: MainViewModel
-    @Inject
-    lateinit var api: MyRestAPI
+    private val viewModel : WordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val factory = SharedMainViewModelFactory(api)
-        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
-
+        val wordListId = intent.getIntExtra("word_list_id",0)
 
         val adapter = WordAdapter()
         binding.recyclerViewWords.adapter = adapter
         binding.recyclerViewWords.layoutManager = LinearLayoutManager(this)
 
-        Log.d("aaa",viewModel.words.value.toString())
+        viewModel.fetchWords(wordListId)
 
         viewModel.words.observe(this, Observer {
             adapter.submitList(it.words)
             adapter.notifyDataSetChanged()
         })
+
 
     }
 }

@@ -3,6 +3,7 @@ package com.jutak.assignment3
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,19 +17,14 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainViewModel
-    @Inject
-    lateinit var api: MyRestAPI
+    private val viewModel: MainViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val factory = SharedMainViewModelFactory(api)
-        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
-
 
         val adapter = WordListAdapter(::onWordListClick)
         binding.recyclerViewWordList.adapter = adapter
@@ -48,8 +44,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onWordListClick(id : Int){
-        viewModel.fetchWords(id)
         val intent = Intent(this, WordActivity::class.java)
+        intent.putExtra("word_list_id", id)
         startActivity(intent)
     }
 }

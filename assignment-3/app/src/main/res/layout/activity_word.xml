@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:text="단어장페이지"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/text"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_words"
         android:layout_width="match_parent"
