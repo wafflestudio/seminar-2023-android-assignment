@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jutak.assignment3.databinding.WordListItemBinding
 
-class WordListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WordListAdapter(private val onWordListClick : (id : Int)-> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var data  : List<WordListRead> = emptyList()
     fun submitList(newData : List<WordListRead>){
@@ -17,6 +17,8 @@ class WordListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: WordListRead) {
             binding.owner.text = item.owner
             binding.name.text = item.name
+            binding.wordListItem.setOnClickListener { onWordListClick(item.id) }
+
         }
     }
     override fun getItemCount(): Int {
