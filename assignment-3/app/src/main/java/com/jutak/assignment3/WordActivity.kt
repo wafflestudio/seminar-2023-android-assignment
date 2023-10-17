@@ -1,5 +1,6 @@
 package com.jutak.assignment3
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -26,7 +27,7 @@ class WordActivity(): AppCompatActivity() {
 
         val wordListId = intent.getIntExtra("word_list_id",0)
 
-        val adapter = WordAdapter()
+        val adapter = WordAdapter(::onWordClick)
         binding.recyclerViewWords.adapter = adapter
         binding.recyclerViewWords.layoutManager = LinearLayoutManager(this)
 
@@ -38,5 +39,10 @@ class WordActivity(): AppCompatActivity() {
         })
 
 
+    }
+
+    private fun onWordClick(word : Word){
+        val wordDialog = WordDialog(word)
+        wordDialog.show(supportFragmentManager, "wordDialogShow")
     }
 }

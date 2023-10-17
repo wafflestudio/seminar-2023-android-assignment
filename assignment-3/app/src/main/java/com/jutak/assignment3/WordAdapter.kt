@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jutak.assignment3.databinding.WordItemBinding
 
-class WordAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WordAdapter(private val onWordClick : (Word) -> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
 
     private var data  : List<Word> = emptyList()
     fun submitList(newData : List<Word>){
@@ -17,7 +19,9 @@ class WordAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: Word) {
             binding.english.text = item.spell
             binding.korean.text = item.meaning
-            // binding.wordListItem.setOnClickListener { onWordListClick(item.id) }
+            binding.wordItem.setOnClickListener {
+                onWordClick(item)
+            }
 
         }
     }
