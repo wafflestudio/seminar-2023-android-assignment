@@ -6,9 +6,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class WordListsInfo(
     @Json(name = "id")
-    val id: Int?,
+    val id: Int,
     @Json(name = "name")
-    val name: String?,
+    val name: String,
     @Json(name = "owner")
-    val owner: String?,
+    val owner: String,
 )

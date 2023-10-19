@@ -27,9 +27,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             val response = api.getWordListsInfoSuspend()
             withContext(Dispatchers.Main) {
-                _wordListsLiveData.value!!.addAll(response)
-                wordListsInfo.addAll(response)
-                Log.d(wordListsInfo.toString(),"asdifj") //잘 나옴
+                _wordListsLiveData.value = response
             }
         }
     }
@@ -41,20 +39,21 @@ class MainViewModel @Inject constructor(
         alertDialog.setView(dialogView)
 
         alertDialog.setPositiveButton("확인") { dialog, which ->
-            //addWordList(binding.name.text.toString(),binding.owner.text.toString(),binding.pw.text.toString())
+            addWordList(binding.name.text.toString(),
+                binding.owner.text.toString(),binding.pw.text.toString())
         }
-        alertDialog.setNegativeButton("취소") { dialog, which ->
-            // 취소 버튼을 눌렀을 때 수행할 작업
-        }
+        alertDialog.setNegativeButton("취소") {dialog, which ->}
         alertDialog.show()
     }
-    /*fun addWordList(name:String, owner:String, pw:String){
+    private fun addWordList(name:String, owner:String, password:String){
         viewModelScope.launch(Dispatchers.IO){
-            val response = api.postWordListSuspend(WordListPost(name,owner,pw))
+            val response = api.postWordListSuspend(WordListPost(name,owner,password))
+            Log.d(response.toString(),"AAAAAAAAAA")
             withContext(Dispatchers.Main) {
-                _wordListsLiveData.value!!.add(response)
-                wordListsInfo.add(response)
+                val tempData = _wordListsLiveData.value ?: mutableListOf()
+                tempData.addAll(response)
+                _wordListsLiveData.value = tempData
             }
         }
-    }*/
+    }
 }
