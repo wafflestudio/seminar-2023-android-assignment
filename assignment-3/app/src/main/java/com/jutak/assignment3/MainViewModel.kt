@@ -19,10 +19,14 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val api: MyRestAPI
 ): ViewModel() {
-    private val _wordListsLiveData = MutableLiveData<MutableList<WordListsInfo>>(mutableListOf())
-    val wordListsLiveData: LiveData<MutableList<WordListsInfo>> = _wordListsLiveData
-    var wordListsInfo: MutableList<WordListsInfo> = mutableListOf()
+    private val _wordListsLiveData = MutableLiveData<MutableList<MyMultiData.WordListsInfo>>(mutableListOf())
+    val wordListsLiveData: LiveData<MutableList<MyMultiData.WordListsInfo>> = _wordListsLiveData
+    private val _wordsLiveData = MutableLiveData<MyMultiData.WordInfo>()
+    val wordsLiveData: LiveData<MyMultiData.WordInfo> = _wordsLiveData
 
+    suspend fun getWords(id: Int): MyMultiData.WordInfo {
+        return api.getWordsSuspend(id)
+    }
     fun getWordListsInfo(){
         viewModelScope.launch(Dispatchers.IO){
             val response = api.getWordListsInfoSuspend()
@@ -33,10 +37,9 @@ class MainViewModel @Inject constructor(
     }
     fun showAlertDialog(context: Context) {
         val alertDialog = AlertDialog.Builder(context)
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.add_dialog_layout, null)
         val binding = AddDialogLayoutBinding.inflate(LayoutInflater.from(context))
         alertDialog.setTitle("제목")
-        alertDialog.setView(dialogView)
+        alertDialog.setView(binding.root)
 
         alertDialog.setPositiveButton("확인") { dialog, which ->
             addWordList(binding.name.text.toString(),
@@ -47,13 +50,24 @@ class MainViewModel @Inject constructor(
     }
     private fun addWordList(name:String, owner:String, password:String){
         viewModelScope.launch(Dispatchers.IO){
-            val response = api.postWordListSuspend(WordListPost(name,owner,password))
-            Log.d(response.toString(),"AAAAAAAAAA")
-            withContext(Dispatchers.Main) {
-                val tempData = _wordListsLiveData.value ?: mutableListOf()
-                tempData.addAll(response)
-                _wordListsLiveData.value = tempData
+            try {
+                val response = api.postWordListSuspend(MyMultiData.WordListPost(name,owner,password))
+                Log.d("aaaa", response.toString())
+                withContext(Dispatchers.Main) {
+                    val tempData = _wordListsLiveData.value ?: mutableListOf()
+                    tempData.addAll(response)
+                    _wordListsLiveData.value = tempData
+                }
+            } catch (e: retrofit2.HttpException ){
+                Log.d("aaaa", e.response()?.errorBody()?.string().toString())
             }
+
+
         }
     }
+
+
+
+
+
 }
