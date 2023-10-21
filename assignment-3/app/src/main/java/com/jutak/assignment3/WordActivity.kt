@@ -1,6 +1,7 @@
 package com.jutak.assignment3
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,17 +18,9 @@ import dagger.hilt.android.HiltAndroidApp
 @AndroidEntryPoint
 class WordActivity: AppCompatActivity() {
     private lateinit var binding: ActivityWordBinding
-    private val viewModel by viewModels<WordViewModel>()
     private lateinit var adapter: WordsAdapter
 
-    private fun onClickDialog(){
-        Log.d("aaaa","Aaaa")
-            /*val alertDialog = AlertDialog.Builder(this)
-            val binding = DetailLayoutBinding.inflate(LayoutInflater.from(this))
-            alertDialog.setView(binding.root)
-            alertDialog.show()
-            //binding.closeButton.setOnClickListener()*/
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val wordList = intent.getParcelableExtra<MyMultiData.WordInfo>("wordList")!!
@@ -35,9 +28,14 @@ class WordActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         binding.wordListName.text = wordList.name
-        adapter = WordsAdapter(wordList.word_list) { onClickDialog() }
+        adapter = WordsAdapter(wordList.word_list, this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        binding.goBackButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

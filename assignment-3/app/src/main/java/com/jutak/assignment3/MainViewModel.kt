@@ -45,23 +45,17 @@ class MainViewModel @Inject constructor(
             addWordList(binding.name.text.toString(),
                 binding.owner.text.toString(),binding.pw.text.toString())
         }
-        alertDialog.setNegativeButton("취소") {dialog, which ->}
+        alertDialog.setNegativeButton("취소") {dialog, which -> dialog.dismiss()}
         alertDialog.show()
     }
     private fun addWordList(name:String, owner:String, password:String){
         viewModelScope.launch(Dispatchers.IO){
-            try {
-                val response = api.postWordListSuspend(MyMultiData.WordListPost(name,owner,password))
-                Log.d("aaaa", response.toString())
-                withContext(Dispatchers.Main) {
+            val response = api.postWordListSuspend(MyMultiData.WordListPost(name,owner,password))
+            withContext(Dispatchers.Main) {
                     val tempData = _wordListsLiveData.value ?: mutableListOf()
                     tempData.addAll(response)
                     _wordListsLiveData.value = tempData
-                }
-            } catch (e: retrofit2.HttpException ){
-                Log.d("aaaa", e.response()?.errorBody()?.string().toString())
             }
-
 
         }
     }
