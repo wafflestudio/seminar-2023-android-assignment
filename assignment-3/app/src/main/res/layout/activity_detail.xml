@@ -14,11 +14,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/subTitleArea">
+        app:layout_constraintBottom_toTopOf="@id/recyclerView">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:background="@drawable/arrow_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="5dp" />
 
         <TextView
             android:id="@+id/title"
-            android:text="단어장 목록"
+            android:text="단어장1"
             android:textSize="25sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
@@ -30,54 +40,28 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp" />
 
-        <ImageView
+        <TextView
+            android:id="@+id/deleteButton"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            app:layout_constraintEnd_toStartOf="@id/editButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="10dp"  />
+
+        <TextView
             android:id="@+id/editButton"
-            android:background="@drawable/edit_button"
-            android:layout_width="25dp"
+            android:text="편집하기"
+            android:layout_width="wrap_content"
             android:layout_height="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"  />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/subTitleArea"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleArea"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="7dp">
-
-        <TextView
-            android:id="@+id/ownerName"
-            android:text="소유자"
-            android:textSize="15sp"
-            android:layout_width="100sp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/setName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-            android:id="@+id/setName"
-            android:text="단어장이름"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/ownerName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -85,7 +69,8 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subTitleArea"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/titleArea"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
