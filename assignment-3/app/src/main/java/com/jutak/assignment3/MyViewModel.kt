@@ -1,20 +1,58 @@
 package com.jutak.assignment3
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MyViewModel @Inject constructor(): ViewModel() {
-    var resbody=emptyList<MyModels.Wordlists>().toMutableList()
-    /*
-    fun fetchPerson(){
-        viewModelScope.launch(Dispatchers.IO){
-            val person=api.getPersonSuspend()
-            withContext(Dispatchers.Main){
-                _data.value=person
+class MyViewModel @Inject constructor(
+    private val api:MyRestAPI
+): ViewModel() {
+    // var resbody=emptyList<MyModels.Wordlists>().toMutableList()
+    var liveresbody:MutableLiveData<List<MyModels.Wordlists>> =MutableLiveData()
+    var resbody = mutableListOf<MyModels.Wordlists>()
+    var livewordlist:MutableLiveData<List<MyModels.Word>> = MutableLiveData()
+    var wordlist= mutableListOf<MyModels.Word>()
+
+    fun a(){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
+                val response = api.word_lists_list()
+                resbody.clear()
+                response.forEach{
+                    resbody.add(it)
+                }
+                liveresbody.value = resbody
             }
         }
     }
-    */
+
+    fun b(id:Int,wlname:String){
+        viewModelScope.launch(Dispatchers.IO){
+            withContext(Dispatchers.Main){
+                val response=api.word_list_read(id).word_list
+                wordlist.clear()
+                response.forEach{
+                    wordlist.add(it)
+                }
+                livewordlist.value=wordlist
+            }
+        }
+    }
+
+    fun postwordlist(data:MyModels.Data_newlist){
+        viewModelScope.launch (Dispatchers.IO){
+            withContext(Dispatchers.Main) {
+                val response = api.word_list_create(data)
+                resbody.add(response.last())
+                liveresbody.value = resbody
+            }
+        }
+    }
+
 }

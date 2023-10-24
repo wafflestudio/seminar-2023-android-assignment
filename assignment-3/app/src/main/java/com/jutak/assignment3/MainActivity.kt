@@ -1,21 +1,14 @@
 package com.jutak.assignment3
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityMainBinding
+import com.jutak.assignment3.databinding.CreateWordlistDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,45 +24,42 @@ class MainActivity : AppCompatActivity() {
 
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //var resb=emptyList<MyModels.Wordlists>()
-        //val adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(resb)),this)
-        adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(viewModel.resbody)),this)
+        adapter=MyMultiAdapter(viewModel.resbody,this)
         binding.wordlists.adapter=adapter
         binding.wordlists.layoutManager= LinearLayoutManager(this)
 
-        getlists()
+        viewModel.a()
+        viewModel.liveresbody.observe(this){
+            Log.d("aaaa",viewModel.liveresbody.value.toString())
+            adapter.notifyDataSetChanged()
+        }
 
         binding.createWordlist.setOnClickListener {
-            val view=LayoutInflater.from(this).inflate(R.layout.create_wordlist_dialog,null)
-            val dialog=AlertDialog.Builder(this)
-                .setView(view)
+            val view=CreateWordlistDialogBinding.inflate(layoutInflater)
+            val dialog= AlertDialog.Builder(this)
+                .setView(view.root)
                 .create()
-            val dialog_button_ok=view.findViewById<TextView>(R.id.dialog_ok)
-            val dialog_button_cancel=view.findViewById<TextView>(R.id.dialog_cancel)
-            val dialog_input_owner=view.findViewById<TextView>(R.id.dialog_ownerinput)
-            val dialog_input_name=view.findViewById<TextView>(R.id.dialog_nameinput)
-            val dialog_input_pw=view.findViewById<TextView>(R.id.dialog_pwinput)
-            dialog_button_ok.setOnClickListener {
-                if (dialog_input_owner.text!="" && dialog_input_name.text!="" && dialog_input_pw.text!=""){
-                    post(dialog_input_name.text.toString(),dialog_input_owner.text.toString(),dialog_input_pw.text.toString())
+            view.dialogOk.setOnClickListener{
+                if (view.dialogNameinput.text.toString()!="" && view.dialogOwnerinput.text.toString()!="" && view.dialogPwinput.text.toString()!=""){
+                    viewModel.postwordlist(MyModels.Data_newlist(view.dialogNameinput.text.toString(),view.dialogOwnerinput.text.toString(),view.dialogPwinput.text.toString()))
                     dialog.dismiss()
-                    getlists()
                 }
             }
             dialog.show()
         }
 
+        /*
         binding.text.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 val response = api.word_list_create(MyModels.Data_newlist("Test2", "이현도", "123456"))
-                response.enqueue(object : Callback<PostResult> {
-                    override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                response.enqueue(object : Callback<List<PostResult>> {
+                    override fun onFailure(call: Call<List<PostResult>>, t: Throwable) {
                         // TODO:
                     }
 
                     override fun onResponse(
-                        call: Call<PostResult>,
-                        response: Response<PostResult>
+                        call: Call<List<PostResult>>,
+                        response: Response<List<PostResult>>
                     ) {
                         val responseBody = response.body()
                         Log.d("aaaa","s")
@@ -155,20 +145,21 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-
+        */
     }
 
+    /*
     fun post(name:String,owner:String,pw:String):Unit{
         CoroutineScope(Dispatchers.IO).launch {
             val response = api.word_list_create(MyModels.Data_newlist(name, owner, pw))
-            response.enqueue(object : Callback<PostResult> {
-                override fun onFailure(call: Call<PostResult>, t: Throwable) {
+            response.enqueue(object : Callback<List<PostResult>> {
+                override fun onFailure(call: Call<List<PostResult>>, t: Throwable) {
                     // TODO:
                 }
 
                 override fun onResponse(
-                    call: Call<PostResult>,
-                    response: Response<PostResult>
+                    call: Call<List<PostResult>>,
+                    response: Response<List<PostResult>>
                 ) {
                     val responseBody = response.body()
                     Log.d("aaaa","s")
@@ -192,13 +183,15 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     Log.d("aaaa",response.body().toString())
                     if (response.body()!=null){
-                        viewModel.resbody.clear()
-                        viewModel.resbody.addAll(response.body()!!)
+                        val n:Int=viewModel.resbody.value!!.size
+                        viewModel.resbody.value!!.clear()
+                        adapter.notifyItemRangeRemoved(0,n)
+                        viewModel.resbody.value!!.addAll(response.body()!!)
                         Log.d("aaaa",viewModel.resbody.toString())
-                        adapter.notifyDataSetChanged()
                     }
                 }
             })
         }
     }
+    */
 }
