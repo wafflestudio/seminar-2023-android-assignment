@@ -1,7 +1,10 @@
 package com.jutak.assignment3
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +22,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private val viewModel:MyViewModel by viewModels()
+    private lateinit var adapter:MyMultiAdapter
 
     @Inject
     lateinit var api:MyRestAPI
@@ -29,31 +33,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         //var resb=emptyList<MyModels.Wordlists>()
         //val adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(resb)),this)
-        val adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(viewModel.resbody)),this)
+        adapter=MyMultiAdapter(list=listOf(MyMultiData.TypeA(viewModel.resbody)),this)
         binding.wordlists.adapter=adapter
         binding.wordlists.layoutManager= LinearLayoutManager(this)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val response6=api.word_lists_list()
-            response6.enqueue(object : Callback<List<MyModels.Wordlists>> {
-                override fun onFailure(call: Call<List<MyModels.Wordlists>>, t: Throwable) {
-                    // TODO:
-                }
+        getlists()
 
-                override fun onResponse(
-                    call: Call<List<MyModels.Wordlists>>,
-                    response: Response<List<MyModels.Wordlists>>
-                ) {
-                    Log.d("aaaa",response.body().toString())
-                    binding.text6.text=response.body().toString()
-                    if (response.body()!=null){
-                        viewModel.resbody.clear()
-                        viewModel.resbody.addAll(response.body()!!)
-                        Log.d("aaaa",viewModel.resbody.toString())
-                        adapter.notifyDataSetChanged()
-                    }
+        binding.createWordlist.setOnClickListener {
+            val view=LayoutInflater.from(this).inflate(R.layout.create_wordlist_dialog,null)
+            val dialog=AlertDialog.Builder(this)
+                .setView(view)
+                .create()
+            val dialog_button_ok=view.findViewById<TextView>(R.id.dialog_ok)
+            val dialog_button_cancel=view.findViewById<TextView>(R.id.dialog_cancel)
+            val dialog_input_owner=view.findViewById<TextView>(R.id.dialog_ownerinput)
+            val dialog_input_name=view.findViewById<TextView>(R.id.dialog_nameinput)
+            val dialog_input_pw=view.findViewById<TextView>(R.id.dialog_pwinput)
+            dialog_button_ok.setOnClickListener {
+                if (dialog_input_owner.text!="" && dialog_input_name.text!="" && dialog_input_pw.text!=""){
+                    post(dialog_input_name.text.toString(),dialog_input_owner.text.toString(),dialog_input_pw.text.toString())
+                    dialog.dismiss()
+                    getlists()
                 }
-            })
+            }
+            dialog.show()
         }
 
         binding.text.setOnClickListener {
@@ -153,5 +156,49 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun post(name:String,owner:String,pw:String):Unit{
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = api.word_list_create(MyModels.Data_newlist(name, owner, pw))
+            response.enqueue(object : Callback<PostResult> {
+                override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                    // TODO:
+                }
+
+                override fun onResponse(
+                    call: Call<PostResult>,
+                    response: Response<PostResult>
+                ) {
+                    val responseBody = response.body()
+                    Log.d("aaaa","s")
+                    binding.text.text=responseBody.toString()
+                }
+            })
+        }
+    }
+
+    fun getlists():Unit{
+        CoroutineScope(Dispatchers.IO).launch {
+            val response6=api.word_lists_list()
+            response6.enqueue(object : Callback<List<MyModels.Wordlists>> {
+                override fun onFailure(call: Call<List<MyModels.Wordlists>>, t: Throwable) {
+                    // TODO:
+                }
+
+                override fun onResponse(
+                    call: Call<List<MyModels.Wordlists>>,
+                    response: Response<List<MyModels.Wordlists>>
+                ) {
+                    Log.d("aaaa",response.body().toString())
+                    if (response.body()!=null){
+                        viewModel.resbody.clear()
+                        viewModel.resbody.addAll(response.body()!!)
+                        Log.d("aaaa",viewModel.resbody.toString())
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            })
+        }
     }
 }
