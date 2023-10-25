@@ -22,7 +22,7 @@ class MyViewModel @Inject constructor(
     var curid:Int=0
     var curpw:String=""
 
-    fun a(){
+    fun get_wordlists(){
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 val response = api.word_lists_list()
@@ -35,7 +35,7 @@ class MyViewModel @Inject constructor(
         }
     }
 
-    fun b(id:Int,wlname:String){
+    fun get_Awordlist(id:Int){
         viewModelScope.launch(Dispatchers.IO){
             withContext(Dispatchers.Main){
                 val response=api.word_list_read(id).word_list
@@ -79,7 +79,7 @@ class MyViewModel @Inject constructor(
     fun deletewordlist(){
         viewModelScope.launch (Dispatchers.IO){
             withContext(Dispatchers.Main){
-                val response=api.word_list_delete(MyModels.Datapw(curpw),curid)
+                api.word_list_delete(MyModels.Datapw(curpw),curid)
             }
         }
     }

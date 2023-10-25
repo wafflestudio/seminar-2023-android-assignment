@@ -32,8 +32,9 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel.curid=intent.getIntExtra("id",0)
         viewModel.curpw=""
+        binding.wordlistName.text=intent.getStringExtra("name")
 
-        viewModel.b(viewModel.curid, intent.getStringExtra("name")!!)
+        viewModel.get_Awordlist(viewModel.curid)
         viewModel.livewordlist.observe(this) {
             adapter.notifyDataSetChanged()
         }

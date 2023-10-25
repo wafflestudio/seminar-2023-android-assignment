@@ -19,7 +19,7 @@ interface MyRestAPI {
     fun word_list_update(@Body data: MyModels.Data_putword, @Path("id") id:Int):Call<MyModels.Awordlist>
 
     @HTTP(method = "DELETE", path = "word_list/{id}", hasBody = true)
-    suspend fun word_list_delete(@Body data: MyModels.Datapw, @Path("id") id:Int):MyModels.DeleteResult
+    suspend fun word_list_delete(@Body data: MyModels.Datapw, @Path("id") id:Int)
 
     @POST("word_list/{id}/permission")
     suspend fun word_list_permission(@Body data: MyModels.Datapw, @Path("id") id:Int):MyModels.PerResult

@@ -46,11 +46,6 @@ sealed class MyModels {
     )
 
     @JsonClass(generateAdapter = true)
-    data class DeleteResult(
-        @Json() val result: String
-    )
-
-    @JsonClass(generateAdapter = true)
     data class PerResult(
         @Json(name="valid") val valid: Boolean
     )
