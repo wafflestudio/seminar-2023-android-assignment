@@ -83,4 +83,13 @@ class MyViewModel @Inject constructor(
             }
         }
     }
+
+    fun addword(data:MyModels.Word){
+        viewModelScope.launch(Dispatchers.IO){
+            withContext(Dispatchers.Main){
+                api.word_list_update(MyModels.Data_putword(curpw,data),curid)
+            }
+        }
+        get_Awordlist(curid)
+    }
 }

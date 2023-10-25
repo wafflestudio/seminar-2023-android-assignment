@@ -1,6 +1,5 @@
 package com.jutak.assignment3
 
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP
@@ -16,7 +15,7 @@ interface MyRestAPI {
     suspend fun word_list_read(@Path("id") id:Int): MyModels.Awordlist
 
     @PUT("word_list/{id}")
-    fun word_list_update(@Body data: MyModels.Data_putword, @Path("id") id:Int):Call<MyModels.Awordlist>
+    suspend fun word_list_update(@Body data: MyModels.Data_putword, @Path("id") id:Int):MyModels.Awordlist
 
     @HTTP(method = "DELETE", path = "word_list/{id}", hasBody = true)
     suspend fun word_list_delete(@Body data: MyModels.Datapw, @Path("id") id:Int)

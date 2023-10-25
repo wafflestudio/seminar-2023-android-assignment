@@ -2,6 +2,7 @@ package com.jutak.assignment3
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                     dialog.dismiss()
+                }
+                else{
+                    Toast.makeText(this,R.string.toast_create_wordlist,Toast.LENGTH_SHORT).show()
                 }
             }
             view.dialogCancel.setOnClickListener {

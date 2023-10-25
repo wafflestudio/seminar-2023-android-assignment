@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityDetailBinding
+import com.jutak.assignment3.databinding.AddWordDialogBinding
 import com.jutak.assignment3.databinding.DeleteWordlistDialogBinding
 import com.jutak.assignment3.databinding.EditWordlistDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -79,6 +80,24 @@ class DetailActivity : AppCompatActivity() {
                 viewModel.deletewordlist()
                 dialog.dismiss()
                 back()
+            }
+            view.dialogCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+
+        binding.editAdd.setOnClickListener {
+            val view= AddWordDialogBinding.inflate(layoutInflater)
+            val dialog= AlertDialog.Builder(this)
+                .setView(view.root)
+                .create()
+            view.dialogOk.setOnClickListener{
+                if (view.dialogSpellinput.text.toString()!="" && view.dialogMeaninginput.text.toString()!=""){
+                    viewModel.addword(MyModels.Word(view.dialogSpellinput.text.toString(),view.dialogMeaninginput.text.toString(),
+                        view.dialogSyninput.text.toString(),view.dialogAntinput.text.toString(),view.dialogSeninput.text.toString()))
+                    dialog.dismiss()
+                }
             }
             view.dialogCancel.setOnClickListener {
                 dialog.dismiss()
