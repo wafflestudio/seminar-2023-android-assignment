@@ -54,5 +54,4 @@ class MyViewModel @Inject constructor(
             }
         }
     }
-
 }

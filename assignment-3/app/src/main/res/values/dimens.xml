@@ -3,5 +3,7 @@
     <dimen name="wordlists_textSize">25sp</dimen>
     <dimen name="wordlists_ownerwidth">120dp</dimen>
     <dimen name="wordlists_namewidth">380dp</dimen>
+    <dimen name="wordlists_spellwidth">160dp</dimen>
+    <dimen name="wordlists_meaningwidth">340dp</dimen>
     <dimen name="wordlists_height">50dp</dimen>
 </resources>

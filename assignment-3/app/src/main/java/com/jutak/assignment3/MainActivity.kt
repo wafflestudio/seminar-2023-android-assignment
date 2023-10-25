@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
             }
+            view.dialogCancel.setOnClickListener {
+                dialog.dismiss()
+            }
             dialog.show()
         }
 

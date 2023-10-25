@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="500dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="단어 추가하기"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 (필수)"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/dialog_spellinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="단어를 입력하세요">
+
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 뜻 (필수)"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/dialog_meaninginput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="단어의 뜻을 입력하세요">
+
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="유의어"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/dialog_syninput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="유의어를 입력하세요">
+
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="반의어"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/dialog_antinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="반의어를 입력하세요">
+
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예문"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/dialog_seninput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="예문을 입력하세요">
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/dialog_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginEnd="15dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/dialog_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginEnd="15dp">
+
+        </TextView>
+
+    </LinearLayout>
+
+</LinearLayout>
