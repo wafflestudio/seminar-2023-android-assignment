@@ -13,11 +13,13 @@ import javax.inject.Inject
 class MyViewModel @Inject constructor(
     private val api:MyRestAPI
 ): ViewModel() {
-    // var resbody=emptyList<MyModels.Wordlists>().toMutableList()
     var liveresbody:MutableLiveData<List<MyModels.Wordlists>> =MutableLiveData()
     var resbody = mutableListOf<MyModels.Wordlists>()
     var livewordlist:MutableLiveData<List<MyModels.Word>> = MutableLiveData()
     var wordlist= mutableListOf<MyModels.Word>()
+    var livepermission:MutableLiveData<Boolean> =MutableLiveData(false)
+    var curpermission:Boolean=false
+    var curid:Int=0
 
     fun a(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -51,6 +53,23 @@ class MyViewModel @Inject constructor(
                 val response = api.word_list_create(data)
                 resbody.add(response.last())
                 liveresbody.value = resbody
+            }
+        }
+    }
+
+    fun pwcorrect(pw:String, id:Int){
+        viewModelScope.launch(Dispatchers.IO){
+            withContext(Dispatchers.Main){
+                val response=api.word_list_permission(MyModels.Datapw(pw),id)
+                when (response.valid){
+                    true->{
+                        curpermission=true
+                        livepermission.value=curpermission
+                    }
+                    else->{
+                        // TODO:
+                    }
+                }
             }
         }
     }

@@ -37,7 +37,7 @@
             android:textColor="@color/black"/>
 
         <TextView
-            android:id="@+id/create_wordlist"
+            android:id="@+id/edit_noPer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
@@ -45,8 +45,42 @@
             android:text="편집하기"
             android:textSize="25dp"
             android:textStyle="bold"
+            android:visibility="visible"
             android:gravity="center"
             android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:id="@+id/edit_withPer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edit_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="del"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/edit_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
 
     </FrameLayout>
 

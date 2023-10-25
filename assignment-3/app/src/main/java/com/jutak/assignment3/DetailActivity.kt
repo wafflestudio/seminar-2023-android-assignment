@@ -2,11 +2,13 @@ package com.jutak.assignment3
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityDetailBinding
+import com.jutak.assignment3.databinding.EditWordlistDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,18 +29,55 @@ class DetailActivity : AppCompatActivity() {
         binding.words.adapter = adapter
         binding.words.layoutManager = LinearLayoutManager(this)
 
-        Log.d("aaaa",intent.getIntExtra("id",0).toString())
-        Log.d("aaaa",intent.getStringExtra("name").toString())
+        viewModel.curid=intent.getIntExtra("id",0)
 
-        viewModel.b(intent.getIntExtra("id",0), intent.getStringExtra("name")!!)
+        viewModel.b(viewModel.curid, intent.getStringExtra("name")!!)
         viewModel.livewordlist.observe(this) {
             adapter.notifyDataSetChanged()
         }
 
-        binding.back.setOnClickListener {
-            Intent(this@DetailActivity,MainActivity::class.java).run{
-                startActivity(this)
+        viewModel.livepermission.observe(this){
+            when(it){
+                true->{
+                    binding.editWithPer.visibility=TextView.VISIBLE
+                    binding.editNoPer.visibility=TextView.INVISIBLE
+                }
+                false->{
+                    binding.editWithPer.visibility=TextView.INVISIBLE
+                    binding.editNoPer.visibility=TextView.VISIBLE
+                }
             }
+        }
+
+        binding.back.setOnClickListener{back()}
+
+        binding.editNoPer.setOnClickListener {
+            val view= EditWordlistDialogBinding.inflate(layoutInflater)
+            val dialog= AlertDialog.Builder(this)
+                .setView(view.root)
+                .create()
+            view.dialogOk.setOnClickListener{
+                val getpw=view.dialogPwinput.text.toString()
+                viewModel.pwcorrect(getpw,viewModel.curid)
+                dialog.dismiss()
+            }
+            view.dialogCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+
+        binding.editDel.setOnClickListener {
+            // TODO:  
+        }
+    }
+
+    fun back(){
+        viewModel.curid=0
+        viewModel.curpermission=false
+        viewModel.livepermission.value=viewModel.curpermission
+        Intent(this@DetailActivity,MainActivity::class.java).run{
+            startActivity(this)
         }
     }
 }
