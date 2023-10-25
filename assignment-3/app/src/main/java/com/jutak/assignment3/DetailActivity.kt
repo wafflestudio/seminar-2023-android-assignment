@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityDetailBinding
+import com.jutak.assignment3.databinding.DeleteWordlistDialogBinding
 import com.jutak.assignment3.databinding.EditWordlistDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
         binding.words.layoutManager = LinearLayoutManager(this)
 
         viewModel.curid=intent.getIntExtra("id",0)
+        viewModel.curpw=""
 
         viewModel.b(viewModel.curid, intent.getStringExtra("name")!!)
         viewModel.livewordlist.observe(this) {
@@ -58,7 +60,7 @@ class DetailActivity : AppCompatActivity() {
                 .create()
             view.dialogOk.setOnClickListener{
                 val getpw=view.dialogPwinput.text.toString()
-                viewModel.pwcorrect(getpw,viewModel.curid)
+                viewModel.pwcorrect(getpw)
                 dialog.dismiss()
             }
             view.dialogCancel.setOnClickListener {
@@ -68,12 +70,23 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.editDel.setOnClickListener {
-            // TODO:  
+            val view= DeleteWordlistDialogBinding.inflate(layoutInflater)
+            val dialog= AlertDialog.Builder(this)
+                .setView(view.root)
+                .create()
+            view.dialogOk.setOnClickListener{
+                viewModel.deletewordlist()
+                dialog.dismiss()
+                back()
+            }
+            view.dialogCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
         }
     }
 
     fun back(){
-        viewModel.curid=0
         viewModel.curpermission=false
         viewModel.livepermission.value=viewModel.curpermission
         Intent(this@DetailActivity,MainActivity::class.java).run{

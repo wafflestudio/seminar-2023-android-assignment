@@ -34,6 +34,7 @@ class NetworkMoudle {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
+
     @Provides
     fun MyRestAPI(
         retrofit: Retrofit, ): MyRestAPI {

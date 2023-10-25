@@ -20,6 +20,7 @@ class MyViewModel @Inject constructor(
     var livepermission:MutableLiveData<Boolean> =MutableLiveData(false)
     var curpermission:Boolean=false
     var curid:Int=0
+    var curpw:String=""
 
     fun a(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -57,12 +58,13 @@ class MyViewModel @Inject constructor(
         }
     }
 
-    fun pwcorrect(pw:String, id:Int){
+    fun pwcorrect(pw:String){
         viewModelScope.launch(Dispatchers.IO){
             withContext(Dispatchers.Main){
-                val response=api.word_list_permission(MyModels.Datapw(pw),id)
+                val response=api.word_list_permission(MyModels.Datapw(pw),curid)
                 when (response.valid){
                     true->{
+                        curpw=pw
                         curpermission=true
                         livepermission.value=curpermission
                     }
@@ -70,6 +72,14 @@ class MyViewModel @Inject constructor(
                         // TODO:
                     }
                 }
+            }
+        }
+    }
+
+    fun deletewordlist(){
+        viewModelScope.launch (Dispatchers.IO){
+            withContext(Dispatchers.Main){
+                val response=api.word_list_delete(MyModels.Datapw(curpw),curid)
             }
         }
     }
