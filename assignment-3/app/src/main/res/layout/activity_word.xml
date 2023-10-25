@@ -13,6 +13,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp"
+        android:background="#AAAAAA"
+        android:gravity="center"
         >
         <ImageView
             android:layout_width="wrap_content"
@@ -24,11 +27,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/word_list_title"
             android:textAlignment="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="편집하기"
+            android:textSize="20sp"
             android:id="@+id/not_editable"
             android:visibility="visible"/>
 

@@ -11,35 +11,41 @@
         android:id="@+id/dialog_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        style = "@style/dialog_title"
+        android:textAlignment="center"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="단어"
         android:id="@+id/subtitle_spell"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_title"/>
+        app:layout_constraintTop_toBottomOf="@id/dialog_title"
+        style="@style/word_dialog_subtitle"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spell"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subtitle_spell"/>
+        app:layout_constraintTop_toBottomOf="@id/subtitle_spell"
+        style="@style/word_dialog_item"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="뜻"
         android:id="@+id/subtitle_meaning"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spell"/>
+        app:layout_constraintTop_toBottomOf="@id/spell"
+        style="@style/word_dialog_subtitle"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/meaning"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subtitle_meaning"/>
+        app:layout_constraintTop_toBottomOf="@id/subtitle_meaning"
+        style="@style/word_dialog_item"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,12 +58,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="유의어"/>
+            android:text="유의어"
+            style="@style/word_dialog_subtitle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="반의어"/>
+            android:text="반의어"
+            style="@style/word_dialog_subtitle"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,12 +79,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/synonym"/>
+            android:id="@+id/synonym"
+            style="@style/word_dialog_item"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/antonym"/>
+            android:id="@+id/antonym"
+            style="@style/word_dialog_item"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -84,12 +94,14 @@
         android:text="예문"
         android:id="@+id/subtitle_sentence"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/synonym_and_antonym"/>
+        app:layout_constraintTop_toBottomOf="@id/synonym_and_antonym"
+        style="@style/word_dialog_subtitle"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sentence"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subtitle_sentence"/>
+        app:layout_constraintTop_toBottomOf="@id/subtitle_sentence"
+        style="@style/word_dialog_item"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

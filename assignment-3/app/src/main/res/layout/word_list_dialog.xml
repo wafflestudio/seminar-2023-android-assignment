@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="새 단어장 만들기"
+        style="@style/dialog_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

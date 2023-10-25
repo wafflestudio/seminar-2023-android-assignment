@@ -12,7 +12,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/dialog_title"/>
+        android:id="@+id/dialog_title"
+        style = "@style/dialog_title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
