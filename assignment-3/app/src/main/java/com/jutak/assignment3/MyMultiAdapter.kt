@@ -35,7 +35,7 @@ class MyMultiAdapter(
                 fun bind(data: MyModels.Wordlists) {
                     val a_word_list = LinearLayout(context).apply {
                         val textView1 = TextView(context).apply {
-                            text = data.owner.toString()
+                            text = data.owner
                             width = resources.getDimension(R.dimen.wordlists_ownerwidth).toInt()
                             height = resources.getDimension(R.dimen.wordlists_height).toInt()
                         }
@@ -48,7 +48,7 @@ class MyMultiAdapter(
                         this.addView(textView1)
 
                         val textView2 = TextView(context).apply {
-                            text = data.name.toString()
+                            text = data.name
                             width = resources.getDimension(R.dimen.wordlists_namewidth).toInt()
                             height = resources.getDimension(R.dimen.wordlists_height).toInt()
                         }

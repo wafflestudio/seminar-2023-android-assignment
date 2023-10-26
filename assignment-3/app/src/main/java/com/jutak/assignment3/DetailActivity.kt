@@ -3,6 +3,7 @@ package com.jutak.assignment3
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -62,8 +63,13 @@ class DetailActivity : AppCompatActivity() {
                 .create()
             view.dialogOk.setOnClickListener{
                 val getpw=view.dialogPwinput.text.toString()
-                viewModel.pwcorrect(getpw)
-                dialog.dismiss()
+                when(getpw=="") {
+                    true->Toast.makeText(this, R.string.toast_required, Toast.LENGTH_SHORT).show()
+                    else->{
+                        viewModel.pwcorrect(getpw)
+                        dialog.dismiss()
+                    }
+                }
             }
             view.dialogCancel.setOnClickListener {
                 dialog.dismiss()
@@ -98,6 +104,9 @@ class DetailActivity : AppCompatActivity() {
                         view.dialogSyninput.text.toString(),view.dialogAntinput.text.toString(),view.dialogSeninput.text.toString()))
                     dialog.dismiss()
                 }
+                else{
+                    Toast.makeText(this, R.string.toast_required, Toast.LENGTH_SHORT).show()
+                }
             }
             view.dialogCancel.setOnClickListener {
                 dialog.dismiss()
@@ -106,7 +115,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    fun back(){
+    private fun back(){
         viewModel.curpermission=false
         viewModel.livepermission.value=viewModel.curpermission
         Intent(this@DetailActivity,MainActivity::class.java).run{

@@ -36,7 +36,7 @@ class AWordListAdapter(
         fun bind(data: MyModels.Word) {
             val a_word_list = LinearLayout(context).apply {
                 val textView1 = TextView(context).apply {
-                    text = data.spell.toString()
+                    text = data.spell
                     width = resources.getDimension(R.dimen.wordlists_spellwidth).toInt()
                     height = resources.getDimension(R.dimen.wordlists_height).toInt()
                 }
@@ -50,7 +50,7 @@ class AWordListAdapter(
                 this.addView(textView1)
 
                 val textView2 = TextView(context).apply {
-                    text = data.meaning.toString()
+                    text = data.meaning
                     width = resources.getDimension(R.dimen.wordlists_meaningwidth).toInt()
                     height = resources.getDimension(R.dimen.wordlists_height).toInt()
                 }
@@ -65,7 +65,7 @@ class AWordListAdapter(
             }
             binding.root.addView(a_word_list)
         }
-        fun makedialog(data:MyModels.Word){
+        private fun makedialog(data:MyModels.Word){
             val view= AWordDialogBinding.inflate(LayoutInflater.from(context))
             val dialog= AlertDialog.Builder(context)
                 .setView(view.root)
@@ -73,8 +73,8 @@ class AWordListAdapter(
             view.dialogClose.setOnClickListener {
                 dialog.dismiss()
             }
-            view.dialogSpell.text=data.spell.toString()
-            view.dialogMeaning.text=data.meaning.toString()
+            view.dialogSpell.text=data.spell
+            view.dialogMeaning.text=data.meaning
             view.dialogSynonym.text=data.synonym.toString()
             view.dialogAntonym.text=data.antonym.toString()
             view.dialogSentence.text=data.sentence.toString()

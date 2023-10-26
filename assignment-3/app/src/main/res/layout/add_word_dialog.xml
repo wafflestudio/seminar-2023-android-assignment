@@ -8,7 +8,7 @@
         android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="단어 추가하기"
+        android:text="@string/word_add"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="단어 (필수)"
+        android:text="@string/word_required"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -37,14 +37,14 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="단어를 입력하세요">
+        android:hint="@string/word_hint">
 
     </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="단어 뜻 (필수)"
+        android:text="@string/meaning_required"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -62,14 +62,14 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="단어의 뜻을 입력하세요">
+        android:hint="@string/meaning_hint">
 
     </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="유의어"
+        android:text="@string/synonym"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -87,14 +87,14 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="유의어를 입력하세요">
+        android:hint="@string/synonym_hint">
 
     </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="반의어"
+        android:text="@string/antonym"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -112,14 +112,14 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="반의어를 입력하세요">
+        android:hint="@string/antonym_hint">
 
     </EditText>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="예문"
+        android:text="@string/sentence"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -137,7 +137,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="예문을 입력하세요">
+        android:hint="@string/sentence_hint">
 
     </EditText>
 
@@ -154,7 +154,7 @@
             android:id="@+id/dialog_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginEnd="15dp">
@@ -165,7 +165,7 @@
             android:id="@+id/dialog_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
+            android:text="@string/ok"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginEnd="15dp">

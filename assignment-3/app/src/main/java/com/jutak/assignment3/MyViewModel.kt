@@ -62,15 +62,10 @@ class MyViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             withContext(Dispatchers.Main){
                 val response=api.word_list_permission(MyModels.Datapw(pw),curid)
-                when (response.valid){
-                    true->{
-                        curpw=pw
-                        curpermission=true
-                        livepermission.value=curpermission
-                    }
-                    else->{
-                        // TODO:
-                    }
+                if (response.valid){
+                    curpw=pw
+                    curpermission=true
+                    livepermission.value=curpermission
                 }
             }
         }

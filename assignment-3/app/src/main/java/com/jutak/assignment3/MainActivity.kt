@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
                 else{
-                    Toast.makeText(this,R.string.toast_create_wordlist,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,R.string.toast_required,Toast.LENGTH_SHORT).show()
                 }
             }
             view.dialogCancel.setOnClickListener {

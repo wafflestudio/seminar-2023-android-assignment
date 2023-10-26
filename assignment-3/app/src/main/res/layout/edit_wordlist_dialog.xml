@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="단어장 편집하기"
+        android:text="@string/wordlist_edit"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="단어장 비밀번호"
+        android:text="@string/password_required"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -36,7 +36,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="단어장 비밀번호를 입력하세요">
+        android:hint="@string/password_hint">
 
     </EditText>
 
@@ -53,7 +53,7 @@
             android:id="@+id/dialog_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginEnd="15dp">
@@ -64,7 +64,7 @@
             android:id="@+id/dialog_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
+            android:text="@string/ok"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginEnd="15dp">

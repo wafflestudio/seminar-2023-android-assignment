@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="단어장 삭제하기"
+        android:text="@string/wordlist_delete"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="단어장을 정말 삭제하시겠습니까?"
+        android:text="@string/wordlist_delete_confirm"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="15dp"
@@ -39,7 +39,7 @@
             android:id="@+id/dialog_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginEnd="15dp">
@@ -50,7 +50,7 @@
             android:id="@+id/dialog_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
+            android:text="@string/ok"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_marginEnd="15dp">
