@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 추가하기"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="25dp"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/spell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="단어"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/eSpell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="단어를 입력하세요."
+            app:layout_constraintTop_toBottomOf="@id/spell"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/meaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="단어 뜻"
+            app:layout_constraintTop_toBottomOf="@id/eSpell"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/eMeaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="단어의 뜻을 입력하세요."
+            app:layout_constraintTop_toBottomOf="@id/meaning"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/synonym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="유의어"
+            app:layout_constraintTop_toBottomOf="@id/eMeaning"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/eSynonym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="유의어를 입력하세요."
+            app:layout_constraintTop_toBottomOf="@id/synonym"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/antonym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="반의어"
+            app:layout_constraintTop_toBottomOf="@id/eSynonym"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/eAntonym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="반의어를 입력하세요."
+            app:layout_constraintTop_toBottomOf="@id/antonym"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예문"
+            app:layout_constraintTop_toBottomOf="@id/eAntonym"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/eSentence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예문을 입력하세요."
+            app:layout_constraintTop_toBottomOf="@id/sentence"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id = "@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="확인"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id = "@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/confirm"
+            android:text="취소"
+            android:textSize="20sp"
+            android:layout_marginRight="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
