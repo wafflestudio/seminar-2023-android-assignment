@@ -1,6 +1,5 @@
 package com.jutak.assignment3
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -118,8 +117,6 @@ class DetailActivity : AppCompatActivity() {
     private fun back(){
         viewModel.curpermission=false
         viewModel.livepermission.value=viewModel.curpermission
-        Intent(this@DetailActivity,MainActivity::class.java).run{
-            startActivity(this)
-        }
+        finish()
     }
 }

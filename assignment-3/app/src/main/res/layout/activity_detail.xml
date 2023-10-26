@@ -17,12 +17,11 @@
 
         <TextView
             android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="10dp"
-            android:text="Back"
-            android:textSize="25dp"
+            android:background="@drawable/back"
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/black"/>
@@ -39,12 +38,11 @@
 
         <TextView
             android:id="@+id/edit_noPer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="10dp"
-            android:text="편집하기"
-            android:textSize="25dp"
+            android:background="@drawable/edit"
             android:textStyle="bold"
             android:visibility="visible"
             android:gravity="center"
@@ -62,21 +60,19 @@
 
             <TextView
                 android:id="@+id/edit_del"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="20dp"
-                android:text="del"
-                android:textSize="20dp"
+                android:background="@drawable/trash"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/edit_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="add"
-                android:textSize="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/add"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/black"/>
