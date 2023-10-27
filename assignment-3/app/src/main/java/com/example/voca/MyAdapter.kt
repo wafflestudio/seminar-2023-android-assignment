@@ -1,14 +1,30 @@
 package com.example.voca
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.core.os.persistableBundleOf
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.voca.databinding.VocaBinding
 import com.example.voca.databinding.VocasBinding
 
-class MyAdapter(private val data: LiveData<List<MyDataTypes.VocaListInfo>>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(private val data: LiveData<out List<MyDataTypes>>, private val viewModel: MyViewModel):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return VocaViewHolder(VocasBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return when(viewType){
+            MyDataTypes.ViewType.A.ordinal->{
+                VocaListViewHolder(VocasBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            }
+            MyDataTypes.ViewType.B.ordinal->{
+                VocaViewHolder(VocaBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+            }
+            else -> throw IllegalStateException("Invalid ViewType") // 발생할 일은 없다.
+        }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -17,12 +33,15 @@ class MyAdapter(private val data: LiveData<List<MyDataTypes.VocaListInfo>>):Recy
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
-            is VocaViewHolder->{
+            is VocaListViewHolder->{
                 holder.set(position)
             }
         }
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it, position)
+        }
     }
-    inner class VocaViewHolder(private val binding:VocasBinding): RecyclerView.ViewHolder(binding.root){
+    inner class VocaListViewHolder(private val binding:VocasBinding): RecyclerView.ViewHolder(binding.root){
 
         /*
         val count=binding.historyTitle
@@ -31,8 +50,12 @@ class MyAdapter(private val data: LiveData<List<MyDataTypes.VocaListInfo>>):Recy
         */
 
         fun set(position: Int){
-            binding.ownerName.text=data.value!![position].owner
-            binding.vocalListName.text=data.value!![position].name
+            binding.ownerName.text=(data.value!![position] as MyDataTypes.VocaListInfo).owner
+            //Log.d("aaaa",binding.ownerName.text.toString())
+            binding.vocaListName.text=(data.value!![position] as MyDataTypes.VocaListInfo).name
+            binding.vocaListButton.setOnClickListener {
+                //  viewModel.openVocaList(position)
+            }
             /*
             binding.historyTitle.text="${data[position].count}턴"
             val currentBoard=Array(9) { 0 }
@@ -58,5 +81,50 @@ class MyAdapter(private val data: LiveData<List<MyDataTypes.VocaListInfo>>):Recy
             }*/
         }
     }
+
+    inner class VocaViewHolder(private val binding: VocaBinding): RecyclerView.ViewHolder(binding.root){
+
+
+        fun set(position: Int){
+            binding.vocaName.text=(data.value!! as MyDataTypes.VocaListSpecificInfo).word_list[position].spell
+            binding.vocaMean.text=(data.value!! as MyDataTypes.VocaListSpecificInfo).word_list[position].meaning
+            binding.vocaButton.setOnClickListener {
+                //openVocaList(position)
+            }
+            /*
+            binding.historyTitle.text="${data[position].count}턴"
+            val currentBoard=Array(9) { 0 }
+
+            val ii=0
+            binding.historyBoard.forEach {
+                val textView=it as TextView
+                val buttonNum=viewModel.getButtonNum2(textView,binding)
+
+                textView.text=when (data[position].board[buttonNum]){
+                    1->"O"
+                    2->"X"
+                    else->""
+                }
+                /*
+                if(buttonNum==data[position].count-1){
+                    textView.text=when (data[position].board[buttonNum]){
+                        1->"O"
+                        2->"X"
+                        else->""
+                    }
+                }*/
+            }*/
+        }
+    }
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
+
+    private lateinit var itemClickListener : OnItemClickListener
+
 
 }

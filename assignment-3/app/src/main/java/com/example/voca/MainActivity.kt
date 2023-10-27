@@ -1,28 +1,15 @@
 package com.example.voca
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.voca.databinding.ActivityMainBinding
 import com.example.voca.databinding.NewVocaListBinding
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
@@ -43,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-
-        binding.vocaListList.adapter = MyAdapter(viewModel.vocaList)
+        val adapter=MyAdapter(viewModel.vocaList,viewModel)
+        binding.vocaListList.adapter = adapter
         binding.vocaListList.layoutManager = LinearLayoutManager(this)
 
 
@@ -59,12 +46,25 @@ class MainActivity : AppCompatActivity() {
             binding2= NewVocaListBinding.inflate(layoutInflater)
             viewModel.openDialog(this,binding2)
         }
+        adapter.setItemClickListener(object: MyAdapter.OnItemClickListener{
+
+            override fun onClick(v: View, position: Int) {
+                Log.d("aaaa","cj")
+                val intent = Intent(this@MainActivity, InVocaActivity::class.java)
+                intent.putExtra("id", position)
+                startActivity(intent)
+            }
+        })
         /*
         binding2.newCancel.setOnClickListener {
             Log.d("aaaa","tlqkf")
         }*/
 
 
+    }
+    fun openVocaList(position:Int){
+        var intent = Intent(this@MainActivity, InVocaActivity::class.java)
+        startActivity(intent)
     }
     /*
     suspend fun io(){
