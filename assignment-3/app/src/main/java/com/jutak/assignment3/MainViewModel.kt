@@ -1,5 +1,6 @@
 package com.jutak.assignment3
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,17 @@ class MainViewModel @Inject constructor(
             val wordList = api.getWordList()
             withContext(Dispatchers.Main){
                 wordLiveData.value = wordList
+            }
+        }
+    }
+
+    fun addWord(owner:String, name:String, pass:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val createWordList = CreateWordList(name, owner, pass)
+            val response = api.wordListCreate(createWordList)
+
+            withContext(Dispatchers.Main){
+                wordLiveData.value = response.body()
             }
         }
     }

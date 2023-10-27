@@ -14,22 +14,22 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @InstallIn(SingletonComponent::class) // 앱 전체 수명 주기 동안 단일 인스턴스 (싱글톤)
 class NetworkModule {
     @Provides
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder().build()
+    }
+    @Provides
     fun provideMoshi(): Moshi {
         return Moshi.Builder().add(KotlinJsonAdapterFactory())
             .build()
     }
 
-    @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().build()
-    }
 
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         moshi: Moshi,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl("https://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000")
+        return Retrofit.Builder().baseUrl("http://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/myapp/v1/")
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

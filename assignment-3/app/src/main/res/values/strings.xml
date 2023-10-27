@@ -13,4 +13,6 @@
     <string name="check">확인</string>
     <string name="host">소유자</string>
     <string name="list">단어장 이름</string>
+    <string name="Set">편집</string>
+    <string name="back">-</string>
 </resources>

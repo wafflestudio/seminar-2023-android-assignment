@@ -7,10 +7,10 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id = "@+id/word_list"
+        android:id = "@+id/word_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/word_list"
+        android:text = ""
         android:textSize = "30sp"
         android:background="@android:color/darker_gray"
         android:gravity="center"
@@ -26,46 +26,27 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textSize = "30sp"
         android:gravity="end"
-        android:text = "@string/new_button"
+        android:text = "@string/Set"
         />
 
-    <LinearLayout
-        android:id = "@+id/data"
-        android:layout_width="400dp"
+    <TextView
+        android:id = "@+id/back_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/word_list"
         app:layout_constraintStart_toStartOf="parent"
-        >
-        <TextView
-            android:id = "@+id/host"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@id/word_list"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text = "@string/host"
-            android:textSize = "20sp"
-            />
-
-        <TextView
-            android:id = "@+id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@id/word_list"
-            app:layout_constraintStart_toEndOf="@id/host"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text = "@string/list"
-            android:textSize = "20sp"
-            />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10sp"
+        android:textSize = "30sp"
+        android:gravity="start"
+        android:text = "@string/back"
+        />
 
     <TextView
         android:id = "@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/data"
+        app:layout_constraintTop_toBottomOf="@+id/word_list_title"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id = "@+id/recycler_view"

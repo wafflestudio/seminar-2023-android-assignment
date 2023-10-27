@@ -9,3 +9,10 @@ data class WordList(
     @Json(name = "name") val name: String,
     @Json(name = "owner") val owner: String,
 )
+
+@JsonClass(generateAdapter = true)
+data class CreateWordList(
+    @Json(name = "name") val name: String,
+    @Json(name = "owner") val owner: String,
+    @Json(name = "pass") val pass: String,
+)

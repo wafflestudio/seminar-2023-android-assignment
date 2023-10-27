@@ -1,6 +1,7 @@
 package com.jutak.assignment3
 
 import android.view.LayoutInflater
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jutak.assignment3.databinding.MainWordListsBinding
