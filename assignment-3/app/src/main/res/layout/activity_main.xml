@@ -7,12 +7,54 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id = "@+id/word_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/word_list"
+        android:textSize = "30sp"
+        android:background="@android:color/darker_gray"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id = "@+id/new_voc_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize = "30sp"
+        android:gravity="end"
+        android:text = "@string/new_button"
+        />
+
+    <TextView
+        android:id = "@+id/host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/word_list"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text = "@string/host"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id = "@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/word_list"
+        app:layout_constraintStart_toEndOf="@id/host"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text = "@string/list"
+        android:textSize = "20sp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/host"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
