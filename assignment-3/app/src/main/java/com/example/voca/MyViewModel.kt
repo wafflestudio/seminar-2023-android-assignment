@@ -42,11 +42,12 @@ class MyViewModel @Inject constructor(
             //Log.d("aaaa",response.toString())
         }
     }
+
     fun openDialog(context:Context,binding: NewVocaListBinding){
+
         val dialog=Dialog(context)
-        dialog.setContentView(R.layout.new_voca_list)
+        dialog.setContentView(binding.root)
         dialog.show()
-        dialog.8
         binding.newCancel.setOnClickListener {
             dialog.dismiss()
             Log.d("aaaa","시발 왜 ")
@@ -54,6 +55,7 @@ class MyViewModel @Inject constructor(
         binding.newSave.setOnClickListener {
             val data:MyDataTypes.NewVocaList=MyDataTypes.NewVocaList(binding.inputOwnerName.text.toString(),binding.inputListName.text.toString(),binding.inputListPassword.text.toString())
             postVocaListToServer(data)
+            dialog.dismiss()
         }
     }
 

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding2= NewVocaListBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         binding.vocaListList.adapter = MyAdapter(viewModel.vocaList)
@@ -53,13 +53,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.vocaList.observe(this){
             (binding.vocaListList.adapter as MyAdapter).notifyDataSetChanged()
         }
+        //setContentView(binding2.root)
 
         binding.newList.setOnClickListener {
+            binding2= NewVocaListBinding.inflate(layoutInflater)
             viewModel.openDialog(this,binding2)
         }
+        /*
         binding2.newCancel.setOnClickListener {
             Log.d("aaaa","tlqkf")
-        }
+        }*/
 
 
     }
