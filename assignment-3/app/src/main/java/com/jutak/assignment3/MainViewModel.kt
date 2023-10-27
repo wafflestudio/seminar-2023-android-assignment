@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
 
     private var wordListInfo = mutableListOf<MyData.WordListInfo>()
     private var wordInfos = mutableListOf<MyData.WordInfo>()
+    private var permission = false
 
     fun getWordListInfo(): MutableList<MyData.WordListInfo> {
         fetchWordListInfo()
@@ -34,6 +36,11 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     fun getWordInfos(id: Int): MutableList<MyData.WordInfo> {
         fetchWordList(id)
         return wordInfos
+    }
+
+    fun getPermission(id: Int, password: String): Boolean {
+        pushPassword(id, password)
+        return permission
     }
 
     fun fetchWordListInfo() {
@@ -62,6 +69,39 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
             withContext(Dispatchers.Main) {
                 _wordListInfoData.value = response
                 Log.d("MainViewModel", "WordListInfos Size: ${response.size}") // 디버그 로그 추가
+            }
+        }
+    }
+
+    fun pushPassword(id: Int, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.verifyPassword(id, password)
+            withContext(Dispatchers.Main) {
+                permission = response
+            }
+        }
+    }
+
+    fun deleteWordList(id: Int, password: String): String {
+        var bodyText = ""
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.deleteWordList(id, password)
+            if (response.isSuccessful) {
+                bodyText = response.body().toString()
+            }
+            else {
+                bodyText = response.errorBody().toString()
+            }
+        }
+        return bodyText
+    }
+
+    fun putWord(id: Int, word: MyData.WordInfo) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            wordInfos = repository.putWord(id, word)
+            withContext(Dispatchers.Main) {
+                _wordListData.value = wordInfos
             }
         }
     }

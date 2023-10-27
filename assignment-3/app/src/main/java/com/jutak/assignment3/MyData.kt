@@ -25,9 +25,9 @@ sealed class MyData(val viewType: ViewType) {
     data class WordInfo(
         @Json(name="spell") val spell: String,
         @Json(name="meaning") val meaning: String,
-        @Json(name="synonym") val synonym: String,
-        @Json(name="antonym") val antonym: String,
-        @Json(name="sentence") val sentence: String
+        @Json(name="synonym") val synonym: String?,
+        @Json(name="antonym") val antonym: String?,
+        @Json(name="sentence") val sentence: String?
     ) : MyData(ViewType.WORD_INFO)
 
     @JsonClass(generateAdapter = true)
