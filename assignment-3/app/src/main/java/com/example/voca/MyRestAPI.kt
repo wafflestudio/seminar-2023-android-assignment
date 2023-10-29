@@ -19,4 +19,6 @@ interface MyRestAPI {
 
     @GET("/myapp/v1/word_list/{id}")
     suspend fun getVocaSpecificInfo(@Path("id") id : Int): MyDataTypes.VocaListSpecificInfo
+
+
 }

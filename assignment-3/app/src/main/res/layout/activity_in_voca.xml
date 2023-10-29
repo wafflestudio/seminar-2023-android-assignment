@@ -12,6 +12,16 @@
         android:orientation="horizontal"
         android:background="#999999">
         <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="뒤로가기"
+            android:textSize="30dp"
+            android:textColor="#555555"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
             android:id="@+id/voca_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

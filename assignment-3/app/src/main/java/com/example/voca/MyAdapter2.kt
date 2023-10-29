@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.voca.databinding.VocaBinding
 import com.example.voca.databinding.VocasBinding
 
-class MyAdapter(private val data: LiveData<out List<MyDataTypes>>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter2(private val data: LiveData<out List<MyDataTypes>>,private val specific:MyDataTypes.VocaListSpecificInfo):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             MyDataTypes.ViewType.A.ordinal->{
-                VocaListViewHolder(VocasBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+                VocaViewHolder(VocaBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
             }
             MyDataTypes.ViewType.B.ordinal->{
                 VocaViewHolder(VocaBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -41,7 +42,7 @@ class MyAdapter(private val data: LiveData<out List<MyDataTypes>>):RecyclerView.
             }
         }
         holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it, position)
+            itemClickListener.onClick2(it, position)
         }
     }
     inner class VocaListViewHolder(private val binding:VocasBinding): RecyclerView.ViewHolder(binding.root){
@@ -54,9 +55,9 @@ class MyAdapter(private val data: LiveData<out List<MyDataTypes>>):RecyclerView.
 
         fun set(position: Int){
             Log.d("aaaa",data.value.toString())
-            binding.ownerName.text=(data.value!![position] as MyDataTypes.VocaListInfo).owner
+            binding.ownerName.text=specific.owner
             //Log.d("aaaa",binding.ownerName.text.toString())
-            binding.vocaListName.text=(data.value!![position] as MyDataTypes.VocaListInfo).name
+            binding.vocaListName.text=specific.name
             binding.vocaListButton.setOnClickListener {
                 //  viewModel.openVocaList(position)
             }
@@ -90,12 +91,12 @@ class MyAdapter(private val data: LiveData<out List<MyDataTypes>>):RecyclerView.
 
 
         fun set(position: Int){
-            /*
-            binding.vocaName.text=(data.value!! as MyDataTypes.VocaListSpecificInfo).word_list[position].spell
-            binding.vocaMean.text=(data.value!! as MyDataTypes.VocaListSpecificInfo).word_list[position].meaning
+
+            binding.vocaName.text=specific.word_list[position].spell
+            binding.vocaMean.text=specific.word_list[position].meaning
             binding.vocaButton.setOnClickListener {
                 //openVocaList(position)
-            }*/
+            }
             /*
             binding.historyTitle.text="${data[position].count}턴"
             val currentBoard=Array(9) { 0 }
@@ -122,7 +123,7 @@ class MyAdapter(private val data: LiveData<out List<MyDataTypes>>):RecyclerView.
         }
     }
     interface OnItemClickListener {
-        fun onClick(v: View, position: Int)
+        fun onClick2(v: View, position: Int)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {

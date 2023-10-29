@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        val adapter=MyAdapter(viewModel.vocaList,viewModel)
+        val adapter=MyAdapter(viewModel.vocaList)
         binding.vocaListList.adapter = adapter
         binding.vocaListList.layoutManager = LinearLayoutManager(this)
 
@@ -46,13 +46,25 @@ class MainActivity : AppCompatActivity() {
             binding2= NewVocaListBinding.inflate(layoutInflater)
             viewModel.openDialog(this,binding2)
         }
+
+        viewModel.inVocaList.observe(this){
+
+            val intent = Intent(this@MainActivity, InVocaActivity::class.java)
+            intent.putExtra("info", viewModel.inVocaList.value!!)
+            startActivity(intent)
+        }
         adapter.setItemClickListener(object: MyAdapter.OnItemClickListener{
 
             override fun onClick(v: View, position: Int) {
-                Log.d("aaaa","cj")
+                Log.d("aaaa",position.toString())
                 val intent = Intent(this@MainActivity, InVocaActivity::class.java)
+                //intent.putExtra("info", viewModel.inVocaList.value!!)
                 intent.putExtra("id", position)
-                startActivity(intent)
+                //viewModel.getVocaListSpecificInfoFromServer(position)
+                //startActivity(intent)
+                //Log.d("aaaa",viewModel.inVocaList.toString())
+
+
             }
         })
         /*

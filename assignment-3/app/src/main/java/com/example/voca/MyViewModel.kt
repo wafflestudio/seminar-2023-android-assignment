@@ -36,6 +36,7 @@ class MyViewModel @Inject constructor(
 
     fun getVocaListFromServer(){
         viewModelScope.launch(Dispatchers.IO){
+
             val response=api.getVocaLists()
             withContext(Dispatchers.Main) {
                 _vocaList.value = response
@@ -45,25 +46,50 @@ class MyViewModel @Inject constructor(
     }
     fun postVocaListToServer(@Body data : MyDataTypes.NewVocaList){
         viewModelScope.launch(Dispatchers.IO){
-            val resonse=api.sendNewVocaList(data)
+            api.sendNewVocaList(data)
 
 
             withContext(Dispatchers.Main) {
                 getVocaListFromServer()
                 Log.d("aaaa","try")
-                //_vocaList.value = response
             }
             //
         }
     }
     fun getVocaListSpecificInfoFromServer(id: Int){
+        Log.d("aaaa","실행이 되기는 했음")
+        //val rp:MyDataTypes.VocaListSpecificInfo
+
         viewModelScope.launch(Dispatchers.IO){
-            val response=api.getVocaSpecificInfo(id)
-            withContext(Dispatchers.Main) {
-                _inVocaList_Voca.value = response.word_list
+            Log.d("aaaa","실행이 되기는 했음2")
+            var response:MyDataTypes.VocaListSpecificInfo
+            while (true){
+                try {
+                    response= api.getVocaSpecificInfo(id)
+                    break
+                }
+                catch (e:Exception){
+
+                }
+                finally {
+
+                }
             }
+
+
+
+            withContext(Dispatchers.Main) {
+
+                _inVocaList.value = response
+                Log.d("aaaa","실행이 되기는 했음3")
+
+            }
+            Log.d("aaaa",response.toString())
             //Log.d("aaaa",response.toString())
+
         }
+
+
     }
 
     fun openDialog(context:Context,binding: NewVocaListBinding){
