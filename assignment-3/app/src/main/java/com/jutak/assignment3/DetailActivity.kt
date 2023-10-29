@@ -1,11 +1,14 @@
 package com.jutak.assignment3
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +34,8 @@ class DetailActivity : AppCompatActivity(), OnItemClickListener<Int> {
     // valid 인증 받은 password 및 permission을 단어 삭제와 추가에도 계속 써야 하므로, DetailActivity 내 전역변수 선언
     private var password = ""
     private var wordInfos = emptyList<MyData.WordInfo>()
+
+
     override fun onItemClick(itemId: Int) {
 
     }
@@ -76,7 +81,8 @@ class DetailActivity : AppCompatActivity(), OnItemClickListener<Int> {
 
         val backButton = binding.backButton
         backButton.setOnClickListener() {
-            onBackPressed() // deprecated 되어서 바꿔야 함!
+            val intent = Intent(this@DetailActivity, MainActivity::class.java)
+            startActivity(intent)
         }
 
         val editButton = binding.detailEditBtn
@@ -104,7 +110,8 @@ class DetailActivity : AppCompatActivity(), OnItemClickListener<Int> {
                         Toast.makeText(this@DetailActivity, result, Toast.LENGTH_SHORT).show()
                     }
                     // 요청 성공 시 메인화면으로 <- 요청 성공/실패 체크]
-                    onBackPressed()
+                    val intent = Intent(this@DetailActivity, MainActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
@@ -129,22 +136,22 @@ class DetailActivity : AppCompatActivity(), OnItemClickListener<Int> {
             .setCustomTitle(customTitleLayoutBinding.root)
             .setTitle("수정 권한 확인하기")
             .setPositiveButton("Submit") { dialog, _ ->
-                password = dialogBinding.inputPassword.text.toString()
-
+                val inputPassword = dialogBinding.inputPassword.text.toString()
+                password = inputPassword
                 // 비밀번호 검증 (뷰모델로 password 전송하고, 뷰모델은 모델로 password 전송.
                 lifecycleScope.launch(Dispatchers.IO) {
                     // 비동기 작업을 수행할 코루틴 블록
-                    val result = viewModel.pushPassword(itemId, password)
+                    val result = viewModel.pushPassword(itemId, inputPassword)
 
                     withContext(Dispatchers.Main) {
                         // 메인 스레드에서 수행할 작업
                         if (result != "SUCCESS") {
+                            // 왜 text가 안 뜨지?
                             Toast.makeText(this@DetailActivity, result, Toast.LENGTH_SHORT).show()
 
                         }
+                        dialog.dismiss()
                     }
-
-                    dialog.dismiss()
                 }
             }
             .setNegativeButton("Cancel") { dialog, _ ->

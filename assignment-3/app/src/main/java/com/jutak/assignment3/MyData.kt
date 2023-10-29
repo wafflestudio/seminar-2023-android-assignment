@@ -6,6 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 sealed class MyData(val viewType: ViewType) {
 
+    // Parcelable 하게 만들어야 intent로 전달 가능...
     @JsonClass(generateAdapter = true)
     data class WordListInfo(
         @Json(name="id") val id: Int,

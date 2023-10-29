@@ -128,6 +128,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
         val sign = fetchedList.first
         val responseValue = fetchedList.second
 
+        Log.d("VM", "dwL On")
+
         when (sign) {
             MainRepository.Signs.SUCCESS -> fetchWordListInfo()
             MainRepository.Signs.FAILURE -> return responseValue as String
