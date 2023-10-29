@@ -27,9 +27,9 @@ class WordListAdapter<T: MyData>(private val context:Context, private var items:
         // 다이얼로그 내용 설정
         customLayoutBinding.dialogText.text = "Spell: ${item.spell}" +
                 "\nMeaning: ${item.meaning}" +
-                "\nSynonym: ${item.synonym}" +
-                "\nAntonym: ${item.antonym}" +
-                "\nSentence: ${item.sentence}"
+                "\nSynonym: ${item.synonym.takeIf { it != null }}" +
+                "\nAntonym: ${item.antonym.takeIf { it != null }}" +
+                "\nSentence: ${item.sentence.takeIf { it != null }}"
 
         // Positive Button 클릭 리스너 설정
         customLayoutBinding.positiveButton.setOnClickListener {

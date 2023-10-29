@@ -23,86 +23,136 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     private val _wordListData = MutableLiveData<MutableList<MyData.WordInfo>>()
     val wordListData: LiveData<MutableList<MyData.WordInfo>> get() = _wordListData
     // ViewModel에서 사용할 메서드 및 데이터를 정의
+    private val _permission = MutableLiveData<Boolean>()
+    val permission: LiveData<Boolean> get() = _permission
 
-    private var wordListInfo = mutableListOf<MyData.WordListInfo>()
+    private var wordListInfos = mutableListOf<MyData.WordListInfo>()
     private var wordInfos = mutableListOf<MyData.WordInfo>()
-    private var permission = false
+    private var permissionData = false
 
-    fun getWordListInfo(): MutableList<MyData.WordListInfo> {
+    suspend fun getWordListInfo(): MutableList<MyData.WordListInfo> {
         fetchWordListInfo()
-        return wordListInfo
+        return wordListInfos
     }
 
-    fun getWordInfos(id: Int): MutableList<MyData.WordInfo> {
+    suspend fun getWordList(id: Int): MutableList<MyData.WordInfo> {
         fetchWordList(id)
         return wordInfos
     }
 
-    fun getPermission(id: Int, password: String): Boolean {
+    suspend fun getPermission(id: Int, password: String): Boolean {
         pushPassword(id, password)
-        return permission
+        return permissionData
     }
 
-    fun fetchWordListInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
-            wordListInfo = repository.getWordListInfo()
-            withContext(Dispatchers.Main) {
-                _wordListInfoData.value = wordListInfo
-                Log.d("MainViewModel", "WordListInfos Size: ${wordListInfo.size}") // 디버그 로그 추가
-            }
-        }
-    }
 
-    fun fetchWordList(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            wordInfos = repository.getWordList(id).word_list.toMutableList()
-            Log.d("MainViewModel", "Word list size: ${wordInfos.size}") // 디버그 로그 추가
+    suspend fun fetchWordListInfo(): String {
+        val fetchedList: Pair<MainRepository.Signs, Any?> = repository.getWordListInfo()
+        val sign = fetchedList.first
+        val responseValue = fetchedList.second
+        when (sign) {
+            MainRepository.Signs.SUCCESS ->
                 withContext(Dispatchers.Main) {
-                _wordListData.setValue(wordInfos)
-            }
+                    wordListInfos = responseValue as MutableList<MyData.WordListInfo>
+                    _wordListInfoData.value = wordListInfos
+                }
+            MainRepository.Signs.FAILURE -> return responseValue as String
+            MainRepository.Signs.EXCEPTION -> return responseValue as String
         }
+
+        return "SUCCESS"
     }
 
-    fun pushWordList(data: MyData.WordListPostInfo) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.pushWordList(data).toMutableList()
-            withContext(Dispatchers.Main) {
-                _wordListInfoData.value = response
-                Log.d("MainViewModel", "WordListInfos Size: ${response.size}") // 디버그 로그 추가
-            }
+    // suspend fun이 아닐 경우, 다 받아오기 전에 함수가 종료될 수 있음
+    // suspend fun을 쓰고, viewModelScope...를 없애는 경우: Activity에서도 코루틴을...
+    suspend fun fetchWordList(id: Int): String {
+        val fetchedList: Pair<MainRepository.Signs, Any?> = repository.getWordList(id)
+        val sign = fetchedList.first
+        val responseValue = fetchedList.second
+        when (sign) {
+            MainRepository.Signs.SUCCESS ->
+                withContext(Dispatchers.Main) {
+                    val wordList = responseValue as MyData.WordList
+                    wordInfos = wordList.word_list.toMutableList()
+                    _wordListData.value = wordInfos
+                }
+            MainRepository.Signs.FAILURE -> return responseValue as String
+            MainRepository.Signs.EXCEPTION -> return responseValue as String
         }
+
+        return "SUCCESS"
     }
 
-    fun pushPassword(id: Int, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.verifyPassword(id, password)
-            withContext(Dispatchers.Main) {
-                permission = response
-            }
+    suspend fun pushWordList(data: MyData.WordListPostInfo): String {
+        val fetchedList: Pair<MainRepository.Signs, Any?> = repository.pushWordList(data)
+        val sign = fetchedList.first
+        val responseValue = fetchedList.second
+        when (sign) {
+            MainRepository.Signs.SUCCESS ->
+                withContext(Dispatchers.Main) {
+                    _wordListInfoData.value = responseValue as MutableList<MyData.WordListInfo>
+                }
+            MainRepository.Signs.FAILURE -> return responseValue as String
+            MainRepository.Signs.EXCEPTION -> return responseValue as String
         }
+
+
+
+        return "SUCCESS"
     }
 
-    fun deleteWordList(id: Int, password: String): String {
-        var bodyText = ""
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.deleteWordList(id, password)
-            if (response.isSuccessful) {
-                bodyText = response.body().toString()
-            }
-            else {
-                bodyText = response.errorBody().toString()
-            }
+    suspend fun pushPassword(id: Int, password: String): String {
+        val fetchedList: Pair<MainRepository.Signs, Any?> = repository.verifyPassword(id, password)
+        val sign = fetchedList.first
+        val responseValue = fetchedList.second
+
+        when (sign) {
+            MainRepository.Signs.SUCCESS ->
+                withContext(Dispatchers.Main) {
+                    val response = responseValue as MyData.Validation
+                    permissionData = response.valid
+                    _permission.value = permissionData
+                }
+            MainRepository.Signs.FAILURE -> return responseValue as String
+            MainRepository.Signs.EXCEPTION -> return responseValue as String
         }
-        return bodyText
+
+        return "SUCCESS"
     }
 
-    fun putWord(id: Int, word: MyData.WordInfo) {
-
-        viewModelScope.launch(Dispatchers.IO) {
-            wordInfos = repository.putWord(id, word)
-            withContext(Dispatchers.Main) {
-                _wordListData.value = wordInfos
-            }
+    suspend fun deleteWordList(id: Int, password: String): String {
+        if (!(_permission.value ?: false)) {
+            return "Wrong Access."
         }
+        val fetchedList: Pair<MainRepository.Signs, Any?> = repository.deleteWordList(id, password)
+        val sign = fetchedList.first
+        val responseValue = fetchedList.second
+
+        when (sign) {
+            MainRepository.Signs.SUCCESS -> fetchWordListInfo()
+            MainRepository.Signs.FAILURE -> return responseValue as String
+            MainRepository.Signs.EXCEPTION -> return responseValue as String
+        }
+
+        return "SUCCESS"
+    }
+
+    suspend fun putWord(id: Int, word: MyData.WordPutInfo): String {
+        if (!(_permission.value?: false)) {
+            return "Wrong Access."
+        }
+
+        val fetchedList: Pair<MainRepository.Signs, Any?> = repository.putWord(id, word)
+        val sign = fetchedList.first
+        val responseValue = fetchedList.second
+        Log.d("VM", "putWord On")
+
+        when (sign) {
+            MainRepository.Signs.SUCCESS -> fetchWordList(id)
+            MainRepository.Signs.FAILURE -> return responseValue as String
+            MainRepository.Signs.EXCEPTION -> return responseValue as String
+        }
+
+        return "SUCCESS"
     }
 }

@@ -1,34 +1,51 @@
 package com.jutak.assignment3
 
-import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
 import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val api: MyRestAPI) {
 
-    suspend fun getWordListInfo(): MutableList<MyData.WordListInfo> {
-        return api.getWordListInfo().toMutableList()
+    enum class Signs {
+        SUCCESS,
+        FAILURE,
+        EXCEPTION
     }
 
-    suspend fun getWordList(id: Int): MyData.WordList {
-        return api.getWordList(id)
+    suspend fun getWordListInfo(): Pair<Signs, Any?>  {
+        return proceedException(api.getWordListInfo())
     }
 
-    suspend fun pushWordList(data: MyData.WordListPostInfo): List<MyData.WordListInfo> {
-        return api.createWordList(data)
+    suspend fun getWordList(id: Int): Pair<Signs, Any?>  {
+        return proceedException(api.getWordList(id))
     }
 
-    suspend fun verifyPassword(id: Int, password: String): Boolean {
-        return api.verifyPermission(id, password)
+    suspend fun pushWordList(data: MyData.WordListPostInfo): Pair<Signs, Any?>  {
+        return proceedException(api.createWordList(data))
     }
 
-    suspend fun deleteWordList(id: Int, password: String): Response<String> {
-        return api.deleteWordList(id, password)
+    suspend fun verifyPassword(id: Int, password: String): Pair<Signs, Any?>  {
+        return proceedException(api.verifyPermission(id, MyData.PasswordJSON(password)))
     }
 
-    suspend fun putWord(id: Int, word: MyData.WordInfo): MutableList<MyData.WordInfo> {
-        return api.putWord(id, word).word_list.toMutableList()
+    suspend fun deleteWordList(id: Int, password: String): Pair<Signs, Any?>  {
+        return proceedException(api.deleteWordList(id, MyData.PasswordJSON(password)))
+    }
+
+    suspend fun putWord(id: Int, word: MyData.WordPutInfo): Pair<Signs, Any?>  {
+        return proceedException(api.putWord(id, word))
+    }
+
+    fun <T> proceedException(response: Response<T>): Pair<Signs, Any?> {
+        try {
+            if (response.isSuccessful) {
+                return Pair(Signs.SUCCESS, response.body())
+            } else {
+                return Pair(Signs.FAILURE, response.errorBody()?.string())
+            }
+        } catch (e: IOException){
+            return Pair(Signs.EXCEPTION, "Network Error")
+        }
     }
 
 }

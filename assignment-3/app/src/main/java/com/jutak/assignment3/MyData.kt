@@ -37,7 +37,21 @@ sealed class MyData(val viewType: ViewType) {
         @Json(name="password") val word_list: String
     ) : MyData(ViewType.WORD_LIST_POST_INFO)
 
+    @JsonClass(generateAdapter = true)
+    data class PasswordJSON(
+        @Json(name="password") val password: String
+    )
 
+    @JsonClass(generateAdapter = true)
+    data class WordPutInfo(
+        @Json(name="password") val password: String,
+        @Json(name="word") val word: WordInfo
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class Validation(
+        @Json(name="valid") val valid: Boolean
+    )
 
     enum class ViewType {
         WORD_LIST_INFO,
