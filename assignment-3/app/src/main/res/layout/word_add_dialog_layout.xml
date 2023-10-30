@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- dialog_input.xml -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:text="단어"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </TextView>
+        <EditText
+            android:id="@+id/dialog_word_spell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="단어를 입력하세요"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="단어 뜻"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </TextView>
+        <EditText
+            android:id="@+id/dialog_word_meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="단어 뜻을 입력하세요"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="유의어"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </TextView>
+        <EditText
+            android:id="@+id/dialog_word_synonym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="유의어를 입력하세요"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="반의어"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </TextView>
+        <EditText
+            android:id="@+id/dialog_word_antonym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="반의어를 입력하세요"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="예문"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </TextView>
+        <EditText
+            android:id="@+id/dialog_word_sentence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예문을 입력하세요"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
