@@ -3,42 +3,76 @@ package com.jutak.assignment3
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.assignment3.databinding.ItemVocabularyBinding
+import com.assignment3.R
+import com.assignment3.databinding.DetailDialogBinding
+import com.assignment3.databinding.ItemWordListBinding
 
-class WordListAdapter(private var vocabularyList: List<MyMultiData.Voca>) :
-    RecyclerView.Adapter<WordListAdapter.VocabularyViewHolder>() {
+class WordListAdapter(
+    private val words: List<Word>,
+    private val onWordClicked: (Int) -> Unit
+) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
 
-    private var onItemClickListener: ((View, Int) -> Unit)? = null
+    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val itemBinding = ItemWordListBinding.bind(itemView)
+        private var alertDialog: AlertDialog? = null
 
-    fun setItemClickListener(listener: ((View, Int) -> Unit)?){
-        onItemClickListener = listener
-    }
+        init {
+            itemView.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onWordClicked(adapterPosition)
+                }
+            }
+        }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VocabularyViewHolder {
-        val itemBinding = ItemVocabularyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VocabularyViewHolder(itemBinding)
-    }
+        fun bindData(word: Word) {
+            with(itemBinding) {
+                tvSpell.text = word.spell
+                tvMeaning.text = word.meaning
+            }
+        }
 
-    override fun onBindViewHolder(holder: VocabularyViewHolder, position: Int) {
-        val vocabulary = vocabularyList[position]
-        holder.bind(vocabulary)
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(it, position)
+        private fun showDialog(word: Word) {
+            val dialogBinding = DetailDialogBinding.inflate(LayoutInflater.from(itemView.context))
+
+            with(dialogBinding) {
+                tvWord.text = word.spell
+                tvMeaning.text = word.meaning
+                tvSynonym.text = word.synonym
+                tvAntonym.text = word.antonym
+
+                btnClose.setOnClickListener {
+                    alertDialog?.dismiss()
+                }
+            }
+
+            val dialogBuilder = AlertDialog.Builder(itemView.context)
+            alertDialog = dialogBuilder.create().apply {
+                setView(dialogBinding.root)
+                show()
+            }
         }
     }
 
-    override fun getItemCount(): Int = vocabularyList.size
-    fun updateVocaList(newList: List<MyMultiData.Voca>) {
-        vocabularyList = newList.toMutableList()
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_word_list, parent, false)
+        return WordViewHolder(itemView)
     }
 
-    inner class VocabularyViewHolder(private val binding: ItemVocabularyBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(vocaData: MyMultiData.Voca) {
-            binding.ownerTextView.text = vocaData.owner
-            binding.nameTextView.text = vocaData.name
-        }
+    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
+        holder.bindData(words[position])
     }
+
+    override fun getItemCount(): Int = words.size
 }
+
+data class Word(
+    val word: String,
+    val spell: String,
+    val meaning: String,
+    val synonym: String,
+    val antonym: String,
+    val sentence: String
+)

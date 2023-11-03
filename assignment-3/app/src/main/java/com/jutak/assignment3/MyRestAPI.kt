@@ -1,33 +1,63 @@
 package com.jutak.assignment3
 
-import retrofit2.Retrofit
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.converter.moshi.MoshiConverterFactory
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import retrofit2.http.*
+
+data class WordSet(
+    val spell: String,
+    val meaning: String,
+    val synonym: String = "",
+    val antonym: String = "",
+    val sentence: String = "",
+)
+
+@JsonClass(generateAdapter = true)
+data class VocabularySet(
+    @Json(name = "id") val id: Int,
+    @Json(name = "name") val setName: String,
+    @Json(name = "owner") val ownerName: String,
+)
+
+@JsonClass(generateAdapter = true)
+data class VocabularySetDetails(
+    @Json(name = "id") val id: Int,
+    @Json(name = "name") val setName: String,
+    @Json(name = "owner") val ownerName: String,
+    @Json(name = "word_list") val vocabularyList: List<WordSet>,
+)
+
+@JsonClass(generateAdapter = true)
+data class PostWordSetInput(
+    @Json(name = "name") val name: String,
+    @Json(name = "owner") val owner: String,
+    @Json(name = "password") val password: String
+)
+
 
 interface MyRestAPI {
-    @GET("vocabulary")
-    suspend fun getVocaListSuspend(): List<MyMultiData.Voca>
 
-    @GET("vocabulary/{vocabularyId}")
-    suspend fun getWordListSuspend(@Path("vocabularyId") vocabularyId: String): MyMultiData.Word
 
-    @GET("vocabulary/{vocabularyId}")
-    suspend fun getVocaInfoSuspend(@Path("vocabularyId") vocabularyId: Int): MyMultiData.VocabularyInfo
+    @GET("/myapp/v1/word_list/{id}")
+    suspend fun fetchAllVocabularySets(@Query("wordSetId") wordSetId: Int = -1): List<VocabularySet>
 
-    @POST("vocabulary")
-    suspend fun addWordSet(@Body newWordSet: MyMultiData.Voca): MyMultiData.Voca
-}
+    @GET("/myapp/v1/word_list/{setId}")
+    suspend fun fetchVocabularySetDetails(@Path("setId") setId: Int): VocabularySetDetails
 
-object ApiClient {
-    private const val BASE_URL = "http://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/myapp/v1/"
+    @POST("/myapp/v1/word_list")
+    suspend fun postWordSet(@Body newWordSet: MainViewModel.PostWordSetInput): VocabularySet
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
+    @GET("/myapp/v1/word_list")
+    suspend fun fetchAllVocabularySets(): List<VocabularySet>
 
-    val vocabularyApiService: MyRestAPI = retrofit.create(MyRestAPI::class.java)
+
+
+    @PUT("/myapp/v1/word_list/{setId}")
+    suspend fun updatedVocabulary(
+        @Body updatedVocabulary: Word,
+        @Path("setId") setId: Int
+    ): VocabularySetDetails
+
+
+
 }
