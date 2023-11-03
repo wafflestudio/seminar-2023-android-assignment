@@ -42,6 +42,7 @@ API 관련 질문이 있으면 말씀해 주세요.
 # 추가 스펙
 
 ### HomeFragment
+- ViewPager2에 예쁜 전환 이펙트를 추가합니다.
 - 하단의 `자세히 보기` 버튼을 누르면 DetailFragment로 이동합니다.
 
 ### 3. DetailFragment
@@ -61,9 +62,10 @@ API 관련 질문이 있으면 말씀해 주세요.
 
 # 데모
 
-| 단어장 목록 화면 | 단어장 상세 화면 |
+| 기본 스펙 | 추가 스펙 (DetailFragment) |
 | ---- | ---- |
-| <video src="" /> | <video src="" /> |
+| <video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/922201a6-f311-4eaa-8615-1b98c826d84f" /> | <video src="" /> |
+
 
 
 
