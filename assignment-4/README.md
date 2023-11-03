@@ -15,9 +15,9 @@
 - Jetpack Navigation으로 Login, Home, Detail의 경로를 구성합니다.
 - 디자인은 데모와 달라도 상관없고, 최소 스펙의 내용만 채점합니다. (그래도 예쁘게 해보세요)
 
-# 서버 API 명세
 ## TMDB api
 https://developer.themoviedb.org/reference/intro/getting-started
+
 API 관련 질문이 있으면 말씀해 주세요.
 
 # 최소 스펙
@@ -37,8 +37,7 @@ API 관련 질문이 있으면 말씀해 주세요.
 - [Popular movie API](https://developer.themoviedb.org/reference/movie-popular-list)를 이용해 인기 영화 목록을 가져오고, 상위 5개 아이템을 표시합니다.
 - Glide 라이브러리를 이용해 포스터 이미지를 크게 표시하고, 간단한 정보들을 하단에 표시합니다.
 - 상단 로그아웃 버튼을 누르면 sharedPreference에서 토큰을 제거하고 LoginFragment로 되돌아갑니다.
-- 마찬가지로 한번 로그아웃하면, 뒤로가기를 했을 때 HomeFragment로 돌아와선 안 됩니다.
-
+- 한번 로그아웃하면 뒤로가기를 했을 때 HomeFragment로 돌아와선 안 됩니다.
 
 # 추가 스펙
 
@@ -46,7 +45,7 @@ API 관련 질문이 있으면 말씀해 주세요.
 - 하단의 `자세히 보기` 버튼을 누르면 DetailFragment로 이동합니다.
 
 ### 3. DetailFragment
-- TODO
+- 추후 공지
 
 
 # 챌린지 스펙
