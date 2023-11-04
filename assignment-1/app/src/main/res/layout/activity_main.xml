@@ -6,13 +6,97 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+
+        app:layout_constraintLeft_toRightOf="@id/image"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름 : 남기태"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="좋아하는 캐릭터: 조구만 스튜디오, 마루" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="요즘 관심사 : 수영, Waffle, IElTS" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="130dp"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+
+        android:orientation="vertical"
+        android:background="@drawable/border_background"
+
+        >
+
+        <EditText
+            android:id = "@+id/Id"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint = "아이디를 입력하세요"
+            >
+        </EditText>
+
+        <EditText
+            android:id = "@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint = "비밀번호를 입력하세요"
+            >
+        </EditText>
+        
+        <TextView
+            android:id = "@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="150dp"
+
+            android:background="@color/black"
+            android:textColor="@color/white"
+
+            android:text = "로그인하기"
+            >
+
+        </TextView>
+    </LinearLayout>
+    
+    
 
 </androidx.constraintlayout.widget.ConstraintLayout>

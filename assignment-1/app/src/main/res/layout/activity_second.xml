@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+
+        android:orientation="vertical"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "유저정보"
+            android:textSize="40sp"
+            >
+        </TextView>
+
+        <TextView
+            android:id = "@+id/idView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text = " "
+            android:textSize = "20sp"
+            >
+        </TextView>
+
+        <TextView
+            android:id = "@+id/passwordView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text = " "
+            android:textSize = "20sp"
+            >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id = "@+id/calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <EditText
+            android:id = "@+id/firstNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint = "첫 번째 수"
+            >
+        </EditText>
+
+        <TextView
+            android:id = "@+id/operator"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="+"
+            >
+        </TextView>
+
+        <EditText
+            android:id = "@+id/secondNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint = "두 번째 수"
+            >
+        </EditText>
+
+        <TextView
+            android:id = "@+id/equal"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="="
+            >
+        </TextView>
+
+        <TextView
+            android:id = "@+id/result"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text =" "
+            >
+        </TextView>
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:columnCount="2"
+        android:rowCount="2"
+
+        app:layout_constraintTop_toBottomOf="@+id/calculate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <TextView
+            android:id = "@+id/plus"
+            android:text="+"
+            android:textSize="50sp"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
+            android:gravity="center"
+            android:background="@android:color/holo_blue_bright"
+            >
+        </TextView>
+
+        <TextView
+            android:id = "@+id/minus"
+            android:text="-"
+            android:textSize="50sp"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
+            android:gravity="center"
+            android:background="@android:color/holo_orange_light"
+            >
+        </TextView>
+
+        <TextView
+            android:id = "@+id/multiply"
+            android:text="*"
+            android:textSize="50sp"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
+            android:gravity="center"
+            android:background="@android:color/holo_red_light"
+            >
+        </TextView>
+
+        <TextView
+            android:id = "@+id/divide"
+            android:text="/"
+            android:textSize="50sp"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
+            android:gravity="center"
+            android:background="@android:color/holo_green_light"
+            >
+        </TextView>
+
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
