@@ -3,10 +3,12 @@ package com.jutak.assignment3
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.DetailWordListBinding
+import com.jutak.assignment3.databinding.PasswordBinding
 import com.jutak.assignment3.databinding.VocaInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +22,7 @@ class DetailVocaActivity: AppCompatActivity() {
 
     private lateinit var binding: DetailWordListBinding
     private lateinit var vocaInfoBinding:VocaInfoBinding
+    private lateinit var passwordBinding: PasswordBinding
 
     private val viewModel:DetailVocaViewModel by viewModels();
 
@@ -38,9 +41,16 @@ class DetailVocaActivity: AppCompatActivity() {
             }
         }
 
+        //Voca Information Screen
         val VocaInfo = Dialog(this)
         vocaInfoBinding = VocaInfoBinding.inflate(layoutInflater)
         VocaInfo.setContentView(vocaInfoBinding.root)
+
+        //Put Password Screen
+        val passInput = Dialog(this)
+        passwordBinding = PasswordBinding.inflate(layoutInflater)
+        passInput.setContentView(passwordBinding.root)
+
 
         viewModel.wordList.observe(this){
             val adapter = DetailVocaMultiAdapter(it.wordList, onItemClick = {
@@ -58,6 +68,31 @@ class DetailVocaActivity: AppCompatActivity() {
             })
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        }
+
+        binding.editButton.setOnClickListener {
+
+            passInput.show()
+
+            passwordBinding.cancel.setOnClickListener { passInput.dismiss() }
+            passwordBinding.check.setOnClickListener {
+                val password = passwordBinding.passwordInfoPasswordType.text.toString()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.Main) {
+                        viewModel.checkPermission(wordListID, Password(password))
+                    }
+                }
+                passInput.dismiss()
+            }
+
+            viewModel.permission.observe(this){
+                if(it){
+                    binding.editButton.visibility = View.INVISIBLE
+                    binding.deleteButton.visibility = View.VISIBLE
+                    binding.newVocButton.visibility = View.VISIBLE
+                }
+            }
         }
 
         binding.backButton.setOnClickListener {

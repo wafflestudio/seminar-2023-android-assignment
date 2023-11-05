@@ -36,3 +36,14 @@ data class WordList(
     @Json(name = "owner") val owner: String,
     @Json(name = "word_list") val wordList: List<Word>,
 )
+
+@JsonClass(generateAdapter = true)
+data class Password(
+    @Json(name = "password") val password:String,
+)
+
+@JsonClass(generateAdapter = true)
+data class Permission(
+    @Json(name = "valid") val valid: Boolean,
+)
+

@@ -12,10 +12,14 @@
     <string name="check">확인</string>
     <string name="host">소유자</string>
     <string name="list">단어장 이름</string>
+    <string name="edit">편집하기</string>
     <string name="voca_info_title">단어 상세보기</string>
     <string name="voca_info_spell">단어</string>
     <string name="voca_info_mean">뜻</string>
     <string name="voca_info_synonym">유의어</string>
     <string name="voca_info_antonym">반의어</string>
     <string name="voca_info_sentence">예문</string>
+    <string name="password_info_title">단어장 편집하기</string>
+    <string name="password_info_password">단어장 비밀번호</string>
+    <string name="password_info_password_type">단어장 비밀번호를 입력하세요</string>
 </resources>

@@ -16,4 +16,7 @@ interface MyRestAPI {
 
     @GET("word_list/{id}")
     suspend fun getWordListById(@Path("id") id :Int):WordList
+
+    @POST("word_list/{id}/permission")
+    suspend fun getPermission(@Body password: Password,@Path("id") id :Int):Permission
 }
