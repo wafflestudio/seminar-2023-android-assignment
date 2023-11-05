@@ -34,6 +34,10 @@ class DetailVocaViewModel @Inject constructor(
     }
 
     suspend fun deleteWordBook(id: Int){
-        api.DeleteWordBook(Password(password),id)
+        api.deleteWordBook(Password(password),id)
+    }
+
+    suspend fun createWord(id: Int, word:Word){
+        _wordList.value = api.wordCreate(id, CreateWord(password, word))
     }
 }

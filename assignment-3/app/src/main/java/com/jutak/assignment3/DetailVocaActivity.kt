@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jutak.assignment3.databinding.AddWordBinding
 import com.jutak.assignment3.databinding.DeleteWordBookBinding
 import com.jutak.assignment3.databinding.DetailWordListBinding
 import com.jutak.assignment3.databinding.PasswordBinding
@@ -16,7 +17,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailVocaActivity: AppCompatActivity() {
@@ -25,6 +25,7 @@ class DetailVocaActivity: AppCompatActivity() {
     private lateinit var vocaInfoBinding:VocaInfoBinding
     private lateinit var passwordBinding: PasswordBinding
     private lateinit var deleteWordBookBinding: DeleteWordBookBinding
+    private lateinit var addWordBinding: AddWordBinding
 
     private val viewModel:DetailVocaViewModel by viewModels();
 
@@ -57,6 +58,11 @@ class DetailVocaActivity: AppCompatActivity() {
         val deleteWordBook = Dialog(this)
         deleteWordBookBinding = DeleteWordBookBinding.inflate(layoutInflater)
         deleteWordBook.setContentView(deleteWordBookBinding.root)
+
+        //Put addWord Screen
+        val addWord = Dialog(this)
+        addWordBinding = AddWordBinding.inflate(layoutInflater)
+        addWord.setContentView(addWordBinding.root)
 
 
         viewModel.wordList.observe(this){
@@ -118,6 +124,28 @@ class DetailVocaActivity: AppCompatActivity() {
             }
         }
 
+        binding.newVocButton.setOnClickListener{
+            addWord.show()
+
+            addWordBinding.cancel.setOnClickListener { addWord.dismiss() }
+            addWordBinding.check.setOnClickListener {
+                val spell = addWordBinding.vocaSpell.text.toString()
+                val mean = addWordBinding.vocaMean.text.toString()
+                val synonym = addWordBinding.vocaSynonym.text.toString()
+                val antonym = addWordBinding.vocaAntonym.text.toString()
+                val sentence = addWordBinding.vocaSentence.text.toString()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                        withContext(Dispatchers.Main) {
+                            viewModel.createWord(
+                                wordListID,
+                                Word(spell, mean, synonym, antonym, sentence)
+                            )
+                        }
+                }
+                addWord.dismiss()
+            }
+        }
 
         binding.backButton.setOnClickListener {
             val intent = Intent(this@DetailVocaActivity,MainActivity::class.java)

@@ -47,3 +47,9 @@ data class Permission(
     @Json(name = "valid") val valid: Boolean,
 )
 
+@JsonClass(generateAdapter = true)
+data class CreateWord(
+    @Json(name = "password") val password: String,
+    @Json(name = "word") val word: Word,
+)
+

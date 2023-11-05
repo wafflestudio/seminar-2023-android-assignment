@@ -24,4 +24,5 @@
     <string name="password_info_password_type">단어장 비밀번호를 입력하세요</string>
     <string name="delete_info_title">단어장 삭제하기</string>
     <string name="delete_info_delete">단어장을 정말 삭제하시겠습니까?</string>
+    <string name="add_info_title">단어 추가하기</string>
 </resources>
