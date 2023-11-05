@@ -23,7 +23,6 @@ class NetworkModule {
             .build()
     }
 
-
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,

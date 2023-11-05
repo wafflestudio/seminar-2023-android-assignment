@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,7 +31,9 @@ class DetailVocaActivity: AppCompatActivity() {
         val wordListID = intent.getIntExtra("id", 0)
 
         CoroutineScope(Dispatchers.IO).launch {
-            viewModel.fetchWordList(wordListID)
+            withContext(Dispatchers.Main){
+                viewModel.fetchWordList(wordListID)
+            }
         }
 
         val VocaInfo = Dialog(this)

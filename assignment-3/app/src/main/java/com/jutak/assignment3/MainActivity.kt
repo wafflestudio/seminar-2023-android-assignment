@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         CoroutineScope(Dispatchers.IO).launch {
-            viewModel.fetchWordBooks()
+            withContext(Dispatchers.Main){
+                viewModel.fetchWordBooks()
+            }
         }
 
 
@@ -60,7 +62,9 @@ class MainActivity : AppCompatActivity() {
                 val pass = newVocAddBinding.newPassType.text.toString()
 
                 CoroutineScope(Dispatchers.IO).launch{
-                    viewModel.addWordBook(owner, name, pass)
+                    withContext(Dispatchers.Main){
+                        viewModel.addWordBook(owner, name, pass)
+                    }
                 }
 
                 newVocAdd.dismiss()

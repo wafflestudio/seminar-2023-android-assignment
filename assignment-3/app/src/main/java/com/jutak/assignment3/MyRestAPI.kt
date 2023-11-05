@@ -11,7 +11,7 @@ interface MyRestAPI {
     @GET("word_lists")
     suspend fun getWordBookList(): List<WordBook>
 
-    @POST("word_lists")
+    @POST("word_list")
     suspend fun wordBookCreate(@Body data: CreateWordBook): Response<List<WordBook>>
 
     @GET("wor_list/{id}")

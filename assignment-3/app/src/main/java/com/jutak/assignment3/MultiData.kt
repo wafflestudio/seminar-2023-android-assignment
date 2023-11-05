@@ -17,7 +17,7 @@ data class WordBook(
 data class CreateWordBook(
     @Json(name = "name") val name: String,
     @Json(name = "owner") val owner: String,
-    @Json(name = "pass") val pass: String,
+    @Json(name = "password") val password: String,
 )
 
 @JsonClass(generateAdapter = true)

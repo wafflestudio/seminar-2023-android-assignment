@@ -30,6 +30,4 @@ class MainViewModel @Inject constructor(
         _wordBookList.value = response.body()
     }
 
-
-
 }
