@@ -3,7 +3,6 @@ package com.jutak.assignment3
 import com.jutak.assignment3.model.CreateWordListRequest
 import com.jutak.assignment3.model.PermissionRequest
 import com.jutak.assignment3.model.PermissionResponse
-import com.jutak.assignment3.model.Word
 import com.jutak.assignment3.model.WordListBrief
 import com.jutak.assignment3.model.WordResponse
 import retrofit2.http.Body

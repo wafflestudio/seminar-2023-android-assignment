@@ -30,7 +30,6 @@ class WordListDetailViewModel @Inject constructor(
 
     val permission: LiveData<Boolean> = _permission
 
-
     fun fetchWord(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val resp = api.getWords(id)
@@ -48,6 +47,11 @@ class WordListDetailViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 _permission.value = resp.valid
             }
+        }
+    }
+
+    fun deleteWordList() {
+        viewModelScope.launch(Dispatchers.IO) {
         }
     }
 

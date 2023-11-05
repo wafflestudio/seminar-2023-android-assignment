@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityWordListDetailBinding
+import com.jutak.assignment3.databinding.AddWordDialogViewBinding
 import com.jutak.assignment3.databinding.EditWordListDialogViewBinding
 import com.jutak.assignment3.databinding.WordDetailDialogViewBinding
 import com.jutak.assignment3.model.Word
@@ -34,13 +35,13 @@ class WordListDetailActivity : AppCompatActivity() {
             viewModel.fetchWord(id)
         }
 
-        binding.goBackButton.setOnClickListener {
-            finish()
-        }
+        binding.goBackButton.setOnClickListener { finish() }
 
-        binding.editWordListButton.setOnClickListener {
-            showEditWordListDialog(this)
-        }
+        binding.editWordListButton.setOnClickListener { showEditWordListDialog(this) }
+
+        binding.deleteWordListButton.setOnClickListener { showDeleteWordListDialog(this) }
+
+        binding.addWordButton.setOnClickListener { showAddWordDialog(this) }
 
         val adapter = WordListDetailAdapter(viewModel.words) { word ->
             showWordDetailDialog(this, word)
@@ -62,6 +63,38 @@ class WordListDetailActivity : AppCompatActivity() {
             binding.deleteWordListButton.visibility = View.VISIBLE
         }
 
+    }
+
+    private fun showAddWordDialog(context: Context) {
+        val dialogBinding = AddWordDialogViewBinding.inflate(LayoutInflater.from(context))
+
+        val dialog = AlertDialog.Builder(context)
+            .setTitle("단어 추가하기")
+            .setView(dialogBinding.root)
+            .setPositiveButton("확인") { dialog, _ ->
+                // TODO: 단어 추가
+                dialog.dismiss()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+        dialog.show()
+    }
+
+    private fun showDeleteWordListDialog(context: Context) {
+        val dialog = AlertDialog.Builder(context)
+            .setTitle("단어장 삭제하기")
+            .setMessage("단어장을 정말 삭제하시겠습니까")
+            .setPositiveButton("확인") { dialog, _ ->
+                // TODO: 단어장 삭제
+                viewModel.deleteWordList()
+                dialog.dismiss()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        dialog.show()
     }
 
 
