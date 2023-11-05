@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10sp"
+    android:layout_marginEnd="10sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/voca_info_title"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize = "25sp"
+        />
+
+    <ImageView
+        android:id = "@+id/exit_button"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src = "@drawable/baseline_clear_24"
+        />
+
+    <TextView
+        android:id="@+id/voca_info_spell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voca_info_spell"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id="@+id/voca_spell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize = "30sp"
+        app:layout_constraintTop_toBottomOf="@id/voca_info_spell"
+        />
+
+    <TextView
+        android:id="@+id/voca_info_mean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voca_info_mean"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/voca_spell"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id="@+id/voca_mean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize = "30sp"
+        app:layout_constraintTop_toBottomOf="@id/voca_info_mean"
+        />
+
+    <TextView
+        android:id="@+id/voca_info_synonym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voca_info_synonym"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/voca_mean"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id="@+id/voca_synonym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize = "30sp"
+        app:layout_constraintTop_toBottomOf="@id/voca_info_synonym"
+        />
+
+    <TextView
+        android:id="@+id/voca_info_antonym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voca_info_antonym"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/voca_synonym"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id="@+id/voca_antonym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize = "30sp"
+        app:layout_constraintTop_toBottomOf="@id/voca_info_antonym"
+        />
+
+    <TextView
+        android:id="@+id/voca_info_sentence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voca_info_sentence"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/voca_antonym"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id="@+id/voca_sentence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize = "30sp"
+        app:layout_constraintTop_toBottomOf="@id/voca_info_sentence"
+        />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

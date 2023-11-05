@@ -20,7 +20,6 @@ data class CreateWordBook(
     @Json(name = "pass") val pass: String,
 )
 
-@Parcelize
 @JsonClass(generateAdapter = true)
 data class Word(
     @Json(name = "spell") val spell: String,
@@ -28,13 +27,12 @@ data class Word(
     @Json(name = "synonym") val synonym: String? = null,
     @Json(name = "antonym") val antonym: String? = null,
     @Json(name = "sentence") val sentence: String? = null,
-) : Parcelable
+)
 
-@Parcelize
 @JsonClass(generateAdapter = true)
 data class WordList(
     @Json(name = "id") val id: Int,
     @Json(name = "name") val name: String,
     @Json(name = "owner") val owner: String,
     @Json(name = "word_list") val wordList: List<Word>,
-) : Parcelable
+)

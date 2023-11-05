@@ -30,8 +30,6 @@ class MainViewModel @Inject constructor(
         _wordBookList.value = response.body()
     }
 
-    suspend fun fetchWordList(id: Int): WordList{
-        return api.getWordListById(id)
-    }
+
 
 }

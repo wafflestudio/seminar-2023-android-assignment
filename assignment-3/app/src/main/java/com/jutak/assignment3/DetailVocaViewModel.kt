@@ -14,5 +14,7 @@ class DetailVocaViewModel @Inject constructor(
     private val _wordList = MutableLiveData<WordList>()
     val wordList:LiveData<WordList> = _wordList
 
-
+    suspend fun fetchWordList(id: Int){
+        _wordList.value = api.getWordListById(id)
+    }
 }

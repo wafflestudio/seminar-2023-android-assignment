@@ -35,14 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.wordBookList.observe(this){
             val adapter =MyMultiAdapter(it, onItemClick = {id ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    val wordList = viewModel.fetchWordList(id)
-                    withContext(Dispatchers.Main){
-                        val intent = Intent(this@MainActivity,DetailVocaActivity::class.java)
-                        intent.putExtra("word_list",wordList)
-                        startActivity(intent)
-                    }
-                }
+                val intent = Intent(this@MainActivity,DetailVocaActivity::class.java)
+                intent.putExtra("id",id)
+                startActivity(intent)
             })
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
