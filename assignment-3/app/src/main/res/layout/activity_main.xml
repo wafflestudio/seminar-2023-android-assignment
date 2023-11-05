@@ -18,15 +18,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id = "@+id/new_voc_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize = "30sp"
         android:gravity="end"
-        android:text = "@string/new_button"
+        android:src = "@drawable/baseline_edit_24"
         />
 
     <LinearLayout

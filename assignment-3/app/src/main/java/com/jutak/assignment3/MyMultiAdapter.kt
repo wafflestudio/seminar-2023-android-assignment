@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jutak.assignment3.databinding.MainWordListsBinding
 
 class MyMultiAdapter(
-    private var list:List<WordList>
+    private var list:List<WordBook>,
+    private var onItemClick: (id : Int) ->Unit
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = list.size
 
@@ -16,18 +17,17 @@ class MyMultiAdapter(
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = list[position]
-        when(holder){
-            is WordListViewHolder -> {
-                holder.bind(data)
-            }
-        }
+        (holder as WordListViewHolder).bind(data)
     }
 
     inner class WordListViewHolder(private val binding: MainWordListsBinding) :
         RecyclerView.ViewHolder(binding.root){
-            fun bind(data:WordList){
+            fun bind(data:WordBook){
                 binding.host.text = data.owner
                 binding.list.text = data.name
+                binding.root.setOnClickListener{
+                    onItemClick.invoke(data.id)
+                }
             }
     }
 

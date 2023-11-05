@@ -29,7 +29,7 @@ class NetworkModule {
         okHttpClient: OkHttpClient,
         moshi: Moshi,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl("http://ec2-13-209-69-159.ap-northeast-2.compute.amazonaws.com:8000/myapp/v1/")
+        return Retrofit.Builder().baseUrl("http://ec2-52-78-203-16.ap-northeast-2.compute.amazonaws.com:8000/myapp/v1/")
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

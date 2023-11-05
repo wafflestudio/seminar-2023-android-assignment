@@ -1,6 +1,7 @@
 package com.jutak.assignment3
 
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jutak.assignment3.databinding.ActivityMainBinding
 import com.jutak.assignment3.databinding.NewVocaBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var newVocBinding: NewVocaBinding
+    private lateinit var newVocAddBinding: NewVocaBinding
 
     private val viewModel: MainViewModel by viewModels();
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,34 +28,49 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.fetchWord()
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.fetchWordBooks()
+        }
 
-        viewModel.returnData().observe(this){
-            val adapter =MyMultiAdapter(it)
+
+        viewModel.wordBookList.observe(this){
+            val adapter =MyMultiAdapter(it, onItemClick = {id ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    val wordList = viewModel.fetchWordList(id)
+                    withContext(Dispatchers.Main){
+                        val intent = Intent(this@MainActivity,DetailVocaActivity::class.java)
+                        intent.putExtra("word_list",wordList)
+                        startActivity(intent)
+                    }
+                }
+            })
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
         }
 
-        val newVoc = Dialog(this)
-        newVocBinding = NewVocaBinding.inflate(layoutInflater)
-        newVoc.setContentView(newVocBinding.root)
+
+
+        val newVocAdd = Dialog(this)
+        newVocAddBinding = NewVocaBinding.inflate(layoutInflater)
+        newVocAdd.setContentView(newVocAddBinding.root)
 
         binding.newVocButton.setOnClickListener{
-            newVoc.show()
-            newVocBinding.cancel.setOnClickListener {
-                newVoc.dismiss()
+            newVocAdd.show()
+            newVocAddBinding.cancel.setOnClickListener {
+                newVocAdd.dismiss()
             }
-            newVocBinding.check.setOnClickListener {
-                val owner = newVocBinding.newHostType.text.toString()
-                val name = newVocBinding.newListType.text.toString()
-                val pass = newVocBinding.newPassType.text.toString()
+            newVocAddBinding.check.setOnClickListener {
+                val owner = newVocAddBinding.newHostType.text.toString()
+                val name = newVocAddBinding.newListType.text.toString()
+                val pass = newVocAddBinding.newPassType.text.toString()
 
-                viewModel.addWord(owner, name, pass)
-                newVoc.dismiss()
-                viewModel.fetchWord()
+                CoroutineScope(Dispatchers.IO).launch{
+                    viewModel.addWordBook(owner, name, pass)
+                }
+
+                newVocAdd.dismiss()
             }
         }
-
 
     }
 }

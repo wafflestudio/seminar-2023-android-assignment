@@ -1,6 +1,7 @@
 package com.jutak.assignment3
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,30 +16,22 @@ class MainViewModel @Inject constructor(
     private val api: MyRestAPI
 ) : ViewModel() {
 
-    private val wordLiveData: MutableLiveData<List<WordList>> = MutableLiveData()
-    fun fetchWord(){
-        viewModelScope.launch(Dispatchers.IO) {
-            val wordList = api.getWordList()
-            withContext(Dispatchers.Main){
-                wordLiveData.value = wordList
-            }
-        }
+    private val _wordBookList = MutableLiveData<List<WordBook>>()
+    val wordBookList: LiveData<List<WordBook>> = _wordBookList
+
+    suspend fun fetchWordBooks(){
+        val wordBookList = api.getWordBookList()
+        _wordBookList.value = wordBookList
     }
 
-    fun addWord(owner:String, name:String, pass:String){
-        viewModelScope.launch(Dispatchers.IO) {
-            val createWordList = CreateWordList(name, owner, pass)
-            val response = api.wordListCreate(createWordList)
-
-            withContext(Dispatchers.Main){
-                wordLiveData.value = response.body()
-            }
-        }
+    suspend fun addWordBook(owner:String, name:String, pass:String){
+        val createWordBook = CreateWordBook(name, owner, pass)
+        val response = api.wordBookCreate(createWordBook)
+        _wordBookList.value = response.body()
     }
 
-    fun returnData() :  MutableLiveData<List<WordList>>{
-        return wordLiveData
+    suspend fun fetchWordList(id: Int): WordList{
+        return api.getWordListById(id)
     }
-
 
 }
