@@ -1,6 +1,7 @@
 package com.jutak.assignment3
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,7 @@ class DetailVocaActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         val wordListID = intent.getIntExtra("id", 0)
+        println(wordListID)
 
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.Main){
@@ -42,11 +44,11 @@ class DetailVocaActivity: AppCompatActivity() {
 
         viewModel.wordList.observe(this){
             val adapter = DetailVocaMultiAdapter(it.wordList, onItemClick = {
-                vocaInfoBinding.vocaInfoSpell.text = it.spell
-                vocaInfoBinding.vocaInfoMean.text = it.meaning
-                vocaInfoBinding.vocaInfoSynonym.text = it.synonym
-                vocaInfoBinding.vocaInfoAntonym.text = it.antonym
-                vocaInfoBinding.vocaInfoSentence.text = it.sentence
+                vocaInfoBinding.vocaSpell.text = it.spell
+                vocaInfoBinding.vocaMean.text = it.meaning
+                vocaInfoBinding.vocaSynonym.text = it.synonym
+                vocaInfoBinding.vocaAntonym.text = it.antonym
+                vocaInfoBinding.vocaSentence.text = it.sentence
 
                 VocaInfo.show()
 
@@ -56,6 +58,11 @@ class DetailVocaActivity: AppCompatActivity() {
             })
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        }
+
+        binding.backButton.setOnClickListener {
+            val intent = Intent(this@DetailVocaActivity,MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }
