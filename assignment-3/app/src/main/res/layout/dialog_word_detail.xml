@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="단어 상세보기"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닫기"
+            android:textSize="15sp"
+            android:layout_gravity="end"
+            app:layout_constraintTop_toBottomOf="@id/password_edit_text"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어"
+        android:textSize="16sp"
+        android:textColor="#1E90FF"
+        android:layout_gravity="start"/>
+    <TextView
+        android:id="@+id/spell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="computer"
+        android:textSize="32sp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="start"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="뜻"
+        android:textSize="16sp"
+        android:textColor="#1E90FF"
+        android:layout_gravity="start"/>
+    <TextView
+        android:id="@+id/meaning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="컴퓨터"
+        android:textSize="28sp"
+        android:textColor="#444444"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="start"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="유의어"
+                android:textSize="16sp"
+                android:textColor="#1E90FF"
+                android:layout_gravity="start"/>
+
+            <TextView
+                android:id="@+id/synonym"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="PC"
+                android:textSize="22sp"
+                android:textColor="#444444"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="start"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반의어"
+                android:textSize="16sp"
+                android:textColor="#1E90FF"
+                android:layout_gravity="start"/>
+
+            <TextView
+                android:id="@+id/antonym"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Typewriter"
+                android:textSize="22sp"
+                android:textColor="#444444"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="start"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예문"
+        android:textSize="16sp"
+        android:textColor="#1E90FF"
+        android:layout_gravity="start"/>
+
+    <TextView
+        android:id="@+id/example"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="I use my computer for work and entertainment."
+        android:textSize="22sp"
+        android:textColor="#444444"
+        android:layout_marginBottom="25dp"
+        android:layout_gravity="start"/>
+
+</LinearLayout>

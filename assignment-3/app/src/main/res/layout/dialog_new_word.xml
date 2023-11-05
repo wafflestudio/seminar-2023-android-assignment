@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 추가하기"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어"
+        android:textSize="13sp"/>
+
+    <EditText
+        android:id="@+id/word_spell_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="단어을 입력하세요"
+        android:maxLines="1"
+        android:privateImeOptions="defaultInputmode=english"
+        android:paddingHorizontal="5dp"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="단어 뜻"
+        android:textSize="13sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/word_meaning_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="단어의 뜻을 입력하세요"
+        android:privateImeOptions="defaultInputmode=korean"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="유의어"
+        android:textSize="13sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/word_synonym_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="유의어을 입력하세요"
+        android:privateImeOptions="defaultInputmode=english"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="반의어"
+        android:textSize="13sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/word_antonym_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="반의어을 입력하세요"
+        android:privateImeOptions="defaultInputmode=english"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예문"
+        android:textSize="13sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/word_sentence_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="예문을 입력하세요"
+        android:privateImeOptions="defaultInputmode=english"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:layout_marginBottom="20dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/negative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="18sp"
+            android:layout_marginEnd="25dp"/>
+
+
+        <TextView
+            android:id="@+id/positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
