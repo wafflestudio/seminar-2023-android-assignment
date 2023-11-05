@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jutak.assignment3.databinding.DeleteWordBookBinding
 import com.jutak.assignment3.databinding.DetailWordListBinding
 import com.jutak.assignment3.databinding.PasswordBinding
 import com.jutak.assignment3.databinding.VocaInfoBinding
@@ -23,6 +24,7 @@ class DetailVocaActivity: AppCompatActivity() {
     private lateinit var binding: DetailWordListBinding
     private lateinit var vocaInfoBinding:VocaInfoBinding
     private lateinit var passwordBinding: PasswordBinding
+    private lateinit var deleteWordBookBinding: DeleteWordBookBinding
 
     private val viewModel:DetailVocaViewModel by viewModels();
 
@@ -50,6 +52,11 @@ class DetailVocaActivity: AppCompatActivity() {
         val passInput = Dialog(this)
         passwordBinding = PasswordBinding.inflate(layoutInflater)
         passInput.setContentView(passwordBinding.root)
+
+        //Put deleteBook Screen
+        val deleteWordBook = Dialog(this)
+        deleteWordBookBinding = DeleteWordBookBinding.inflate(layoutInflater)
+        deleteWordBook.setContentView(deleteWordBookBinding.root)
 
 
         viewModel.wordList.observe(this){
@@ -80,7 +87,7 @@ class DetailVocaActivity: AppCompatActivity() {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     withContext(Dispatchers.Main) {
-                        viewModel.checkPermission(wordListID, Password(password))
+                        viewModel.checkPermission( Password(password), wordListID)
                     }
                 }
                 passInput.dismiss()
@@ -94,6 +101,23 @@ class DetailVocaActivity: AppCompatActivity() {
                 }
             }
         }
+
+        binding.deleteButton.setOnClickListener{
+            deleteWordBook.show()
+
+            deleteWordBookBinding.cancel.setOnClickListener { deleteWordBook.dismiss() }
+            deleteWordBookBinding.check.setOnClickListener {
+                CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.Main) {
+                        viewModel.deleteWordBook(wordListID)
+                    }
+                }
+                deleteWordBook.dismiss()
+                val intent = Intent(this@DetailVocaActivity,MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
 
         binding.backButton.setOnClickListener {
             val intent = Intent(this@DetailVocaActivity,MainActivity::class.java)

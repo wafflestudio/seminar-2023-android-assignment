@@ -3,7 +3,9 @@ package com.jutak.assignment3
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -19,4 +21,7 @@ interface MyRestAPI {
 
     @POST("word_list/{id}/permission")
     suspend fun getPermission(@Body password: Password,@Path("id") id :Int):Permission
+
+    @HTTP(method = "DELETE",path = "word_list/{id}", hasBody = true)
+    suspend fun DeleteWordBook(@Body password: Password,@Path("id") id :Int)
 }
