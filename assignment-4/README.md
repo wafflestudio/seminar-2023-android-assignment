@@ -12,7 +12,7 @@
 # 과제 요약
 - TMDB api를 이용해 간단한 영화 정보 앱을 만듭니다.
 - 이번 과제 앱에는 단 하나의 액티비티(MainActivity)만이 존재합니다.
-- Jetpack Navigation으로 Login, Home, Detail의 경로를 구성합니다.
+- Jetpack Navigation으로 Login, Home의 경로를 구성합니다.
 - 디자인은 데모와 달라도 상관없고, 최소 스펙의 내용만 채점합니다. (그래도 예쁘게 해보세요)
 
 ## TMDB api
@@ -42,12 +42,7 @@ API 관련 질문이 있으면 말씀해 주세요.
 # 추가 스펙
 
 ### HomeFragment
-- ViewPager2에 예쁜 전환 이펙트를 추가합니다.
-- 하단의 `자세히 보기` 버튼을 누르면 DetailFragment로 이동합니다.
-
-### 3. DetailFragment
-- 추후 공지
-
+- ViewPager2에 예쁜 전환 이펙트를 추가합니다. (제 샘플보다 예쁘게 해 보세요)
 
 # 챌린지 스펙
 - TMDB api에서는 HTTP status가 40X일 경우 일관된 형태의 error를 보내줍니다.
@@ -62,9 +57,7 @@ API 관련 질문이 있으면 말씀해 주세요.
 
 # 데모
 
-| 기본 스펙 | 추가 스펙 (DetailFragment) |
-| ---- | ---- |
-| <video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/922201a6-f311-4eaa-8615-1b98c826d84f" /> | <video src="" /> |
+<video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/922201a6-f311-4eaa-8615-1b98c826d84f" />
 
 
 
