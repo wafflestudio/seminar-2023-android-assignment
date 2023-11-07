@@ -33,8 +33,7 @@ class WordActivity: AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.goBackButton.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
     }
