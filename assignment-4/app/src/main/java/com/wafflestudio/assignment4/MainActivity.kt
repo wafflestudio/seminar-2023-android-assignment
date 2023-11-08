@@ -10,7 +10,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MyViewModel by viewModels()
+    //private val viewModel: MyViewModel by viewModels()
     @Inject
     lateinit var api: MyRestAPI
     override fun onCreate(savedInstanceState: Bundle?) {

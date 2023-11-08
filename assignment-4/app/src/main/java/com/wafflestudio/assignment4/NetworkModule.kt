@@ -1,5 +1,6 @@
 package com.wafflestudio.assignment4
 
+import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -7,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -15,7 +17,18 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class NetworkModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().build()
+        return OkHttpClient.Builder()
+            .addInterceptor(
+                HttpLoggingInterceptor { log -> Log.d("okhttp3", "HTTP: $log") }
+                    .setLevel(HttpLoggingInterceptor.Level.HEADERS)
+            )
+            .addInterceptor { chain ->
+                val newRequest = chain.request()
+                    .newBuilder()
+                    .addHeader("Accept", "application/json")
+                    .build()
+                chain.proceed(newRequest)
+            }.build()
     }
 
     @Provides
@@ -29,7 +42,7 @@ class NetworkModule {
         okHttpClient: OkHttpClient,
         moshi: Moshi,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl("https://api.themoviedb.org/3/")
+        return Retrofit.Builder().baseUrl("https://api.themoviedb.org/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

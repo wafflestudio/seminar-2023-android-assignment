@@ -14,6 +14,7 @@
             android:id="@+id/action_blankFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.wafflestudio.assignment4.LoginFragment"
@@ -21,6 +22,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_blankFragment"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/blankFragment" />
     </fragment>
 </navigation>
