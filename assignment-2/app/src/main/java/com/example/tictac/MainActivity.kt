@@ -2,6 +2,7 @@ package com.example.tictac
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.forEach
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         */
 
 
+        viewModel.myHistory.observe(this){
+            (binding.history.adapter as MyMultiAdapter).notifyDataSetChanged()
+            Log.d("aaaa","감지. 완료.")
+        }
 
         //refresh
         if(viewModel.gameEnded)binding.reset.text="한판 더"
@@ -46,7 +51,8 @@ class MainActivity : AppCompatActivity() {
                 else->""
             }
         }
-        drawDrawer()
+        binding.history.adapter = MyMultiAdapter(viewModel.myHistory,viewModel)
+        binding.history.layoutManager = LinearLayoutManager(this)
 
         //drawer
         binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -54,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             binding.drawer.open()
         }
 
-
+        //viewModel.
 
 
         //틱택토 버튼들 누름
@@ -69,8 +75,9 @@ class MainActivity : AppCompatActivity() {
                     val newBoardArray=Array(9) { 0 }
                     for(i in 0..buttonNum) newBoardArray[i]=viewModel.numbers[i]
                     val new=MyData(viewModel.count,newBoardArray,viewModel.gameEnded)
-                    viewModel.items.add(new)
-                    drawDrawer()
+                    viewModel.addData(new)
+                    //Log.d("aaaa",new.toString())
+                    //drawDrawer()
 
                 }
             }
@@ -81,7 +88,6 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.gameEnded=false
             viewModel.resetDrawer()
-            drawDrawer()
             binding.buttons.forEach {
                 val textView=it as TextView
                 textView.text=""
@@ -100,8 +106,9 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+    /*
     fun drawDrawer(){
         binding.history.adapter = MyMultiAdapter(viewModel.items,viewModel)
         binding.history.layoutManager = LinearLayoutManager(this)
-    }
+    }*/
 }

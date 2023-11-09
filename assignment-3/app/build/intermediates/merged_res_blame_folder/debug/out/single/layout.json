@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-mergeDebugResources-34:\\layout\\voca.xml",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-main-37:\\layout\\voca.xml"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-mergeDebugResources-34:\\layout\\specific_voca_list.xml",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-main-37:\\layout\\specific_voca_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-mergeDebugResources-34:\\layout\\activity_in_voca.xml",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-main-37:\\layout\\activity_in_voca.xml"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-mergeDebugResources-34:\\layout\\new_voca_list.xml",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-main-37:\\layout\\new_voca_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-mergeDebugResources-34:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-main-37:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.example.voca.app-mergeDebugResources-34:/layout/specific_voca_list.xml",
+        "source": "com.example.voca.app-main-37:/layout/specific_voca_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-mergeDebugResources-34:\\layout\\vocas.xml",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.0\\com.example.voca.app-main-37:\\layout\\vocas.xml"
+    }
+]

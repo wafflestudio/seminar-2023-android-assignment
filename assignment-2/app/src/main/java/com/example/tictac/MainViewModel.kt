@@ -1,12 +1,19 @@
 package com.example.tictac
 
+import android.util.Log
 import android.widget.TextView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.example.tictac.databinding.ActivityMainBinding
 import com.example.tictac.databinding.HistoryBinding
 
 class MainViewModel: ViewModel() {
+
+    private val _myHistory: MutableLiveData<MutableList<MyData>> = MutableLiveData(mutableListOf())
+    val myHistory: LiveData<MutableList<MyData>> = _myHistory
+
     var turn=1
     var status="O의 차례입니다"
     val numbers = Array(9) { 0 }//0은 비어있음, 1은 o, 2는 x
@@ -23,11 +30,15 @@ class MainViewModel: ViewModel() {
     var gameEnded=false
     var count=0
 
-    val items = mutableListOf<MyData>(
-        // 데이터들
-    )
+    fun addData(new:MyData){
+        val currentList = _myHistory.value!!
+        currentList.add(new)
+        _myHistory.value = currentList
+        Log.d("aaaa",_myHistory.value.toString())
+    }
+
     fun resetDrawer(){
-        items.clear()
+        _myHistory.value= mutableListOf()
     }
 
     fun getButtonNum(textView: TextView,binding: ActivityMainBinding):Int{
