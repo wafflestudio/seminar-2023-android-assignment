@@ -17,14 +17,13 @@ class LoginViewModel @Inject constructor(
         _token.postValue(MyApplication.preferences.getToken("token", ""))
     }
 
-    suspend fun login(temp : String?) : Boolean {
-        if(temp == null) return false
+    suspend fun login(temp : String?) {
+        if(temp==null) return
         var answer = api.getLogin("Bearer " + temp)
         if(answer.success) {
             MyApplication.preferences.setToken("token", temp)
             MyApplication.preferences.setToken("success", "true")
             _token.postValue(temp!!)
         }
-        return answer.success
     }
 }

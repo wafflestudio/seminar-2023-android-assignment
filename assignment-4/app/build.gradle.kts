@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -63,4 +63,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.47")
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0-alpha06")
+    implementation("com.github.bumptech.glide:glide:4.9.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.9.0")
 }

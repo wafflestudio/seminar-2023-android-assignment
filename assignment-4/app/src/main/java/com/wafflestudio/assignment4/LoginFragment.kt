@@ -26,8 +26,8 @@ private const val ARG_PARAM2 = "param2"
  */
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+    /*private var param1: String? = null
+    private var param2: String? = null*/
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels()
@@ -35,10 +35,6 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentLoginBinding.inflate(layoutInflater)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -47,10 +43,9 @@ class LoginFragment : Fragment() {
     ): View? {
         binding.button.setOnClickListener(){
             var key : String? = binding.username.text.toString()
-            var success = false
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    success = viewModel.login(key)
+                    viewModel.login(key)
                 } catch(e : Exception){
                     Log.d("error", e.message.toString())
                 }
@@ -66,7 +61,7 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
+    /*companion object {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -84,5 +79,5 @@ class LoginFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
+    }*/
 }
