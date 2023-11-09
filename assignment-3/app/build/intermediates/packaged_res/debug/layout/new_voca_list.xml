@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="새 단어장 만들기"
+        android:textSize="25dp"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="단어장 소유자"
+        android:textSize="15dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/input_owner_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="소유자 이름을 입력하세요."/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="단어장 이름"
+        android:textSize="15dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/input_list_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="단어장 이름을 입력하세요."/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="단어장 비밀번호"
+        android:textSize="15dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/input_list_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="단어장 비밀번호를 입력하세요"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/new_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="취소"
+            android:textSize="20dp"
+            app:layout_constraintRight_toLeftOf="@+id/new_save"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:id="@+id/new_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="저장"
+            android:textSize="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
