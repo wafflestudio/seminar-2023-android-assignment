@@ -5,26 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="제출하기!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-         android:id="@+id/submit_btn"/>
-
-    <EditText
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submit_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/api_key"
-        android:text="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ODIwOTY5NDIyNzc2N2E4YTAwMjM4ZDM0Mzc2MjI2MSIsInN1YiI6IjY1NGRlMWEyNWE1ZWQwMDEzYmFjMmMxMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sx2cmH2EEB1zYnwzjM2f2GMar3qnwSe1TaeM97NnCIo"/>
-
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

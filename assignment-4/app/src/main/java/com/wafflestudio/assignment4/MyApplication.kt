@@ -11,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class MyApplication: Application(){
 
     override fun onCreate() {
-        Companion.preferences = MySharedPreferences(applicationContext)
+        preferences = MySharedPreferences(applicationContext)
         super.onCreate()
     }
 

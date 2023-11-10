@@ -18,18 +18,7 @@ class AuthenticateResponse(
     @Json(name = "status_code") val statusCode: Int,
     @Json(name = "status_message") val statusMessage : String,
 )
-interface MyRestAPI {
-
-    /*
-    @GET("/myapp/v1/word_lists")
-    suspend fun getWordLists(): List<WordListRead>
-
-    @POST("/myapp/v1/word_list")
-    suspend fun createWordList(@Body data: WordListWrite): Response<List<WordListRead>>
-
-    @GET("/myapp/v1/word_list/{id}")
-    suspend fun getWords(@Path("id") id: String?): Response<WordListDetail>
-    */
+interface MyRestAPI{
 
     @GET("/3/authentication")
     suspend fun authenticate(): Response<AuthenticateResponse>

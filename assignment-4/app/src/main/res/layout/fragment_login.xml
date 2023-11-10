@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#220393"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        android:text="GO!"
+        android:textColor="@color/white"
+        android:id="@+id/submit_btn"/>
+
+    <EditText
+        android:id="@+id/api_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ODIwOTY5NDIyNzc2N2E4YTAwMjM4ZDM0Mzc2MjI2MSIsInN1YiI6IjY1NGRlMWEyNWE1ZWQwMDEzYmFjMmMxMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sx2cmH2EEB1zYnwzjM2f2GMar3qnwSe1TaeM97NnCIo" />
+
+
+</FrameLayout>

@@ -15,11 +15,8 @@ class MainViewModel @Inject constructor(
     private val api: MyRestAPI
 ) : ViewModel() {
 
-    private val _token : MutableLiveData<String> = MutableLiveData(MyApplication.preferences.getToken("isLoggedIn"))
-    val token : LiveData<String> = _token
-
-
-
+    private val _isLoggedIn : MutableLiveData<String> = MutableLiveData( MyApplication.preferences.getToken("isLoggedIn"))
+    val isLoggedIn : LiveData<String> = _isLoggedIn
 
 
     fun authenticate(apiKey : String){
@@ -31,7 +28,7 @@ class MainViewModel @Inject constructor(
                 if(response.isSuccessful){
                     MyApplication.preferences.setToken("isLoggedIn", "true")
                     withContext(Dispatchers.Main) {
-                        _token.value = MyApplication.preferences.getToken("isLoggedIn")
+                        _isLoggedIn.value = MyApplication.preferences.getToken("isLoggedIn")
                     }
                     Log.d("authentication", "success")
                 }

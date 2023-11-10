@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.4")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("com.google.dagger:hilt-android:2.47")
