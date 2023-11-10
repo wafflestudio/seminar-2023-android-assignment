@@ -36,12 +36,12 @@ class InVocaActivity:AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val id=intent.getIntExtra("id", 0)
+        //val id=intent.getIntExtra("id", 0)
 
 
         val simpleData = intent.getParcelableExtra<MyDataTypes.VocaListSpecificInfo>("info")!!
         //val simpleData=MyDataTypes.VocaListSpecificInfo(id,"2","3", listOf(MyDataTypes.Voca("1","2","3","4","5")))
-
+        Log.d("aaaa",simpleData.id.toString())
         _inVocaList.value=simpleData
         _inVocaList_Voca.value=simpleData.word_list
         binding.vocaListName.text=simpleData.name

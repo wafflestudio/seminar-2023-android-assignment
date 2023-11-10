@@ -63,18 +63,8 @@ class MyViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             Log.d("aaaa","실행이 되기는 했음2")
             var response:MyDataTypes.VocaListSpecificInfo
-            while (true){
-                try {
-                    response= api.getVocaSpecificInfo(id)
-                    break
-                }
-                catch (e:Exception){
 
-                }
-                finally {
-
-                }
-            }
+            response= api.getVocaSpecificInfo(id)
 
 
 
@@ -92,21 +82,7 @@ class MyViewModel @Inject constructor(
 
     }
 
-    fun openDialog(context:Context,binding: NewVocaListBinding){
 
-        val dialog=Dialog(context)
-        dialog.setContentView(binding.root)
-        dialog.show()
-        binding.newCancel.setOnClickListener {
-            dialog.dismiss()
-            Log.d("aaaa","시발 왜 ")
-        }
-        binding.newSave.setOnClickListener {
-            val data:MyDataTypes.NewVocaList=MyDataTypes.NewVocaList(binding.inputOwnerName.text.toString(),binding.inputListName.text.toString(),binding.inputListPassword.text.toString())
-            postVocaListToServer(data)
-            dialog.dismiss()
-        }
-    }
 
 
 }
