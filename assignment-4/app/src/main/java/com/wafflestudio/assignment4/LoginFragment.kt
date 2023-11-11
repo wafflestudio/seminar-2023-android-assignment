@@ -32,8 +32,10 @@ class LoginFragment : Fragment() {
            viewModel.authenticate(binding.apiKey.text.toString())
         }
 
-        viewModel.isLoggedIn.observe(viewLifecycleOwner, Observer { newToken ->
-            if(newToken=="true") findNavController().navigate(R.id.action_loginFragment_to_movieFragment)
+        viewModel.isLoggedIn.observe(viewLifecycleOwner, Observer { loginStatus ->
+            if(loginStatus=="true") {
+                findNavController().navigate(R.id.action_loginFragment_to_movieFragment)
+            }
         })
 
         return binding.root

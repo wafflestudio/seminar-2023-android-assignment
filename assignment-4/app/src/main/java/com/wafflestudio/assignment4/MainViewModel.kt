@@ -42,4 +42,31 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun logout(){
+        MyApplication.preferences.setToken("accessToken", "")
+        MyApplication.preferences.setToken("isLoggedIn", "false")
+        _isLoggedIn.value = MyApplication.preferences.getToken("isLoggedIn")
+
+    }
+
+
+    private val _movies : MutableLiveData<List<MovieData>> = MutableLiveData(listOf())
+    val movies : LiveData<List<MovieData>> = _movies
+
+    fun fetchMovie(){
+        viewModelScope.launch(Dispatchers.IO){
+            try{
+                val response = api.fetchMovie()
+                withContext(Dispatchers.Main){ _movies.value = response.results}
+
+            }
+            catch(e : Exception){
+                Log.d("error",e.message.toString())
+            }
+        }
+
+    }
+
+
+
 }

@@ -22,4 +22,7 @@ interface MyRestAPI{
 
     @GET("/3/authentication")
     suspend fun authenticate(): Response<AuthenticateResponse>
+
+    @GET("/3/movie/popular")
+    suspend fun fetchMovie() : MovieDataResponse
 }
