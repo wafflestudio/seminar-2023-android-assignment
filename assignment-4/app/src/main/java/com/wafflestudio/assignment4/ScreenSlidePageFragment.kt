@@ -1,5 +1,6 @@
 package com.wafflestudio.assignment4
 
+import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,5 +35,16 @@ class ScreenSlidePageFragment(private val data : MovieData?) : Fragment() {
         binding.date.text = data?.release_date
 
         return binding.root
+    }
+
+    fun onUpdateData(updateData : MovieData){
+        binding.title.text = updateData?.original_title
+        Glide.with(binding.poster.context)
+            .load("https://image.tmdb.org/t/p/w300/"+updateData?.poster_path)
+            .into(binding.poster)
+
+        binding.overview.text = updateData?.overview
+        binding.star.text = updateData?.vote_average.toString()
+        binding.date.text = updateData?.release_date
     }
 }

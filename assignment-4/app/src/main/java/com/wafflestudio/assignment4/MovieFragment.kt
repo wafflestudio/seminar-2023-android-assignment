@@ -23,6 +23,7 @@ class MovieFragment : Fragment() {
     private lateinit var pagerAdapter : ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("moviefragment","oncreate")
         super.onCreate(savedInstanceState)
         binding = FragmentMovieBinding.inflate(layoutInflater)
         viewPager = binding.pager
@@ -35,7 +36,7 @@ class MovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        Log.d("moviefragment","oncreaveview")
         binding.logoutBtn.setOnClickListener {
             viewModel.logout()
         }
@@ -46,6 +47,9 @@ class MovieFragment : Fragment() {
             if(it.isNotEmpty()) {
                 pagerAdapter.submitList(it)
                 pagerAdapter.notifyDataSetChanged()
+                //굉장히 이상한 짓인 것 같지만, FragmentStateAdapter는 notifyDataSetChanged()를 호출했을떄
+                //현재 페이지 frgment가 업데이트 되지 않는다고 해서 아래와 같이 처리했습니다 ㅜㅜ
+                pagerAdapter.firstFragment.onUpdateData(it[0])
                 Log.d("observe", it.toString())
             }
         })
