@@ -1,5 +1,6 @@
 package com.wafflestudio.assignment4
 
+import NumberAdapter
 import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -25,7 +26,6 @@ class NetworkModule {
             .addInterceptor { chain ->
                 val newRequest = chain.request()
                     .newBuilder()
-                    .addHeader("Accept", "application/json")
                     .build()
                 chain.proceed(newRequest)
             }.build()
@@ -33,7 +33,9 @@ class NetworkModule {
 
     @Provides
     fun provideMoshi(): Moshi {
-        return Moshi.Builder().add(KotlinJsonAdapterFactory())
+        return Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .add(NumberAdapter())
             .build()
     }
 

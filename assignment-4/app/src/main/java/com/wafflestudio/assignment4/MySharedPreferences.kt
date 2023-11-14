@@ -13,4 +13,8 @@ class MySharedPreferences (context: Context){
     fun setToken(key: String, defValue: String){
         preferences.edit().putString(key, defValue).apply()
     }
+
+    fun removeToken(key: String){
+        preferences.edit().remove(key).apply()
+    }
 }
