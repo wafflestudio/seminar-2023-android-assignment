@@ -17,21 +17,20 @@ import javax.inject.Singleton
 class NetworkModule {
     @Provides
     fun provideMoshi(): Moshi {
-        return Moshi.Builder().add(KotlinJsonAdapterFactory())
+        return Moshi.Builder().add(com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory())
             .build()
     }
 
     @Provides
-    fun provideOkHttpClient(): OkHttpClient.Builder {
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor{chain ->
                 val newRequest=chain.request()
                     .newBuilder()
-                    .addHeader("Authorization","토큰 값")
-                    .addHeader("accept","application/json")
+                    .addHeader("Accept","application/json")
                     .build()
                 chain.proceed(newRequest)
-            }
+            }.build()
     }
 
     @Provides
