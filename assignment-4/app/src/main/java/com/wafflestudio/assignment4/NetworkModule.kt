@@ -32,7 +32,7 @@ class NetworkModule {
 
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi,
-    ): Retrofit {return Retrofit.Builder().baseUrl("https://api.themoviedb.org/") //수정필요
+    ): Retrofit {return Retrofit.Builder().baseUrl("https://api.themoviedb.org/3/")
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

@@ -19,9 +19,11 @@ class MainActivity : AppCompatActivity() {
         val mainFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val controller = mainFragment.navController
 
+
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPref.getString("token","")
 
         if(token != "") controller.navigate(R.id.action_loginFragment_to_homeFragment)
+
     }
 }
