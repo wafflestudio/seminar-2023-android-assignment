@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    //Dagger
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -53,4 +56,18 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
 
+    // OkHttp – Http 통신을 간편하게 해주는 것
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+    // Retrofit – API 인터페이스를 구현해주는 것
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    // moshi – Data class와 JSON과의 직렬화/역직렬화
+    implementation("com.squareup.moshi:moshi:1.14.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+
+    // Dagger – 싱글톤 패턴으로 단 하나의 인스턴스만 관리, 전체 모듈을 자동으로
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
 }
