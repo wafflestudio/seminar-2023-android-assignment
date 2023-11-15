@@ -1,82 +1,45 @@
 package com.example.assignment2
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.TypeAItemViewBinding
-import com.example.assignment2.databinding.TypeBItemViewBinding
-import com.example.assignment2.databinding.TypeCItemViewBinding
 
-sealed class MyMultiData(val viewType: ViewType) {
-    data class TypeA(val texts: List<Int>) : MyMultiData(viewType = ViewType.A)
-    data class TypeB(@DrawableRes val imageRes: Int) : MyMultiData(viewType = ViewType.B)
-    data class TypeC(val num: Int) : MyMultiData(viewType = ViewType.C)
-    enum class ViewType { A, B, C } // viewType은 잠시 무시하자
-}
 class Adapter(
-    private val list:List<MyMultiData>,
+    private val list:List<List<Int>>,
     private val context: Context
-):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            MyMultiData.ViewType.A.ordinal -> TypeAViewHolder(
-                TypeAItemViewBinding.inflate(LayoutInflater.from(parent.context))
-            )
-            MyMultiData.ViewType.B.ordinal -> TypeBViewHolder(
-                TypeBItemViewBinding.inflate(LayoutInflater.from(parent.context))
-            )
-            MyMultiData.ViewType.C.ordinal -> TypeCViewHolder(
-                TypeCItemViewBinding.inflate(LayoutInflater.from(parent.context))
-            )
-            else -> throw IllegalAccessError("")
-        }
+):RecyclerView.Adapter<Adapter.TypeAViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeAViewHolder {
+        val viewHolder=TypeAViewHolder(TypeAItemViewBinding.inflate(LayoutInflater.from(parent.context)))
+        viewHolder.setIsRecyclable(false)
+        return viewHolder
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(list[position]){
-            is MyMultiData.TypeA -> MyMultiData.ViewType.A.ordinal
-            is MyMultiData.TypeB -> MyMultiData.ViewType.B.ordinal
-            is MyMultiData.TypeC -> MyMultiData.ViewType.C.ordinal
-        }
+        return position
     }
 
     override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val data=list[position]
-        when(holder){
-            is TypeAViewHolder -> holder.bind(data as MyMultiData.TypeA)
-            is TypeBViewHolder -> holder.bind(data as MyMultiData.TypeB)
-            is TypeCViewHolder -> holder.bind(data as MyMultiData.TypeC)
-        }
+    override fun onBindViewHolder(holder: TypeAViewHolder, position: Int) {
+        holder.bind(list[position])
     }
 
     inner class TypeAViewHolder(private val binding: TypeAItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(data:MyMultiData.TypeA){
+            fun bind(data:List<Int>){
                 var i:Int=1
-                data.texts.forEach{
+                Log.d("aaaa",data.toString())
+                data.forEach{
                     val textView=TextView(context).apply{
                         text="($i)번째 턴 : ($it)"
                     }
                     i+=1
-                    binding.root.addView(textView)
+                    binding.historyview.addView(textView)
                 }
             }
-    }
-    inner class TypeBViewHolder(private val binding: TypeBItemViewBinding) :
-        RecyclerView.ViewHolder(binding.root){
-        fun bind(data: MyMultiData.TypeB){
-            binding.image.setImageResource(data.imageRes)
-        }
-    }
-    inner class TypeCViewHolder(private val binding: TypeCItemViewBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(data:MyMultiData.TypeC){
-            binding.num.text=data.num.toString()
-        }
     }
 }
