@@ -27,7 +27,7 @@ class DetailVocaActivity: AppCompatActivity() {
     private lateinit var deleteWordBookBinding: DeleteWordBookBinding
     private lateinit var addWordBinding: AddWordBinding
 
-    private val viewModel:DetailVocaViewModel by viewModels();
+    private val viewModel:DetailVocaViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,6 @@ class DetailVocaActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         val wordListID = intent.getIntExtra("id", 0)
-        println(wordListID)
 
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.Main){
@@ -148,8 +147,7 @@ class DetailVocaActivity: AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener {
-            val intent = Intent(this@DetailVocaActivity,MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 }

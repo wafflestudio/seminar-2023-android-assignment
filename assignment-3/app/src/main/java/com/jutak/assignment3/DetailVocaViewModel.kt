@@ -16,12 +16,9 @@ class DetailVocaViewModel @Inject constructor(
 
     private var password:String = ""
 
-    private val _permission = MutableLiveData<Boolean>()
+    private val _permission = MutableLiveData<Boolean>(false)
     val permission: LiveData<Boolean> = _permission
 
-    init{
-        _permission.value = false
-    }
     suspend fun fetchWordList(id: Int){
         _wordList.value = api.getWordListById(id)
     }
