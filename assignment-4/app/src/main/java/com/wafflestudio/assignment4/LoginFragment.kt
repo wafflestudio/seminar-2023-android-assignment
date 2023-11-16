@@ -59,7 +59,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.button.setOnClickListener{
-            binding.button.text="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MmE3YWM3YmFkNzYxNmIxZThhMTc3ZjU4NmMwOWU5MyIsInN1YiI6IjY1NTM0OTBkOTY1M2Y2MTNmNDc0OWE0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gdB1lLd0H_1Fd9FUCi88NQUsYXDKzIz141VtP3tcReo"
+            //binding.button.text="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MmE3YWM3YmFkNzYxNmIxZThhMTc3ZjU4NmMwOWU5MyIsInN1YiI6IjY1NTM0OTBkOTY1M2Y2MTNmNDc0OWE0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gdB1lLd0H_1Fd9FUCi88NQUsYXDKzIz141VtP3tcReo"
             CoroutineScope(Dispatchers.Main).launch {
                 if(viewModel.login(binding.button.text.toString()))
                     loginsuc()
