@@ -20,7 +20,7 @@ class LoginViewModel @Inject constructor(
 
     suspend fun getmovies(){
         Log.d("aaaa","did")
-        movielist=api.getmovies("Bearer "+MyApplication.prefs.getString("token","")).result.toMutableList()
+        movielist=api.getmovies("Bearer "+MyApplication.prefs.getString("token","")).result.slice(0..<5).toMutableList()
         livemoviellist.value=movielist
         Log.d("aaaa",movielist.toString())
     }

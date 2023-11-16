@@ -23,15 +23,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val adapter=ViewPagerAdapter(viewModel.movielist,this)
-        FragmentHomeBinding.inflate(layoutInflater).viewpager.adapter=adapter
-        //FragmentHomeBinding.inflate(layoutInflater).viewpager
-        adapter.notifyDataSetChanged()
-
-        viewModel.livemoviellist.observe(this){
-            Log.d("aaaa",viewModel.movielist.toString())
-            adapter.notifyDataSetChanged()
-        }
     }
 }

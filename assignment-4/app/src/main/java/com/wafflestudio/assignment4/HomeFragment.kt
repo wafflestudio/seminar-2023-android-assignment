@@ -1,11 +1,13 @@
 package com.wafflestudio.assignment4
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.wafflestudio.assignment4.databinding.FragmentHomeBinding
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,8 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment @Inject constructor() : Fragment() {
     private val viewModel:LoginViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
+    lateinit var viewPagerAdapter: ViewPagerAdapter
+    lateinit var viewPager: ViewPager2
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -51,6 +55,16 @@ class HomeFragment @Inject constructor() : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentHomeBinding.inflate(layoutInflater,container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val viewPagerAdapter=ViewPagerAdapter(viewModel.movielist,this)
+        binding.viewpager.adapter=viewPagerAdapter
+
+        viewModel.livemoviellist.observe(requireActivity()){
+            Log.d("aaaa",viewModel.movielist.toString())
+            viewPagerAdapter.notifyDataSetChanged()
+        }
     }
 
     companion object {
