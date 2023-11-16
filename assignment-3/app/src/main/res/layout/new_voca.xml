@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10sp"
+    android:layout_marginEnd="10sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/make_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/make_new"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize = "25sp"
+        />
+
+    <TextView
+        android:id="@+id/new_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_host"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/make_new"
+        app:layout_constraintBottom_toTopOf="@id/new_host_type"
+        android:textSize = "20sp"
+        />
+
+    <EditText
+        android:id="@+id/new_host_type"
+        android:hint ="@string/new_host_type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_host"
+        app:layout_constraintBottom_toTopOf="@id/new_list"
+        />
+
+    <TextView
+        android:id="@+id/new_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_host_type"
+        app:layout_constraintBottom_toTopOf="@id/new_list_type"
+        android:textSize = "20sp"
+        />
+
+    <EditText
+        android:id="@+id/new_list_type"
+        android:hint ="@string/new_list_type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_list"
+        app:layout_constraintBottom_toTopOf="@id/new_pass"
+        />
+
+    <TextView
+        android:id="@+id/new_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_list_type"
+        app:layout_constraintBottom_toTopOf="@id/new_pass_type"
+        android:textSize = "20sp"
+        />
+
+    <EditText
+        android:id="@+id/new_pass_type"
+        android:hint ="@string/new_pass_type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_pass"
+        app:layout_constraintBottom_toTopOf="@id/check"
+        />
+
+    <TextView
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize = "20sp"
+        />
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_marginEnd="10sp"
+        app:layout_constraintEnd_toStartOf="@id/check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize = "20sp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Assignment3</string>
+    <string name="word_list">단어장 목록</string>
+    <string name="make_new">새 단어장 만들기</string>
+    <string name="new_host">단어장 소유자</string>
+    <string name="new_host_type">소유자 이름을 입력하세요</string>
+    <string name="new_list">단어장 이름</string>
+    <string name="new_list_type">단어장 이름을 입력하세요</string>
+    <string name="new_pass">단어장 비밀번호</string>
+    <string name="new_pass_type">단어장 비밀번호를 입력하세요</string>
+    <string name="cancel">취소</string>
+    <string name="check">확인</string>
+    <string name="host">소유자</string>
+    <string name="list">단어장 이름</string>
+    <string name="edit">편집하기</string>
+    <string name="voca_info_title">단어 상세보기</string>
+    <string name="voca_info_spell">단어</string>
+    <string name="voca_info_mean">뜻</string>
+    <string name="voca_info_synonym">유의어</string>
+    <string name="voca_info_antonym">반의어</string>
+    <string name="voca_info_sentence">예문</string>
+    <string name="password_info_title">단어장 편집하기</string>
+    <string name="password_info_password">단어장 비밀번호</string>
+    <string name="password_info_password_type">단어장 비밀번호를 입력하세요</string>
+    <string name="delete_info_title">단어장 삭제하기</string>
+    <string name="delete_info_delete">단어장을 정말 삭제하시겠습니까?</string>
+    <string name="add_info_title">단어 추가하기</string>
 </resources>
