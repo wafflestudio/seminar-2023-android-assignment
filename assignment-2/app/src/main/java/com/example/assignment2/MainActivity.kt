@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                     else -> "error"
                 }
             }
+            Log.d("aaaa",viewModel.board.toString())
             Log.d("aaaa",viewModel.history.toString())
             adapter.notifyDataSetChanged()
         }

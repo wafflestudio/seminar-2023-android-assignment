@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -46,7 +46,7 @@
 
             </TextView>
 
-        </LinearLayout>
+        </FrameLayout>
 
         <GridLayout
             android:id="@+id/gameboard"
@@ -208,7 +208,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/grey">
 

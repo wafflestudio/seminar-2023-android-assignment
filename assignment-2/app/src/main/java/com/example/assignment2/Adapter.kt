@@ -35,7 +35,7 @@ class Adapter(
                 Log.d("aaaa",data.toString())
                 data.forEach{
                     val textView=TextView(context).apply{
-                        text="($i)번째 턴 : ($it)"
+                        text="${i}번째 턴 : ${it}"
                     }
                     i+=1
                     binding.historyview.addView(textView)

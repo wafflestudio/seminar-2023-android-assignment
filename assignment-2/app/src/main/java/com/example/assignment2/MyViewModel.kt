@@ -45,7 +45,8 @@ class MyViewModel: ViewModel() {
 
     fun reset(h: List<Int> =emptyList()){
         this.board=mutableListOf(0,0,0,0,0,0,0,0,0)
-        this.history=listOf(h.toMutableList()).toMutableList()
+        this.history.clear()
+        this.history.add(mutableListOf())
         this.gamekey=0
         sync()
     }
