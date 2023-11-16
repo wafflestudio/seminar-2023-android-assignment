@@ -64,22 +64,25 @@ class DetailVocaActivity: AppCompatActivity() {
         addWord.setContentView(addWordBinding.root)
 
 
+        val adapter = DetailVocaMultiAdapter(onItemClick = {
+            vocaInfoBinding.vocaSpell.text = it.spell
+            vocaInfoBinding.vocaMean.text = it.meaning
+            vocaInfoBinding.vocaSynonym.text = it.synonym
+            vocaInfoBinding.vocaAntonym.text = it.antonym
+            vocaInfoBinding.vocaSentence.text = it.sentence
+
+            VocaInfo.show()
+
+            vocaInfoBinding.exitButton.setOnClickListener{
+                VocaInfo.dismiss()
+            }
+        })
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
         viewModel.wordList.observe(this){
-            val adapter = DetailVocaMultiAdapter(it.wordList, onItemClick = {
-                vocaInfoBinding.vocaSpell.text = it.spell
-                vocaInfoBinding.vocaMean.text = it.meaning
-                vocaInfoBinding.vocaSynonym.text = it.synonym
-                vocaInfoBinding.vocaAntonym.text = it.antonym
-                vocaInfoBinding.vocaSentence.text = it.sentence
-
-                VocaInfo.show()
-
-                vocaInfoBinding.exitButton.setOnClickListener{
-                    VocaInfo.dismiss()
-                }
-            })
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
+            adapter.setWordList(viewModel.wordList.value?.wordList)
         }
 
         binding.editButton.setOnClickListener {

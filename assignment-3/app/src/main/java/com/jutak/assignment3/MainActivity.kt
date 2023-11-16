@@ -34,18 +34,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val adapter =MyMultiAdapter(onItemClick = {id ->
+            val intent = Intent(this@MainActivity,DetailVocaActivity::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
+        })
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.wordBookList.observe(this){
-            val adapter =MyMultiAdapter(it, onItemClick = {id ->
-                val intent = Intent(this@MainActivity,DetailVocaActivity::class.java)
-                intent.putExtra("id",id)
-                startActivity(intent)
-            })
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
+            adapter.setWordBookList(viewModel.wordBookList.value)
         }
-
-
 
         val newVocAdd = Dialog(this)
         newVocAddBinding = NewVocaBinding.inflate(layoutInflater)

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jutak.assignment3.databinding.MainWordListsBinding
 
 class MyMultiAdapter(
-    private var list:List<WordBook>,
     private var onItemClick: (id : Int) ->Unit
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var list:List<WordBook> = listOf()
     override fun getItemCount(): Int = list.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -29,6 +29,11 @@ class MyMultiAdapter(
                     onItemClick.invoke(data.id)
                 }
             }
+    }
+
+    fun setWordBookList(newList:List<WordBook>?){
+        if(newList!=null) list = newList
+        notifyItemChanged(list.lastIndex)
     }
 
 }

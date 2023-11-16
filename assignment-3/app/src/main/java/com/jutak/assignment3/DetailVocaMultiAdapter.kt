@@ -7,9 +7,9 @@ import com.jutak.assignment3.databinding.DetailWordBinding
 import com.jutak.assignment3.databinding.MainWordListsBinding
 
 class DetailVocaMultiAdapter(
-    private var list:List<Word>,
     private var onItemClick: (word: Word) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var list:List<Word> = listOf()
     override fun getItemCount(): Int = list.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -29,6 +29,13 @@ class DetailVocaMultiAdapter(
             binding.root.setOnClickListener{
                 onItemClick.invoke(data)
             }
+        }
+    }
+
+    fun setWordList(newList : List<Word>?){
+        if(newList!=null) {
+            list = newList
+            notifyItemChanged(list.lastIndex)
         }
     }
 }
