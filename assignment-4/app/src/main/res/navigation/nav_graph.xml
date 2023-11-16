@@ -10,7 +10,13 @@
         android:name="com.wafflestudio.assignment4.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.wafflestudio.assignment4.LoginFragment"
@@ -18,6 +24,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

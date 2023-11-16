@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.wafflestudio.assignment4.databinding.FragmentHomeBinding
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
@@ -58,9 +59,14 @@ class HomeFragment @Inject constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.logout.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+            MyApplication.prefs.setString("token","")
+        }
+
         val viewPagerAdapter=ViewPagerAdapter(viewModel.movielist,this)
         binding.viewpager.adapter=viewPagerAdapter
-
         viewModel.livemoviellist.observe(requireActivity()){
             Log.d("aaaa",viewModel.movielist.toString())
             viewPagerAdapter.notifyDataSetChanged()

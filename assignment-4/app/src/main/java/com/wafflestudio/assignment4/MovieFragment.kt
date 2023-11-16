@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.wafflestudio.assignment4.databinding.FragmentMovieBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +33,12 @@ class MovieFragment(val movie:MovieInfo) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("aaaa",movie.title)
+        Glide.with(binding.root.context)
+            .load("https://image.tmdb.org/t/p/original/"+movie.poster_path)
+            .into(binding.poster)
         binding.title.text=movie.title
+        binding.overview.text=movie.overview
+        binding.star.text="평점 : " + movie.vote_average.toString()
+        binding.date.text="개봉일 : " + movie.release_date
     }
 }
