@@ -4,16 +4,15 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment2.databinding.TypeAItemViewBinding
 import com.example.assignment2.databinding.TypeBItemViewBinding
 import com.example.assignment2.databinding.TypeCItemViewBinding
 
 sealed class MyMultiData(val viewType: ViewType) {
-    data class TypeA(val board : Array<Array<Boolean?>>, val count:Int) : MyMultiData(ViewType.A)
+    data class TypeA(val board :List<Boolean?>, val count:Int) : MyMultiData(ViewType.A)
     data class TypeB(val gameStart: String) : MyMultiData(ViewType.B)
-    data class TypeC(val board : Array<Array<Boolean?>>, val team:Boolean, val isEnd:Boolean) : MyMultiData(ViewType.C)
+    data class TypeC(val board : List<Boolean?>, val team:Boolean, val isEnd:Boolean) : MyMultiData(ViewType.C)
     enum class ViewType { A, B, C }
 }
 
@@ -58,24 +57,25 @@ class MyMultiAdapter(
         list = newList;
     }
 
-    private fun fillBoard(column:Int, row:Int, block:TextView, board:Array<Array<Boolean?>>){
-        if(board[column][row] == true) block.text = "X"
-        else if (board[column][row] == false) block.text = "O"
+    private fun fillBoard(num:Int, block:TextView, board:List<Boolean?>){
+        if(board[num] == true) block.text = "X"
+        else if (board[num] == false) block.text = "O"
         else block.text = "    "
     }
+
     inner class TypeAViewHolder(private val binding: TypeAItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data:MyMultiData.TypeA){
-            fillBoard(0,0,binding.block00,data.board)
-            fillBoard(0,1,binding.block01,data.board)
-            fillBoard(0,2,binding.block02,data.board)
-            fillBoard(1,0,binding.block10,data.board)
-            fillBoard(1,1,binding.block11,data.board)
-            fillBoard(1,2,binding.block12,data.board)
-            fillBoard(2,0,binding.block20,data.board)
-            fillBoard(2,1,binding.block21,data.board)
-            fillBoard(2,2,binding.block22,data.board)
+            fillBoard(0,binding.block00,data.board)
+            fillBoard(1,binding.block01,data.board)
+            fillBoard(2,binding.block02,data.board)
+            fillBoard(3,binding.block10,data.board)
+            fillBoard(4,binding.block11,data.board)
+            fillBoard(5,binding.block12,data.board)
+            fillBoard(6,binding.block20,data.board)
+            fillBoard(7,binding.block21,data.board)
+            fillBoard(8,binding.block22,data.board)
 
             binding.whatNumber.text = data.count.toString()
         }
@@ -91,15 +91,15 @@ class MyMultiAdapter(
     inner class TypeCViewHolder(private val binding: TypeCItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data:MyMultiData.TypeC){
-            fillBoard(0,0,binding.block00,data.board)
-            fillBoard(0,1,binding.block01,data.board)
-            fillBoard(0,2,binding.block02,data.board)
-            fillBoard(1,0,binding.block10,data.board)
-            fillBoard(1,1,binding.block11,data.board)
-            fillBoard(1,2,binding.block12,data.board)
-            fillBoard(2,0,binding.block20,data.board)
-            fillBoard(2,1,binding.block21,data.board)
-            fillBoard(2,2,binding.block22,data.board)
+            fillBoard(0,binding.block00,data.board)
+            fillBoard(1,binding.block01,data.board)
+            fillBoard(2,binding.block02,data.board)
+            fillBoard(3,binding.block10,data.board)
+            fillBoard(4,binding.block11,data.board)
+            fillBoard(5,binding.block12,data.board)
+            fillBoard(6,binding.block20,data.board)
+            fillBoard(7,binding.block21,data.board)
+            fillBoard(8,binding.block22,data.board)
 
             if (!data.isEnd) binding.status.text = "무승부!"
             else if(data.team) binding.status.text = "O의 승리!"

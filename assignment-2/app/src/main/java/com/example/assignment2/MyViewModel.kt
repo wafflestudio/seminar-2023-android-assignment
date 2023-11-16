@@ -5,72 +5,90 @@ import android.provider.Settings
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 class MyViewModel() :ViewModel() {
-    var team: Boolean = true;
-    var isEnd: Boolean = false;
-    var record: Array<Array<Array<Boolean?>>> = Array(9) { Array(3) { Array(3) { null } } }
-    var board: Array<Array<Boolean?>> = Array(3) { Array(3) { null } }
+    var team: Boolean = true
+    var isEnd: Boolean = false
     var count: Int = 0
+    var record: Array<List<Boolean?>> = Array(9) { mutableListOf(null) }
+
+    private val _resetText = MutableLiveData<String>()
+    val resetText: LiveData<String> = _resetText
+
+    private val _statusText = MutableLiveData<String>()
+    var statusText:LiveData<String> = _statusText
+
+    private val _board:MutableLiveData<List<Boolean?>> = MutableLiveData<List<Boolean?>>(List(9){null})
+    val board:LiveData<List<Boolean?>> = _board
 
     var data = mutableListOf<MyMultiData>(MyMultiData.TypeB("게임 시작!"))
 
-    fun basicSet(column: Int, row: Int, block: TextView){
-        if(board[column][row] == true) block.text = "X"
-        else if(board[column][row] == false) block.text = "O"
-    }
-
     private fun checkEnd() {
+        val currentBoard = board.value ?: return
+
         // Check rows
         for (i in 0 until 3) {
-            if (board[i][0] != null && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+            val row = i * 3
+            if (currentBoard[row] != null && currentBoard[row] == currentBoard[row + 1] && currentBoard[row + 1] == currentBoard[row + 2]) {
                 isEnd = true
             }
         }
 
         // Check columns
         for (i in 0 until 3) {
-            if (board[0][i] != null && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+            if (currentBoard[i] != null && currentBoard[i] == currentBoard[i + 3] && currentBoard[i + 3] == currentBoard[i + 6]) {
                 isEnd = true
             }
         }
 
         // Check diagonals
-        if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+        if (currentBoard[0] != null && currentBoard[0] == currentBoard[4] && currentBoard[4] == currentBoard[8]) {
             isEnd = true
         }
-        if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+        if (currentBoard[2] != null && currentBoard[2] == currentBoard[4] && currentBoard[4] == currentBoard[6]) {
             isEnd = true
         }
     }
 
-    fun boardClick(column: Int, row: Int, block: TextView, reset: TextView, status: TextView) {
-        if (count < 9 && board[column][row] == null && !isEnd) {
+    fun reset(){
+        team = true
+        isEnd = false
+        count= 0
+        record= Array(9) { mutableListOf(null) }
+        _resetText.value = ""
+        _statusText.value = ""
+        _board.value = (List(9){null})
+    }
+
+    fun boardClick(num: Int) {
+        val currentBoard = _board.value?.toMutableList() ?: mutableListOf()
+        currentBoard[num] = team
+
+        if (count < 9 && _board.value?.get(num) == null && !isEnd) {
             //status update
-            board[column][row] = team
-            record[count] = board
+            _board.value = currentBoard
+            record[count] = currentBoard
             count++
             team = !team
-
-            if (team) block.text = "O"
-            else block.text = "X"
 
             checkEnd()
 
             //if Game End
             if(isEnd || count == 9){
-                reset.text = "한번더"
+                _resetText.value = "한번더"
 
-                data.add(MyMultiData.TypeC(board,team,isEnd))
+                data.add(MyMultiData.TypeC(currentBoard,team,isEnd))
 
-                if(!isEnd) status.text = "무승부"
-                else status.text = "게임 오버"
+                if(!isEnd) _statusText.value = "무승부"
+                else _statusText.value = "게임 오버"
             }
             //if Game not End
             else{
-                data.add(MyMultiData.TypeA(board,count))
-                if (team) status.text = "X의 차례입니다"
-                else status.text = "O의 차례입니다"
+                data.add(MyMultiData.TypeA(currentBoard,count))
+                if (team) _statusText.value = "O의 차례입니다"
+                else _statusText.value = "X의 차례입니다"
             }
         }
     }
