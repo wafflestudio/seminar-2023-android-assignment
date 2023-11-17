@@ -19,11 +19,10 @@ class NetworkModule {
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().addInterceptor{
             chain -> val newRequest = chain.request()
-            .newBuilder().addHeader("x-access-token","")
+            .newBuilder()
             .build()
             chain.proceed(newRequest)
-        }
-            .build()
+        }.build()
     }
     @Provides
     fun provideMoshi(): Moshi {

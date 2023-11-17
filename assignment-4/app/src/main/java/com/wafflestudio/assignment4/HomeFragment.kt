@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.wafflestudio.assignment4.databinding.FragmentHomeBinding
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +31,7 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val viewModel:HomeViewModel by viewModels()
     private lateinit var movieInformAdapter:MovieInformAdapter
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewPager: ViewPager2
@@ -44,6 +49,10 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        CoroutineScope(Dispatchers.IO).launch{
+            viewModel.fetchMovie()
+        }
+        println("a")
         return binding.root
     }
 
