@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -43,33 +46,37 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // If token is exist, go to HomeFragment 바로
+        // 코드 필요
+
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.click.setOnClickListener {
-            val token = binding.api.text.toString()
+            var token = binding.api.text.toString()
+            token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZDdhMjI5YWQ4ZjkxYTM5NWU4YzY4MjQ0YjAxY2M1MCIsInN1YiI6IjY1NTMzN2FlNjdiNjEzNDVjYjRjZDljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.th4ziXLDaVuZdGDz-oJO5w25mnQjO4rrrL0vdCkrezQ"
+
             CoroutineScope(Dispatchers.IO).launch{
-                if(viewModel.login(token)) navigateToHomeFragment()
+                viewModel.login(token)
             }
         }
+
+        viewModel.succeed.observe(viewLifecycleOwner){
+            if(it) findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        }
+
         return binding.root;
     }
 
-    private fun navigateToHomeFragment() {
-        // Obtain the FragmentManager
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-
-        // Begin the transaction
-        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-
-        // Replace the current fragment with the new one
-        val newFragment = HomeFragment()
-        transaction.replace(R.id.action_loginFragment_to_homeFragment, newFragment)
-    }
 
     companion object {
         /**
