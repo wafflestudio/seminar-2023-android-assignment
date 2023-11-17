@@ -1,9 +1,14 @@
 package com.jutak.assignment3
 
+import android.content.Context
+import android.util.Log
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jutak.assignment3.databinding.AddDialogLayoutBinding
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,98 +17,59 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val restApi: MyRestAPI,
-): ViewModel() {
+    private val api: MyRestAPI
+) : ViewModel() {
 
-    val liveWordSets: MutableLiveData<List<VocabularySet>> = MutableLiveData()
-    val liveVocabularyDetails: MutableLiveData<VocabularySetDetails> = MutableLiveData()
-    private val _words = MutableLiveData<List<Word>>()  // Internal MutableLiveData
-    val words: LiveData<List<Word>> = _words
+    private val _wordListsLiveData = MutableLiveData<MutableList<MyMultiData.WordListsInfo>>(mutableListOf())
+    val wordListsLiveData: LiveData<MutableList<MyMultiData.WordListsInfo>> = _wordListsLiveData
 
-
-
-    fun fetchVocabularySets() {
+    fun getWordListsInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val wordSetsFromServer = restApi.fetchAllVocabularySets()
+                val response = api.getWordListsInfoSuspend()
+                postWordLists(response)
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "Error fetching word lists", e)
+            }
+        }
+    }
+
+    private fun postWordLists(wordLists: MutableList<MyMultiData.WordListsInfo>) {
+        _wordListsLiveData.postValue(wordLists)
+    }
+
+    fun showAlertDialog(context: Context) {
+        val binding = AddDialogLayoutBinding.inflate(LayoutInflater.from(context))
+        AlertDialog.Builder(context).apply {
+            setTitle("제목")
+            setView(binding.root)
+            setPositiveButton("확인") { _, _ ->
+                addWordList(binding.name.text.toString(), binding.owner.text.toString(), binding.pw.text.toString())
+            }
+            setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
+            show()
+        }
+    }
+
+    private fun addWordList(name: String, owner: String, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = api.postWordListSuspend(MyMultiData.WordListPost(name, owner, password))
                 withContext(Dispatchers.Main) {
-                    liveWordSets.value = wordSetsFromServer
+                    val tempData = _wordListsLiveData.value ?: mutableListOf()
+                    tempData.addAll(response)
+                    _wordListsLiveData.value = tempData
                 }
-            } catch (e: Exception) {
-                // Handle the error
+            } catch (e: retrofit2.HttpException) {
+                Log.d("okay", e.response()?.errorBody()?.string().toString())
             }
         }
     }
 
 
-
-    fun fetchVocabularySetDetails(setId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val vocabularyDetails = restApi.fetchVocabularySetDetails(setId)
-                withContext(Dispatchers.Main) {
-                    liveVocabularyDetails.value = vocabularyDetails
-                }
-            } catch (e: Exception) {
-                // Handle the error
-            }
+    suspend fun getWords(id: Int): MyMultiData.WordInfo {
+        return withContext(Dispatchers.IO) {
+            api.getWordsSuspend(id)
         }
     }
-
-    fun postWordSetToServer(postInput: PostWordSetInput) {
-        viewModelScope.launch {
-            try {
-                val response = restApi.postWordSet(postInput)
-                if (response != null) {
-                    val updatedList = liveWordSets.value?.toMutableList()
-                    updatedList?.add(response)
-                    liveWordSets.postValue(updatedList)
-                }
-            } catch (e: Exception) {
-                // 에러 처리 로직 (예: Toast 메시지 표시)
-            }
-        }
-    }
-
-    fun addWordToWordSet(updatedVocabulary: Word, setId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val updatedDetails = restApi.updatedVocabulary(updatedVocabulary, setId)
-                withContext(Dispatchers.Main) {
-                    liveVocabularyDetails.value = updatedDetails
-                }
-            } catch (e: Exception) {
-                // Handle the error
-            }
-        }
-    }
-/*
-    fun deleteVocabularySet(setId: Int, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                restApi.deleteVocabularySet(PasswordValidation(password), setId)
-                fetchVocabularySets() // Optionally refresh the vocabulary sets list
-            } catch (e: Exception) {
-                // Handle the error
-            }
-        }
-    }
-
-
- */
-    data class UpdateVocabulary(
-        val wordSet: WordSet,
-        val password: String
-    )
-
-    data class PasswordValidation(
-        val password: String
-    )
-
-    data class PostWordSetInput(
-        val setName: String,
-        val ownerName: String,
-        val password: String
-    )
-
 }

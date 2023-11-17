@@ -1,90 +1,73 @@
 package com.jutak.assignment3
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.assignment3.databinding.ActivityMainBinding
-import com.assignment3.databinding.WordAddBinding
+import com.jutak.assignment3.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import com.jutak.assignment3.MainViewModel.PostWordSetInput
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var mainBinding: ActivityMainBinding
-    private lateinit var wordSetAdapter: WordSetAdapter
+
+    private val adapter: WordListsInfoAdapter by lazy {
+        WordListsInfoAdapter(emptyList()) { id ->
+            onClick(id)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mainBinding.root)
-
+        setupBinding()
         setupRecyclerView()
-        observeWordSetList()
-        setupEditButton()
-
-        viewModel.fetchVocabularySets()
+        setupViewModelObservers()
+        setupAddListButton()
     }
 
+    private fun setupBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
 
     private fun setupRecyclerView() {
-        wordSetAdapter = WordSetAdapter(mutableListOf(), this)
-        mainBinding.recyclerView.apply {
-            adapter = wordSetAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-        }
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-
-    private fun observeWordSetList() {
-        viewModel.liveWordSets.observe(this) { vocabularySetList ->
-            val wordSets = vocabularySetList.map { vocabSet ->
-                WordSetAdapter.WordSet(
-                    id = vocabSet.id,
-                    name = vocabSet.setName,
-                    owner = vocabSet.ownerName
-                )
+    private fun setupViewModelObservers() {
+        viewModel.getWordListsInfo()
+        viewModel.wordListsLiveData.observe(this) { wordLists ->
+            wordLists?.let {
+                adapter.submitList(it)
             }
-            wordSetAdapter.updateData(wordSets)
         }
     }
 
-
-    private fun setupEditButton() {
-        mainBinding.editButton.setOnClickListener {
-            showAddWordSetDialog()
+    private fun setupAddListButton() {
+        binding.addListButton.setOnClickListener {
+            viewModel.showAlertDialog(this)
         }
     }
 
-    private fun showAddWordSetDialog() {
-        val addWordSetBinding = WordAddBinding.inflate(layoutInflater)
-        val dialog = AlertDialog.Builder(this)
-            .setView(addWordSetBinding.root)
-            .create()
-
-        addWordSetBinding.positiveButton.setOnClickListener {
-            val owner = addWordSetBinding.editOwner.text.toString()
-            val setName = addWordSetBinding.editSetName.text.toString()
-            val password = addWordSetBinding.editPassword.text.toString()
-
-            val postInput = PostWordSetInput(
-                setName = setName,
-                ownerName = owner,
-                password = password
-            )
-
-            viewModel.postWordSetToServer(postInput)  // Changed here
-            dialog.dismiss()
+    private fun onClick(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val words = viewModel.getWords(id)
+            withContext(Dispatchers.Main) {
+                startWordActivity(words)
+            }
         }
+    }
 
-        addWordSetBinding.negativeButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
+    private fun startWordActivity(words: MyMultiData.WordInfo) {
+        val intent = Intent(this@MainActivity, WordActivity::class.java)
+        intent.putExtra("wordList", words)
+        startActivity(intent)
     }
 }
