@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.wafflestudio.assignment4.databinding.FragmentHomeBinding
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,8 +27,9 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-
+    private lateinit var movieInformAdapter:MovieInformAdapter
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewPager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,11 +44,16 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-
-
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        movieInformAdapter = MovieInformAdapter(this)
+        viewPager = binding.pager
+        viewPager.adapter = movieInformAdapter
+    }
+
+
 
     companion object {
         /**
