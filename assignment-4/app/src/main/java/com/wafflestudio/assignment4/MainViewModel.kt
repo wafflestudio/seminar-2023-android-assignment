@@ -1,5 +1,8 @@
 package com.wafflestudio.assignment4
 
+import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -8,6 +11,11 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val api: MovieApi
 ): ViewModel() {
+
+
+
+    private val _loginStatus = MutableLiveData<String>()
+    val loginStatus : LiveData<String> = _loginStatus
     suspend fun tryLogin(key: String?){
         var response = api.getLogin("Bearer " + key)
     }
