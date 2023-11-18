@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.wafflestudio.assignment4.databinding.FragmentHomeBinding
@@ -66,6 +67,11 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        binding.back.setOnClickListener{
+            MyApplication.preference.deleteToken()
+            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
     }
 

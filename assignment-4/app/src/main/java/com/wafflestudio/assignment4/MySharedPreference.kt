@@ -17,4 +17,8 @@ class MySharedPreference(context: Context) {
     fun getToken():String?{
         return prefs.getString(Token, null)
     }
+
+    fun deleteToken(){
+        prefs.edit().remove(Token).apply()
+    }
 }

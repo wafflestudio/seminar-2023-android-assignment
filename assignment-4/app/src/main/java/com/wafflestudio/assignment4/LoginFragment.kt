@@ -1,14 +1,11 @@
 package com.wafflestudio.assignment4
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
@@ -16,8 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import retrofit2.HttpException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,11 +58,15 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.click.setOnClickListener {
-            var token = binding.api.text.toString()
-            token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZDdhMjI5YWQ4ZjkxYTM5NWU4YzY4MjQ0YjAxY2M1MCIsInN1YiI6IjY1NTMzN2FlNjdiNjEzNDVjYjRjZDljNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.th4ziXLDaVuZdGDz-oJO5w25mnQjO4rrrL0vdCkrezQ"
+            val token = binding.api.text.toString()
 
-            CoroutineScope(Dispatchers.IO).launch{
-                viewModel.login(token)
+            CoroutineScope(Dispatchers.Main).launch{
+                try {
+                    viewModel.login(token)
+                } catch(e:HttpException){
+                    Toast.makeText(context, "login Failed",Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
 
