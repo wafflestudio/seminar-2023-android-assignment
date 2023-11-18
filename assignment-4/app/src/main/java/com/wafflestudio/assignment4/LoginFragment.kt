@@ -8,15 +8,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.wafflestudio.assignment4.databinding.LoginFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-
+@AndroidEntryPoint
 class LoginFragment: Fragment(R.layout.login_fragment) {
+
     private lateinit var binding: LoginFragmentBinding
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +47,13 @@ class LoginFragment: Fragment(R.layout.login_fragment) {
                     }
                 }
             }
+        }
+
+        viewModel.loginStatus.observe(viewLifecycleOwner){
+            if(viewModel.loginStatus.value == "true"){
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+
         }
 
         return binding.root

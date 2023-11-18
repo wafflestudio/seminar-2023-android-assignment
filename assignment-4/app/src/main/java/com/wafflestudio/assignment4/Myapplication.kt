@@ -4,4 +4,13 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class Myapplication: Application()
+class Myapplication: Application(){
+    companion object{
+        lateinit var preferences: MySharedPreferences
+    }
+
+    override fun onCreate() {
+        preferences = MySharedPreferences(applicationContext)
+        super.onCreate()
+    }
+}

@@ -1,6 +1,7 @@
 package com.wafflestudio.assignment4
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,12 @@ class MainViewModel @Inject constructor(
     private val _loginStatus = MutableLiveData<String>()
     val loginStatus : LiveData<String> = _loginStatus
     suspend fun tryLogin(key: String?){
-        var response = api.getLogin("Bearer " + key)
+        val response = api.getLogin("Bearer " + key.toString())
+        if(response.success){
+            Myapplication.preferences.putToken("LoginSuccess", "true")
+            _loginStatus.postValue("true")
+        }
     }
+
+
 }

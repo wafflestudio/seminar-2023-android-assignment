@@ -8,7 +8,6 @@ import androidx.fragment.app.commit
 import com.wafflestudio.assignment4.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-class HomeFragment : Fragment(R.layout.home_fragment)
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
