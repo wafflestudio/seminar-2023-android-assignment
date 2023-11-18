@@ -1,4 +1,4 @@
-package com.example.movie
+package com.example.myapplication
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -15,16 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class NetworkModule {
     @Provides // OkHttpClient 타입의 객체를 어떻게 만드는 지 dagger에게 알려 준다.
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val newRequest = chain.request()
-                    .newBuilder()
-                    .addHeader("accept", "application/json")
-                    //.addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDA3YTQ0MjU1NGM5ZTNiM2E1NmVhNzQ1MmVkYTNjYiIsInN1YiI6IjY1NTcxODg0ZWE4NGM3MTA5MjI4OTFkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Tk7NnUpEzXoD-8aaCJw4L-neabtM56D_-WvgB2T50eo")
-                .build()
-                chain.proceed(newRequest)
-            }
-            .build()
+        return OkHttpClient.Builder().build()
     }
     @Provides
     fun provideMoshi(): Moshi {
@@ -39,7 +30,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://api.themoviedb.org")
+            .baseUrl("http://ec2-52-78-203-16.ap-northeast-2.compute.amazonaws.com:8000")
             .build()
     }
 

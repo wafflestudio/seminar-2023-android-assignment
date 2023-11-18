@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.movie.databinding.FragmentLoginBinding
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +28,9 @@ class LoginFragment : Fragment() {
     private var param2: String? = null
     //private val viewModel:MyViewModel by viewModels()
     private lateinit var binding:FragmentLoginBinding
-    //private val viewModel: MyViewModel by activityViewModels()
+    @Inject
+    lateinit var restAPI: MyRestAPI
+    private val viewModel:MyViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -48,8 +52,14 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginButton.setOnClickListener {
-            //viewModel.checkAPIKey(binding.apiKeyInput.text.toString())
+            viewModel.checkAPIKey(binding.apiKeyInput.text.toString())
         }
+        viewModel.error.observe(viewLifecycleOwner) { eventWrapper ->
+            eventWrapper.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     companion object {
