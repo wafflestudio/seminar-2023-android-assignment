@@ -70,4 +70,9 @@ dependencies {
     // Dagger – 싱글톤 패턴으로 단 하나의 인스턴스만 관리, 전체 모듈을 자동으로
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")
+
+    // Glide - Url을 통하여 이미지 표시
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 }

@@ -12,6 +12,6 @@ interface MyRestAPI {
     suspend fun giveToken(@Header("Authorization") token: String):Data.LoginResult
 
     @Headers("Accept: application/json")
-    @GET("3/movie/popular")
+    @GET("movie/popular")
     suspend fun getMovieInfo(@Header("Authorization") token:String):Data.Movies
 }

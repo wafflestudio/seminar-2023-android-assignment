@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,17 +50,23 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        CoroutineScope(Dispatchers.IO).launch{
-            viewModel.fetchMovie()
-        }
-        println("a")
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        movieInformAdapter = MovieInformAdapter(this)
-        viewPager = binding.pager
-        viewPager.adapter = movieInformAdapter
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.fetchMovie()
+            withContext(Dispatchers.Main) {
+                viewModel.movie.observe(viewLifecycleOwner) {
+                    if(it !=null){
+                        movieInformAdapter = MovieInformAdapter(this@HomeFragment, it)
+                        viewPager = binding.pager
+                        viewPager.adapter = movieInformAdapter
+                    }
+                }
+            }
+        }
     }
 
 
