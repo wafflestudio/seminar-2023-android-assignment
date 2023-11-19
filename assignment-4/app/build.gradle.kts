@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")

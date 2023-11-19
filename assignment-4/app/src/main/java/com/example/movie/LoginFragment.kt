@@ -52,7 +52,8 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginButton.setOnClickListener {
-            viewModel.checkAPIKey(binding.apiKeyInput.text.toString())
+            viewModel.checkAPIKey("eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDA3YTQ0MjU1NGM5ZTNiM2E1NmVhNzQ1MmVkYTNjYiIsInN1YiI6IjY1NTcxODg0ZWE4NGM3MTA5MjI4OTFkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Tk7NnUpEzXoD-8aaCJw4L-neabtM56D_-WvgB2T50eo")
+            //viewModel.checkAPIKey(binding.apiKeyInput.text.toString())
         }
         viewModel.error.observe(viewLifecycleOwner) { eventWrapper ->
             eventWrapper.getContentIfNotHandled()?.let { message ->

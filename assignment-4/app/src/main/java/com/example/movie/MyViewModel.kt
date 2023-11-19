@@ -24,7 +24,10 @@ class MyViewModel @Inject constructor(
     private val _transition = MutableLiveData<Event<String>>()
     val transition: LiveData<Event<String>> = _transition
 
+    private val _myMovieList :MutableLiveData<List<MyDataTypes.MovieInfo>> = MutableLiveData(listOf())
+    val myMovieList: LiveData<List<MyDataTypes.MovieInfo>> = _myMovieList
 
+    var myToken=""
     //navController.navigate(R.id.loginFragment)
 
     private fun handleError(exception: Throwable) {
@@ -41,10 +44,32 @@ class MyViewModel @Inject constructor(
                 Log.d("aaaa",response.toString())
                 withContext(Dispatchers.Main){
                     if(response.success){
+                        myToken=key
                         handleTransition()
                     }
                 }
             } catch (e: Exception) {
+                //Toast.makeText(getActivity(), "Wrong Token", Toast.LENGTH_LONG).show()
+                withContext(Dispatchers.Main){
+                    handleError(e)
+                }
+            }
+
+        }
+    }
+    fun getPopularMovies(key:String){
+        Log.d("aaaa",key)
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response=api.getPopularMovies("Bearer "+key)
+                //Log.d("aaaa",response.toString())
+
+                withContext(Dispatchers.Main){
+                    _myMovieList.value=response.results.subList(0,5)
+                    Log.d("bbbb",myMovieList.value.toString())
+                }
+            } catch (e: Exception) {
+                Log.d("aaaa",e.toString())
                 //Toast.makeText(getActivity(), "Wrong Token", Toast.LENGTH_LONG).show()
                 withContext(Dispatchers.Main){
                     handleError(e)
