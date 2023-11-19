@@ -1,6 +1,7 @@
 package com.wafflestudio.assignment4
 
 import android.app.Application
+import android.graphics.Movie
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,18 +22,24 @@ class MainViewModel @Inject constructor(
         val response = api.getLogin("Bearer " + key.toString())
         if(response.success){
             withContext(Dispatchers.Main) {
+                Myapplication.preferences.putToken("Token",key.toString())
                 Myapplication.preferences.putToken("LoginStatus", "true")
                 _loginStatus.value = "true"
             }
         }
     }
-
     fun logout(){
-        Log.d("Token",Myapplication.preferences.getToken("LoginStatus").toString())
+        Myapplication.preferences.removeToken("Token")
         Myapplication.preferences.removeToken("LoginStatus")
         _loginStatus.value = "false"
-
     }
 
+    private val _movieList = MutableLiveData<List<MovieData>>()
+    val movieList: LiveData<List<MovieData>> = _movieList
+    suspend fun getMovie(key: String?): List<MovieData>{
+        val response = api.getMovie("Bearer " + key)
+        _movieList.postValue(response.results)
+        return response.results
+    }
 
 }
