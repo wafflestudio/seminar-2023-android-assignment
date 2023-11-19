@@ -14,19 +14,24 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val api: MovieApi
 ): ViewModel() {
-
-
-
+    companion object{}
     private val _loginStatus = MutableLiveData<String>()
     val loginStatus : LiveData<String> = _loginStatus
     suspend fun tryLogin(key: String?){
         val response = api.getLogin("Bearer " + key.toString())
         if(response.success){
             withContext(Dispatchers.Main) {
-                Myapplication.preferences.putToken("LoginSuccess", "true")
+                Myapplication.preferences.putToken("LoginStatus", "true")
                 _loginStatus.value = "true"
             }
         }
+    }
+
+    fun logout(){
+        Log.d("Token",Myapplication.preferences.getToken("LoginStatus").toString())
+        Myapplication.preferences.removeToken("LoginStatus")
+        _loginStatus.value = "false"
+
     }
 
 

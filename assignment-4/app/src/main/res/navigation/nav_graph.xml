@@ -9,7 +9,7 @@
         android:name="com.wafflestudio.assignment4.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment2"
+            android:id="@+id/action_homeFragment_to_loginFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"
             app:destination="@id/loginFragment" />

@@ -26,6 +26,9 @@ class LoginFragment: Fragment(R.layout.login_fragment) {
     private lateinit var binding: LoginFragmentBinding
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(Myapplication.preferences.getToken("LoginStatus") == "true") {
+            findNavController().safeNavigate(ActionOnlyNavDirections(R.id.action_loginFragment_to_homeFragment))
+        }
         super.onCreate(savedInstanceState)
         binding = LoginFragmentBinding.inflate(layoutInflater)
     }
@@ -53,19 +56,16 @@ class LoginFragment: Fragment(R.layout.login_fragment) {
         }
 
         viewModel.loginStatus.observe(viewLifecycleOwner){
-            if(viewModel.loginStatus.value == "true"){
+            if(it == "true"){
                 findNavController().safeNavigate(ActionOnlyNavDirections(R.id.action_loginFragment_to_homeFragment))
             }
-
         }
-
         return binding.root
     }
 
+
     private fun NavController.safeNavigate(direction: NavDirections){
-        Log.d("click","Click happened")
         currentDestination?.getAction(direction.actionId)?.run{
-            Log.d("click","Click propagated")
             navigate(direction)
         }
     }
