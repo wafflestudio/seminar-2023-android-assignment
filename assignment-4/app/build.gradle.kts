@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("com.google.dagger:hilt-android:2.47")

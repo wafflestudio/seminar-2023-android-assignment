@@ -1,6 +1,7 @@
 package com.example.movie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,11 +36,12 @@ class HomeFragment : Fragment() {
     private val viewModel:MyViewModel by activityViewModels()
     private lateinit var viewPager: ViewPager2
     private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var slideAdapter:SlideAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= FragmentHomeBinding.inflate(layoutInflater)
-        val slideAdapter=SlideAdapter(this,viewModel.myMovieList.value!!)
-        binding.pager.adapter=slideAdapter
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -63,7 +65,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.myMovieList.observe(viewLifecycleOwner){
-            (binding.pager.adapter as SlideAdapter)?.notifyDataSetChanged()
+            if(!::slideAdapter.isInitialized){
+                if(viewModel.myMovieList.value!!.isNotEmpty()){
+                    Log.d("input",viewModel.myMovieList.value!!.toString())
+                    slideAdapter=SlideAdapter(this,viewModel.myMovieList.value!!,viewModel.myToken)
+                    binding.pager.adapter=slideAdapter
+                }
+
+            }
+            else{
+                (binding.pager.adapter as? SlideAdapter)?.notifyDataSetChanged()
+            }
+
+
 
             //viewPager = binding.pager
             //viewPager.adapter = pagerAdapter

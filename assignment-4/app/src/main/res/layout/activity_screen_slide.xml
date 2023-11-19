@@ -3,12 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/border">
-    <TextView
-        android:id="@+id/slide_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/slide_image"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:id="@+id/slide_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        android:text="fewq"
-        android:textSize="100dp"/>
+            android:text="fewq"
+            android:textSize="25dp"/>
+    </LinearLayout>
+    
 
 </ScrollView>

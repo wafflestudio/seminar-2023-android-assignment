@@ -1,7 +1,9 @@
 package com.example.movie
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 import java.util.Date
 
 sealed class MyDataTypes{
@@ -19,6 +21,7 @@ sealed class MyDataTypes{
         @Json(name="total_results")val total_results:Int,
     )
     @JsonClass(generateAdapter = true)
+    @Parcelize
     data class MovieInfo(
         @Json(name="adult")val adult:Boolean,
         @Json(name="backdrop_path")val backdrop_path:String,
@@ -34,7 +37,7 @@ sealed class MyDataTypes{
         @Json(name="video")val video:Boolean,
         @Json(name="vote_average")val vote_average:Float,
         @Json(name="vote_count")val vote_count:Int,
-    )
+    ): Parcelable
     /*
     {
       "adult": false,
