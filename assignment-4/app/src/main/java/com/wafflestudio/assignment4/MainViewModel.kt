@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,8 +22,10 @@ class MainViewModel @Inject constructor(
     suspend fun tryLogin(key: String?){
         val response = api.getLogin("Bearer " + key.toString())
         if(response.success){
-            Myapplication.preferences.putToken("LoginSuccess", "true")
-            _loginStatus.postValue("true")
+            withContext(Dispatchers.Main) {
+                Myapplication.preferences.putToken("LoginSuccess", "true")
+                _loginStatus.value = "true"
+            }
         }
     }
 

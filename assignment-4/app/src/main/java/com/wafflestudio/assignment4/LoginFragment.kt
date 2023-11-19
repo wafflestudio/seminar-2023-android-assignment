@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActionOnlyNavDirections
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.wafflestudio.assignment4.databinding.LoginFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +54,7 @@ class LoginFragment: Fragment(R.layout.login_fragment) {
 
         viewModel.loginStatus.observe(viewLifecycleOwner){
             if(viewModel.loginStatus.value == "true"){
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                findNavController().safeNavigate(ActionOnlyNavDirections(R.id.action_loginFragment_to_homeFragment))
             }
 
         }
@@ -59,4 +62,11 @@ class LoginFragment: Fragment(R.layout.login_fragment) {
         return binding.root
     }
 
+    private fun NavController.safeNavigate(direction: NavDirections){
+        Log.d("click","Click happened")
+        currentDestination?.getAction(direction.actionId)?.run{
+            Log.d("click","Click propagated")
+            navigate(direction)
+        }
+    }
 }
