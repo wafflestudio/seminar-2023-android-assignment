@@ -1,5 +1,6 @@
 package com.example.movie
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,6 +37,15 @@ class LoginFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        /*
+        val editor = sharedPreferences.edit()
+        editor.putString("token", viewModel.myToken)
+        editor.apply()*/
+        val token = sharedPreferences.getString("token","default")
+        if(token!="default"){
+            viewModel.checkAPIKey(token!!)
         }
     }
 

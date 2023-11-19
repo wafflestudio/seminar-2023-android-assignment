@@ -9,10 +9,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+        <TextView
+            android:id="@+id/logout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+            android:textSize="30dp"
+            android:textAlignment="center"/>
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"

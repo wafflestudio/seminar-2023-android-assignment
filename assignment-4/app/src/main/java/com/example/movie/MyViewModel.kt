@@ -1,5 +1,6 @@
 package com.example.movie
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -21,6 +22,9 @@ class MyViewModel @Inject constructor(
     private val _error = MutableLiveData<Event<String>>()
     val error: LiveData<Event<String>> = _error
 
+    private val _logout = MutableLiveData<Event<String>>()
+    val logout: LiveData<Event<String>> = _logout
+
     private val _transition = MutableLiveData<Event<String>>()
     val transition: LiveData<Event<String>> = _transition
 
@@ -29,7 +33,10 @@ class MyViewModel @Inject constructor(
 
     var myToken=""
     //navController.navigate(R.id.loginFragment)
-
+    fun logOut() {
+        val message = "나간다"
+        _logout.value = Event(message)
+    }
     private fun handleError(exception: Throwable) {
         val message = exception.message ?: ""
         _error.value = Event(message)
@@ -41,9 +48,11 @@ class MyViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             try {
                 val response=api.checkAPIKey("Bearer "+key)
-                Log.d("aaaa",response.toString())
+
                 withContext(Dispatchers.Main){
                     if(response.success){
+                        Log.d("aaaa",response.toString())
+
                         myToken=key
                         handleTransition()
                     }
