@@ -25,32 +25,29 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _apiKeyValid = MutableLiveData<Boolean>()
-    val apiKeyValid: LiveData<Boolean>
+    private val _apiKeyValid = MutableLiveData<String>()
+    val apiKeyValid: LiveData<String>
         get() = _apiKeyValid
 
     fun saveApiKey(apiKey: String) {
         storage.setStoredTag("apiKey", apiKey)
+        storage.setStoredTag("loginPref", "true")
     }
 
-    suspend fun checkApiKey(apiKey: String): String { // 통신 관련 코드로 수정
-        var apiReturn = "false"
+    suspend fun checkApiKey(apiKey: String) { // 통신 관련 코드로 수정
 
         viewModelScope.launch {
             try {
-                Log.d("LVM", "try success.")
+                 Log.d("LVM", "try success.")
                 val loginResult = repository.authenticateApiKey("application/json", apiKey)
-                apiReturn = loginResult.toString()
-                Log.d("LVM", "$apiReturn")
+                _apiKeyValid.value = loginResult.toString()
+                Log.d("LVM", "apiReturn: ${_apiKeyValid.value}")
                 if (loginResult) {
                     saveApiKey(apiKey)
                 }
-                storage.setStoredBoolean("loginResult", loginResult)
             } catch (e: HttpException) {
-                apiReturn = "HttpException"
+                _apiKeyValid.value = "HttpException"
             }
         }
-
-        return apiReturn
     }
 }

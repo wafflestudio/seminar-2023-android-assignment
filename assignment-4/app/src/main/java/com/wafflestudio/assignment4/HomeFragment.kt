@@ -51,13 +51,22 @@ class HomeFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 adapter = HomeAdapter(this@HomeFragment, viewModel.getMovieDetails("en-US", 1))
                 viewPager.adapter = adapter
+                viewPager.offscreenPageLimit = 2
                 viewModel.movieList.observe(viewLifecycleOwner, Observer { movieList ->
                     // movieList가 업데이트될 때마다 실행되는 부분
                     adapter.setItems(movieList)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemInserted(0)
                 })
             }
+        }
 
+        binding.logoutBtn.setOnClickListener() {
+            Log.d("HF", "logoutBtn Clicked")
+            viewModel.deleteApiKey()
+            val loginFragment = LoginFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_view, loginFragment)
+                .commit()
         }
 
     }

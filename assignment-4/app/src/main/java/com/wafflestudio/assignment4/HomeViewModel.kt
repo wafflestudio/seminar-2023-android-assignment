@@ -54,4 +54,8 @@ class HomeViewModel @Inject constructor(
         Log.d("HF", "${storage.getStoredTag("apiKey")}")
     }
 
+    fun deleteApiKey() {
+        storage.deleteStoredTag(storage.getStoredTag("apiKey"))
+    }
+
 }

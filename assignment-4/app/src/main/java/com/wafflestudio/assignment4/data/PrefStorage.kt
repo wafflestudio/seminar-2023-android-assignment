@@ -20,4 +20,8 @@ class PrefStorage @Inject constructor(
         sharedPreferences.edit().putBoolean(tag, bool).apply()
     }
 
+    fun deleteStoredTag(tag: String) {
+        sharedPreferences.edit().remove(tag).apply()
+    }
+
 }

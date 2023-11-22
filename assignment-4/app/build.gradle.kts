@@ -61,6 +61,7 @@ dependencies {
     // moshi
     implementation("com.squareup.moshi:moshi:1.14.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")

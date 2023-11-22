@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.wafflestudio.assignment4.databinding.FragmentMovieDetailBinding
 import com.wafflestudio.assignment4.lib.network.dto.MovieDetailDto
 
@@ -38,6 +39,9 @@ class MovieDetailFragment : Fragment() {
 
         val movie: MovieDetailDto? = arguments?.getParcelable(ARG_MOVIE)
         movie?.let {
+            Glide.with(this)
+                .load("https://image.tmdb.org/t/p/w500/" + it.posterPath)
+                .into(binding.moviePoster)
             binding.movieDetailTitle.text = it.title
             binding.movieDetailDirector.text = it.releaseDate
             binding.movieDetailDescription.text = it.overview

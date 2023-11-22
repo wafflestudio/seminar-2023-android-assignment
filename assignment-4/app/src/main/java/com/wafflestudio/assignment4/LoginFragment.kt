@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,14 +45,20 @@ class LoginFragment : Fragment() {
                 // 비동기 작업을 수행할 코루틴 블록
                 Log.d("LoginFrag", "비동기 진입")
                 val apiKey = "Bearer " + binding.loginFragmentApiInput.text.toString()
-                val loginResult = viewModel.checkApiKey(apiKey)
+                var loginResult = "false"
                 withContext(Dispatchers.Main) {
                     Log.d("LoginFrag", "$apiKey")
-                    when (loginResult) {
-                        "true" -> Toast.makeText(requireContext(), "Login Success.", Toast.LENGTH_SHORT).show()
-                        "false" -> Toast.makeText(requireContext(), "Wrong Access.", Toast.LENGTH_SHORT).show()
-                        "HttpException" -> Toast.makeText(requireContext(), "HttpError", Toast.LENGTH_SHORT).show()
-                    }
+                    viewModel.checkApiKey(apiKey)
+                    viewModel.apiKeyValid.observe(viewLifecycleOwner, Observer { apiKeyValid ->
+                        loginResult = apiKeyValid.toString()
+                        Log.d("LoginFrag", "login Result: $loginResult")
+                        when (loginResult) {
+                            "true" -> {Toast.makeText(requireContext(), "Login Success.", Toast.LENGTH_SHORT).show()
+                                replaceHomeFragment() }
+                            "false" -> Toast.makeText(requireContext(), "Wrong Access.", Toast.LENGTH_SHORT).show()
+                            "HttpException" -> Toast.makeText(requireContext(), "HttpError", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
             }
         }
@@ -60,5 +67,13 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun replaceHomeFragment() {
+        Log.d("LF", "changed to HomeFragment")
+        val homeFragment = HomeFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_view, homeFragment)
+            .commit()
     }
 }

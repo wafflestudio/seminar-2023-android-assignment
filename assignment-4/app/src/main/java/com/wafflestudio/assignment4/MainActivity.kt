@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import com.wafflestudio.assignment4.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +25,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val loginPref = sharedPreferences.getBoolean("loginResult", false)
-        Log.d("MA", "$loginPref")
+        val loginPref = viewModel.getLoginPref()
+        Log.d("MA", "loginPref is $loginPref")
         if (!loginPref) {
             supportFragmentManager.beginTransaction()
                 .replace(binding.fragmentView.id, LoginFragment()) // YourFragment()는 추가할 Fragment입니다.

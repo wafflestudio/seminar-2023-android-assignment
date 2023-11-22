@@ -20,7 +20,7 @@ class HomeAdapter(activity: Fragment, data:List<MovieDetailDto>) : FragmentState
     }
 
     override fun getItemCount(): Int {
-        return dataSet.size
+        return  minOf(dataSet.size, 5)
     }
 
     override fun createFragment(position: Int): Fragment {
