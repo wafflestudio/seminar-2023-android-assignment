@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
                             "true" -> {Toast.makeText(requireContext(), "Login Success.", Toast.LENGTH_SHORT).show()
                                 replaceHomeFragment() }
                             "false" -> Toast.makeText(requireContext(), "Wrong Access.", Toast.LENGTH_SHORT).show()
-                            "HttpException" -> Toast.makeText(requireContext(), "HttpError", Toast.LENGTH_SHORT).show()
+                            else -> Toast.makeText(requireContext(), "HttpError", Toast.LENGTH_SHORT).show()
                         }
                     })
                 }

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("MA", "loginPref is $loginPref")
         if (!loginPref) {
             supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentView.id, LoginFragment()) // YourFragment()는 추가할 Fragment입니다.
+                .replace(binding.fragmentView.id, LoginFragment())
                 .commit()
         } else {
             replaceHomeFragment()

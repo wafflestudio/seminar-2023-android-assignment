@@ -13,10 +13,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getLoginPref(): Boolean {
-        val loginPref = storage.getStoredTag("loginPref")
-        if (loginPref == "true") {
-            return true
-        }
-        return false
+        val loginPref = storage.getStoredTag("loginPref", "false")
+        return loginPref == "true"
     }
 }

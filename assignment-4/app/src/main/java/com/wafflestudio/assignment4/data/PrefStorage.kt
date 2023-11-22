@@ -10,8 +10,13 @@ class PrefStorage @Inject constructor(
 ) {
 
     fun getStoredTag(tag: String): String {
-        return sharedPreferences.getString(tag, "")!!
+        return sharedPreferences.getString(tag, "") ?: ""
     }
+
+    fun getStoredTag(tag: String, defValue: String): String {
+        return sharedPreferences.getString(tag, defValue)!!
+    }
+
     fun setStoredTag(tag: String, query: String) {
         sharedPreferences.edit().putString(tag, query).apply()
     }

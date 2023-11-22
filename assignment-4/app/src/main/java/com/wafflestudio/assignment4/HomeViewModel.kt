@@ -50,12 +50,11 @@ class HomeViewModel @Inject constructor(
         return _movieList.value ?: listOf()
     }
 
-    fun getApiKey() {
-        Log.d("HF", "${storage.getStoredTag("apiKey")}")
-    }
 
     fun deleteApiKey() {
         storage.deleteStoredTag(storage.getStoredTag("apiKey"))
+        storage.setStoredTag("loginPref", "false")
+        Log.d("HVM", "loginPref is ${storage.getStoredTag("loginPref")}")
     }
 
 }

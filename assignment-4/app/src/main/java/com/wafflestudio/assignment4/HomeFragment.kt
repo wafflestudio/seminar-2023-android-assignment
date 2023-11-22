@@ -36,8 +36,6 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
 
-        viewModel.getApiKey()
-
         return binding.root
     }
 
