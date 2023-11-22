@@ -36,14 +36,11 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 전달받은 영화 정보를 바탕으로 UI 업데이트
-        val movieTitle = arguments?.getString("title")
-        val releaseDate = arguments?.getString("release_date")
-        val overview = arguments?.getString("overview")
-
-        // UI 업데이트s
-        binding.movieDetailTitle.text = movieTitle
-        binding.movieDetailDirector.text = releaseDate
-        binding.movieDetailDescription.text = overview
+        val movie: MovieDetailDto? = arguments?.getParcelable(ARG_MOVIE)
+        movie?.let {
+            binding.movieDetailTitle.text = it.title
+            binding.movieDetailDirector.text = it.releaseDate
+            binding.movieDetailDescription.text = it.overview
+        }
     }
 }

@@ -24,16 +24,23 @@ class NetworkModule {
     }
 
     @Provides // OkHttpClient 타입의 객체를 어떻게 만드는 지 dagger에게 알려 준다.
-    fun provideOkHttpClientBuilder(sharedPreferences: SharedPreferences): OkHttpClient {
+    fun provideOkHttpClientBuilder(sharedPreferences: SharedPreferences): OkHttpClient.Builder {
         val apiKey = sharedPreferences.getString("apiKey", "") ?: ""
-        return OkHttpClient.Builder()
-            .addInterceptor { chain ->
+        val builder = OkHttpClient.Builder()
+        if (apiKey.isNotEmpty()) {
+            builder.addInterceptor { chain ->
                 val newRequest = chain.request()
                     .newBuilder()
-                    .addHeader("x-access-token", apiKey)
                     .build()
                 chain.proceed(newRequest)
-            }.build()
+            }
+        }
+        return builder
+    }
+
+    @Provides
+    fun provideOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient {
+        return builder.build()
     }
 
     @Provides

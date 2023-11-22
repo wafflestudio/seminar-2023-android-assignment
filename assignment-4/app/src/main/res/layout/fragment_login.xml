@@ -9,6 +9,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:text="API 키를 제출하세요."
         android:background="@color/material_dynamic_tertiary70"
         app:layout_constraintWidth_percent="0.4"

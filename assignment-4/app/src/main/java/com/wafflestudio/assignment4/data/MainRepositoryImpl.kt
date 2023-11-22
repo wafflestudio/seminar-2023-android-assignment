@@ -10,7 +10,8 @@ class MainRepositoryImpl @Inject constructor(
     private val api: MovieRestApi,
 ): MainRepository {
 
-    override suspend fun getPopularMovies(language: String, page: Int): List<MovieDetailDto> {
-        return api.fetchPopularMovies(language, page).body()!!.results
+    override suspend fun getPopularMovies(language: String, page: Int, accept: String, authorization: String): List<MovieDetailDto> {
+
+        return api.fetchPopularMovies(language, page, accept, authorization).body()!!.results
     }
 }

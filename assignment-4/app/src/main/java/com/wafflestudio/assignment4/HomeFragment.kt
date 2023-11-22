@@ -1,13 +1,16 @@
 package com.wafflestudio.assignment4
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.wafflestudio.assignment4.databinding.ActivityMainBinding
 import com.wafflestudio.assignment4.databinding.FragmentHomeBinding
 import com.wafflestudio.assignment4.databinding.FragmentLoginBinding
 import com.wafflestudio.assignment4.lib.network.dto.MovieDetailDto
@@ -22,43 +25,41 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val movieDetailFragment: MovieDetailFragment = MovieDetailFragment()
 
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: HomeAdapter
-    private lateinit var movieList: List<MovieDetailDto>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
 
-        viewPager = rootView.findViewById(R.id.home_fragment_viewpager2)
+        viewModel.getApiKey()
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            // 비동기 작업을 수행할 코루틴 블록
-            movieList = viewModel.getMovieDetails("en-US", 1)
-            withContext(Dispatchers.Main) {
-                // 메인 스레드에서 수행할 작업
-
-            }
-        }
-
-        adapter = HomeAdapter(MovieDetailFragment(), movieList)
-
-        // ViewPager2에 어댑터 설정
-        viewPager.adapter = adapter
-
-        return rootView
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 여기에서 바인딩된 뷰를 사용하여 작업 수행
-//        binding.loginFragmentBtn.setOnClickListener() {
-//            binding.loginFragmentApiInput.toString() // 을 sharedPreference에 저장.
-//        }// 예시로 사용자명 EditText에 접근
+        viewPager = binding.homeFragmentViewpager2
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            // 비동기 작업을 수행할 코루틴 블록
+            withContext(Dispatchers.Main) {
+                adapter = HomeAdapter(this@HomeFragment, viewModel.getMovieDetails("en-US", 1))
+                viewPager.adapter = adapter
+                viewModel.movieList.observe(viewLifecycleOwner, Observer { movieList ->
+                    // movieList가 업데이트될 때마다 실행되는 부분
+                    adapter.setItems(movieList)
+                    adapter.notifyDataSetChanged()
+                })
+            }
+
+        }
+
     }
 
     override fun onDestroyView() { // 메모리 누수 방지
