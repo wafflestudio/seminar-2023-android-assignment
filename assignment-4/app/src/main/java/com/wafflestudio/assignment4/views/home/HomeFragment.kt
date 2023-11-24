@@ -55,9 +55,9 @@ class HomeFragment : Fragment() {
                     adapter = pagerAdapter
                     setPageTransformer(ZoomOutPageTransformer())
                 }
-                viewModel.movies.observe(this@HomeFragment as LifecycleOwner) {
-                    viewPager.adapter?.notifyDataSetChanged()
-                }
+//                viewModel.movies.observe(this@HomeFragment as LifecycleOwner) {
+//                    viewPager.adapter?.notifyDataSetChanged()
+//                }
             }
         }
     }
