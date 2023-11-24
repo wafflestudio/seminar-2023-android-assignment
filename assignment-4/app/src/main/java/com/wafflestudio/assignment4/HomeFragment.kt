@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewPager = binding.homeFragmentViewpager2
+        val cubeOutRotationTransformer = CubeOutRotationTransformer()
 
         lifecycleScope.launch(Dispatchers.IO) {
             // 비동기 작업을 수행할 코루틴 블록
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
                 adapter = HomeAdapter(this@HomeFragment, viewModel.getMovieDetails("en-US", 1))
                 viewPager.adapter = adapter
                 viewPager.offscreenPageLimit = 2
+                viewPager.setPageTransformer(cubeOutRotationTransformer)
                 viewModel.movieList.observe(viewLifecycleOwner, Observer { movieList ->
                     // movieList가 업데이트될 때마다 실행되는 부분
                     adapter.setItems(movieList)

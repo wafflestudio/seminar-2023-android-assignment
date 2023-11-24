@@ -43,7 +43,7 @@ class LoginFragment : Fragment() {
         binding.loginFragmentBtn.setOnClickListener() {
             lifecycleScope.launch(Dispatchers.IO) {
                 // 비동기 작업을 수행할 코루틴 블록
-                Log.d("LoginFrag", "비동기 진입")
+                Log.d("LoginFrag", "비동기 진입 + ${binding.loginFragmentApiInput.text.toString()}")
                 val apiKey = "Bearer " + binding.loginFragmentApiInput.text.toString()
                 var loginResult = "false"
                 withContext(Dispatchers.Main) {
