@@ -32,6 +32,7 @@ API 관련 질문이 있으면 말씀해 주세요. 이번에는 SharedPreferenc
 - 검색된 영화들의 포스터와 제목, 평점, 개봉일을 목록에 표시합니다.
 - 포스터 url은 `https://image.tmdb.org/t/p/w500/${movie.posterPath}` 로 하시면 됩니다.
 - 이미지 표시에는 Glide 혹은 Coil 라이브러리를 사용하세요.
+- API 결과를 컴포저블 함수로 가져올 때는, 뷰모델에 MutableStateFlow를 두고 컴포저블 함수 내에서 `.collectAsState()`를 사용하세요. (참고 : [스누티티 코드](https://github.com/wafflestudio/snutt-android/blob/a2d5f25ecc4e507cf9d0e56199554402bdd8c7b3/app/src/main/java/com/wafflestudio/snutt2/views/logged_in/home/HomePage.kt#L56))
 
 ### 3. 디지털 시계 앱
 - 논리설계에서 배우는 BCD-7 segment decoder를 구현하...는 건 아닙니다(하셔도 됩니다).
