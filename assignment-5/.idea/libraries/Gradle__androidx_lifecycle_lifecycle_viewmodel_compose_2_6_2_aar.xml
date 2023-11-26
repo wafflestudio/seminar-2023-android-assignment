@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5b167b700a191c4b75ad12b0f88cc53e/transformed/lifecycle-viewmodel-compose-2.6.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5b167b700a191c4b75ad12b0f88cc53e/transformed/lifecycle-viewmodel-compose-2.6.2/res" />
+      <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5b167b700a191c4b75ad12b0f88cc53e/transformed/lifecycle-viewmodel-compose-2.6.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Library/Android/sdk/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-viewmodel-compose/2.6.2/391e6f5d454ca22eafbe525e3c1f2684a089ebab/lifecycle-viewmodel-compose-2.6.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
