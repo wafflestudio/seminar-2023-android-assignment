@@ -24,14 +24,14 @@ API 관련 질문이 있으면 말씀해 주세요. 이번에는 SharedPreferenc
 # 최소 스펙
 
 ### 1. 튜토리얼
-- 튜토리얼을 충실히 완료해 주세요. 정말 좋은 예제입니다!
+- 튜토리얼을 충실히 완료해 주세요. 정말 좋은 예제입니다! [링크](https://developer.android.com/codelabs/jetpack-compose-basics?hl=ko#0)
 
 ### 2. 영화 검색 앱
 - 상단에는 TextField 혹은 BasixTextField를 이용해서 검색 문구 입력 창을 만듭니다.
 - [검색 API](https://developer.themoviedb.org/reference/search-movie)를 이용해 검색합니다.
 - 검색된 영화들의 포스터와 제목, 평점, 개봉일을 목록에 표시합니다.
-  - 포스터 url은 `https://image.tmdb.org/t/p/w500/${movie.posterPath}` 로 하시면 됩니다.
-- 성인 관람가 영화일 경우 추가적인 아이콘으로 표시합니다.
+- 포스터 url은 `https://image.tmdb.org/t/p/w500/${movie.posterPath}` 로 하시면 됩니다.
+- 이미지 표시에는 Glide 혹은 Coil 라이브러리를 사용하세요.
 
 ### 3. 디지털 시계 앱
 - 논리설계에서 배우는 BCD-7 segment decoder를 구현하...는 건 아닙니다(하셔도 됩니다).
@@ -43,20 +43,22 @@ API 관련 질문이 있으면 말씀해 주세요. 이번에는 SharedPreferenc
 
 ### 영화 검색 앱
 - 상단에 총 몇 개의 영화가 검색되었는지 표시합니다.
-- 성인 관람가 영화일 경우 추가적인 표시를 해 주세요.
 - 하단에는 현재 페이지 번호와, 다음 페이지/이전 페이지로 이동하는 버튼을 만듭니다.
   - 현재 페이지가 첫 페이지이면 이전 페이지 이동 문구가 없고, 현재 페이지가 마지막 페이지이면 다음 페이지 이동 문구가 없겠죠?
 - 검색된 영화 아이템을 클릭하면 리뷰 페이지로 이동합니다.
 - 이때 영화 id를 인수로 하는 [이동](https://developer.android.com/jetpack/compose/navigation?hl=ko#nav-with-args)을 통해 구현해 주세요.
 - [리뷰 API](https://developer.themoviedb.org/reference/movie-reviews)를 이용해 영화의 리뷰를 가져옵니다.
 - 리뷰를 단 유저 이름, 평점, 리뷰 내용을 표시합니다.
+- 리뷰는 기본 5줄까지만 표시하고, 5줄 이상일 경우 ... 으로 말줄임을 넣습니다. (힌트 : Text에 `overflow` 파라미터)
+- 5줄 이상인 리뷰는 클릭하면 펼쳐져서 전체 내용을 볼 수 있고, 다시 클릭하면 축소됩니다.
 - 리뷰 화면의 경우도 동일하게, 총 리뷰 개수, 페이지 번호, 다음/이전 페이지 이동 버튼을 만듭니다.
 
 # 데모
 
 | 기본 스펙 | 추가 스펙 |
 | ---- | ---- |
-| <video src="" /> | <video src="" /> |
+| <video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/54b34387-b7a3-40f7-a9f4-ef776f5cea49" /> | <video src="https://github.com/wafflestudio/seminar-2023-android-assignment/assets/88367636/20b0b506-be77-49e4-81ba-76ee960ccd0d" /> |
+
 
 
 # 과제 제출 방법
