@@ -12,7 +12,7 @@
 - [Jetpack Compose Navigation](https://developer.android.com/jetpack/compose/navigation?hl=ko)을 이용해서 인트로 페이지와 세가지 기능 페이지를 구성합니다.
 - 첫 번째는 Jetpack Compose Tutorial입니다. [링크](https://developer.android.com/codelabs/jetpack-compose-basics?hl=ko#0)를 보고 천천히 따라해 봅시다.
 - 두 번째는 TMDB api를 이용한 간단한 영화 검색 기능입니다.
-- 세 번째는 Compose를 이용한 디지털 시계 만들기입니다.
+- 세 번째는 Compose로 디지털 시계 만들기입니다.
 - 이번 과제도 단 하나의 액티비티(MainActivity)만이 존재합니다.
 - 디자인은 데모와 달라도 상관없고, 최소 스펙의 내용만 채점합니다. (그래도 예쁘게 해보세요)
 
@@ -23,18 +23,20 @@ API 관련 질문이 있으면 말씀해 주세요. 이번에는 SharedPreferenc
 
 # 최소 스펙
 
-### 1. 튜토리얼
+### 1. 튜토리얼 페이지
 - 튜토리얼을 충실히 완료해 주세요. 정말 좋은 예제입니다! [링크](https://developer.android.com/codelabs/jetpack-compose-basics?hl=ko#0)
 
-### 2. 영화 검색 앱
+### 2. 영화 검색 페이지
 - 상단에는 TextField 혹은 BasixTextField를 이용해서 검색 문구 입력 창을 만듭니다.
+  - KeyboardAction, KeyboardOption 파라미터를 잘 지정하면 편하게 검색할 수 있습니다.
 - [검색 API](https://developer.themoviedb.org/reference/search-movie)를 이용해 검색합니다.
 - 검색된 영화들의 포스터와 제목, 평점, 개봉일을 목록에 표시합니다.
 - 포스터 url은 `https://image.tmdb.org/t/p/w500/${movie.posterPath}` 로 하시면 됩니다.
 - 이미지 표시에는 Glide 혹은 Coil 라이브러리를 사용하세요.
+- 기존의 RecyclerView를 대신하게 될 `LazyColumn`을 사용하세요.
 - API 결과를 컴포저블 함수로 가져올 때는, 뷰모델에 MutableStateFlow를 두고 컴포저블 함수 내에서 `.collectAsState()`를 사용하세요. (참고 : [스누티티 코드](https://github.com/wafflestudio/snutt-android/blob/a2d5f25ecc4e507cf9d0e56199554402bdd8c7b3/app/src/main/java/com/wafflestudio/snutt2/views/logged_in/home/HomePage.kt#L56))
 
-### 3. 디지털 시계 앱
+### 3. 디지털 시계 페이지
 - 논리설계에서 배우는 BCD-7 segment decoder를 구현하...는 건 아닙니다(하셔도 됩니다).
 - 일곱 개의 선으로 구성된 디지털 숫자 UI를 구현합니다.
 - 1. State Hoisting에 충실하게, 컴포넌트를 잘 분리하여 재사용이 용이하게 만들어 보세요!
@@ -42,7 +44,7 @@ API 관련 질문이 있으면 말씀해 주세요. 이번에는 SharedPreferenc
 
 # 추가 스펙
 
-### 영화 검색 앱
+### 영화 리뷰 페이지
 - 상단에 총 몇 개의 영화가 검색되었는지 표시합니다.
 - 하단에는 현재 페이지 번호와, 다음 페이지/이전 페이지로 이동하는 버튼을 만듭니다.
   - 현재 페이지가 첫 페이지이면 이전 페이지 이동 문구가 없고, 현재 페이지가 마지막 페이지이면 다음 페이지 이동 문구가 없겠죠?
