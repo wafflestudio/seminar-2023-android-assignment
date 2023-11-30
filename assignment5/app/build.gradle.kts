@@ -88,7 +88,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.skydoves:landscapist-glide:1.4.7")
+    implementation("com.github.skydoves:landscapist-coil:1.4.7")
 
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")

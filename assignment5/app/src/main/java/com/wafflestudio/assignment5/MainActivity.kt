@@ -1,5 +1,6 @@
 package com.wafflestudio.assignment5
 
+import android.graphics.Movie
 import android.media.Image
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,8 +46,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ComposableOpenTarget
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -57,7 +61,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,6 +75,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bumptech.glide.Glide
+import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.glide.GlideImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -278,7 +287,7 @@ fun SearchScreen(){
     var text by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
     val movies =mainViewModel.movielist.collectAsState()
-    var ms by remember { mutableStateOf(movies) }
+    var page by remember { mutableStateOf(1) }
 
     Column(
         modifier = Modifier
@@ -286,7 +295,7 @@ fun SearchScreen(){
             .padding(15.dp)
     ){
         TextField(
-            leadingIcon = { Icon(imageVector = Icons.Filled.Search, contentDescription = "dsf") },
+            leadingIcon = { Icon(imageVector = Icons.Filled.Search, contentDescription = "Search") },
             value = text,
             onValueChange = {text = it},
             placeholder = { Text("시리즈, 영화를 검색해 보세요...") },
@@ -296,16 +305,137 @@ fun SearchScreen(){
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
+                    page=1
                     focusManager.clearFocus()
                     CoroutineScope(Dispatchers.Main).launch {
-                        mainViewModel.getmovies(text)
-                        ms=movies
+                        mainViewModel.getmovies(text,page)
                     }
-                    //Log.d("aaaa",movies.toString())
                 }
             )
         )
-        Text(text = ms.toString())
+        if(movies.value.page!=0) {
+            Text(text = "${movies.value.total_results}개의 영화가 검색되었습니다.")
+            LazyColumn(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .height(590.dp)
+            ) {
+                items(items = movies.value.result) { movie ->
+                    ShowMovie(movie = movie)
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                when(page>1) {
+                    true -> {
+                        TextButton(
+                            onClick = {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    mainViewModel.getmovies(text, page)
+                                }
+                                page -= 1
+                            }
+                        ) {
+                            Text(
+                                text = "<- 이전 페이지",
+                                color = Color.Black
+                            )
+                        }
+                    }
+                    false -> Spacer(modifier=Modifier.width(110.dp))
+                }
+                Text(text = page.toString())
+                when(page < movies.value.total_pages){
+                    true -> {
+                        TextButton(
+                            onClick = {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    mainViewModel.getmovies(text, page)
+                                }
+                                page += 1
+                            }
+                        ) {
+                            Text(
+                                text = "다음 페이지 ->",
+                                color = Color.Black
+                            )
+                        }
+                    }
+                    false -> Spacer(modifier=Modifier.width(110.dp))
+                }
+            }
+        }
+    }
+}
+
+
+val moviedefault = MovieInfo(adult=false,
+backdrop_path="/5WkP8mUzfnuKVjDLt9eTKobP3Cn.jpg",
+genre_ids=arrayOf(28, 12, 878, 14, 53),
+id= 15767,
+original_language= "ja",
+original_title= "ゴジラ ファイナルウォーズ",
+overview= "Humanity finally rids themselves of Godzilla, imprisoning him in an icy tomb in the South Pole. All is peaceful until various monsters emerge to lay waste to Earth's cities. Overwhelmed, humanity is seemingly saved by a race of benevolent aliens known as Xiliens. But not all is what it seems with these bizarre visitors. If humanity wishes to survive, they must reluctantly resurrect their most hated enemy, Godzilla.",
+popularity= 39.03,
+poster_path= "/21lWA4YyYppVnwAPOiBkGrt2FGr.jpg",
+release_date= "2004-12-04",
+title= "Godzilla: Final Wars",
+video= false,
+vote_average= 7.0,
+vote_count= 271)
+@Preview
+@Composable
+fun ShowMovie(movie:MovieInfo= moviedefault){
+    Surface(
+        modifier = Modifier
+            .padding(vertical = 4.dp, horizontal = 10.dp)
+            .background(Color.LightGray)
+            .fillMaxWidth()
+            .height(130.dp),
+        shape = RectangleShape
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(vertical = 5.dp)
+                .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(80.dp)
+            ) {
+                CoilImage(
+                    imageModel = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
+                    contentScale = ContentScale.FillBounds
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(
+                    text = movie.original_title!!,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Row{
+                    Text(
+                        text = "평점 : ${movie.vote_average}",
+                        fontSize = 14.sp
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "개봉일 : ${movie.release_date}",
+                        fontSize = 14.sp,
+                    )
+                }
+            }
+        }
     }
 }
 
