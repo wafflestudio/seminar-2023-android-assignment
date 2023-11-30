@@ -1,4 +1,4 @@
-package com.wafflestudio.assignment4.network
+    package com.wafflestudio.assignment4.network
 
 import com.squareup.moshi.Moshi
 import com.wafflestudio.assignment4.network.dto.login.StatusResponse
