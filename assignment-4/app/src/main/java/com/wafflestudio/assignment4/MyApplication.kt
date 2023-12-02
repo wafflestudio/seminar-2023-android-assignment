@@ -4,14 +4,17 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-//@Suppress("DEPRECATION")
-class MyApplication: Application() {
+class MyApplication : Application() {
     companion object {
-        lateinit var preferences : SharedPreference
+        lateinit var sharedPrefs: SharedPreference
     }
 
     override fun onCreate() {
-        preferences = SharedPreference(applicationContext)
         super.onCreate()
+        initializePreferences()
+    }
+
+    private fun initializePreferences() {
+        sharedPrefs = SharedPreference(applicationContext)
     }
 }
