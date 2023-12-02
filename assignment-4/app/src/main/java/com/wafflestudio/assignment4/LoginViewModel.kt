@@ -1,6 +1,6 @@
 package com.wafflestudio.assignment4
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,35 +8,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginService: MyRestAPI
-): ViewModel() {
-    private val _loginToken: MutableLiveData<String?> = MutableLiveData()
-    val loginToken: MutableLiveData<String?> = _loginToken
-/*
-    init {
-        initializeToken()
+    private val restApiService: RestAPI
+) : ViewModel() {
+    private var moviesList: MutableList<MovieInfo> = mutableListOf()
+    var liveMoviesList: MutableLiveData<MutableList<MovieInfo>> = MutableLiveData()
+
+    suspend fun performLogin(authKey: String?): Boolean {
+        if (authKey == null) return false
+        val response = restApiService.authentication("Bearer $authKey")
+        return response.success
     }
 
-
-
-    private fun initializeToken() {
-        _loginToken.value = MyApplication.preferences.GetToken("token", "")
-    }
-
- */
-
-    suspend fun performLogin(authToken: String?): Boolean {
-        if (authToken.isNullOrEmpty()) return false
-        val loginResponse = loginService.authenticateUser("Bearer"+ authToken)
-        if (loginResponse.login_success) {
-            updatePreferences(authToken)
-            _loginToken.postValue(authToken)
+    suspend fun fetchMovies() {
+        try {
+            val movies = restApiService.getmovies("Bearer ${MyApplication.prefs.getString("token", "")}")
+            val topMovies = movies.result.take(5).toMutableList()
+            moviesList.addAll(topMovies)
+            liveMoviesList.value = moviesList
+            Log.d("LoginViewModel", "Movies fetched: $moviesList")
+        } catch (e: Exception) {
+            Log.e("LoginViewModel", "Error fetching movies: ${e.message}")
         }
-        return loginResponse.login_success
-    }
-
-    private fun updatePreferences(authToken: String) {
-        MyApplication.preferences.SetToken("token", authToken)
-        MyApplication.preferences.SetToken("success", "true")
     }
 }

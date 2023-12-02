@@ -1,15 +1,12 @@
 package com.wafflestudio.assignment4
 
-import retrofit2.http.Header
 import retrofit2.http.GET
-import retrofit2.http.Headers
+import retrofit2.http.Header
 
-interface MyRestAPI {
-    @Headers("Accept: application/json")
-    @GET("/3/movie/popular")
-    suspend fun fetchPopularMovies(@Header("Authorization")authorization: String): MovieData
+interface MyRestApi {
+    @GET("3/authentication")
+    suspend fun fetchAuthenticationToken(@Header("Authorization") authorizationKey: String): AuthResult
 
-    @Headers("Accept: application/json")
-    @GET("/3/authentication")
-    suspend fun authenticateUser(@Header("Authorization")authorization: String): LoginData
+    @GET("3/movie/popular")
+    suspend fun fetchPopularMovies(@Header("Authorization") authorizationKey: String): MovieList
 }

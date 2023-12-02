@@ -1,73 +1,84 @@
 package com.wafflestudio.assignment4
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.wafflestudio.assignment4.databinding.EmptyFragmentBinding
+import com.wafflestudio.assignment4.databinding.FragmentEmptyBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+private const val FIRST_PARAM = "firstParam"
+private const val SECOND_PARAM = "secondParam"
+-
 @AndroidEntryPoint
-class EmptyFragment : Fragment() {
+class EmptyFragment @Inject constructor() : Fragment() {
+    private var firstParam: String? = null
+    private var secondParam: String? = null
+    private lateinit var fragmentBinding: FragmentEmptyBinding
+    private lateinit var moviesViewPager: ViewPager2
+    private lateinit var moviesAdapter: MoviesPagerAdapter
+    private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var binding: EmptyFragmentBinding
-    private lateinit var movieViewPager: ViewPager2
-    private lateinit var moviePagerAdapter: ViewAdapter
-
-    private val viewModel: EmptyViewModel by viewModels()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            firstParam = it.getString(FIRST_PARAM)
+            secondParam = it.getString(SECOND_PARAM)
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.fetchMovies()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = EmptyFragmentBinding.inflate(inflater, container, false)
-        setupButtonListener()
-        return binding.root
+        fragmentBinding = FragmentEmptyBinding.inflate(inflater, container, false)
+        return fragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.movies.observe(viewLifecycleOwner) { movies ->
-            setupViewPager(movies)
-            moviePagerAdapter.notifyDataSetChanged()
-        }
-        loadMovies()
-    }
-    private fun setupViewPager(movies: List<MovieData>) {
-        moviePagerAdapter = ViewAdapter(this, movies)
-        movieViewPager = binding.pager
-        movieViewPager.adapter = moviePagerAdapter
-        movieViewPager.offscreenPageLimit = 5
+        setupViewPager()
+        observeMovieList()
+        setupLogoutButton()
     }
 
-    private fun setupButtonListener() {
-        binding.button.setOnClickListener {
-            MyApplication.preferences.DeleteToken("token")
-            MyApplication.preferences.SetToken("success", "false")
-            findNavController().navigate(R.id.action_empty_fragment_to_login_fragment)
+    private fun setupViewPager() {
+        moviesAdapter = MoviesPagerAdapter(viewModel.movieList, this)
+        fragmentBinding.moviesViewPager.adapter = moviesAdapter
+    }
+
+    private fun observeMovieList() {
+        viewModel.liveMovieList.observe(viewLifecycleOwner) {
+            moviesAdapter.notifyDataSetChanged()
         }
     }
 
+    private fun setupLogoutButton() {
+        fragmentBinding.logoutButton.setOnClickListener {
+            findNavController().navigate(R.id.action_emptyFragment_to_loginFragment)
+            MyApplication.prefs.setString("token", "")
+        }
+    }
 
-    private fun loadMovies() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                viewModel.fetchMovies()
-            } catch(e: Exception) {
-                Log.e("Error", "Loading movie failed: ${e.message}")
+    companion object {
+        @JvmStatic
+        fun newInstance(firstParam: String, secondParam: String) =
+            EmptyFragment().apply {
+                arguments = Bundle().apply {
+                    putString(FIRST_PARAM, firstParam)
+                    putString(SECOND_PARAM, secondParam)
+                }
             }
-        }
-
-        viewModel.movies.observe(viewLifecycleOwner) {
-            moviePagerAdapter.notifyDataSetChanged()
-        }
     }
 }

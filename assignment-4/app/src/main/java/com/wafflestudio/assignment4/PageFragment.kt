@@ -2,45 +2,37 @@ package com.wafflestudio.assignment4
 
 import android.os.Bundle
 import android.view.View
-import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.wafflestudio.assignment4.databinding.PageFragmentBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.wafflestudio.assignment4.databinding.FragmentPageBinding
 
-@AndroidEntryPoint
-class PageFragment : Fragment() {
-    private var _binding: PageFragmentBinding? = null
-    private val binding get() = _binding!!
-    private val movieViewModel: EmptyViewModel by viewModels()
+private const val ARG_MOVIE = "movie"
+
+class PageFragment(private val movieDetail: MovieInfo) : Fragment() {
+    private lateinit var pageBinding: FragmentPageBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = PageFragmentBinding.inflate(inflater, container, false)
-        initializeUI()
-        return binding.root
+    ): View {
+        pageBinding = FragmentPageBinding.inflate(inflater, container, false)
+        return pageBinding.root
     }
 
-    private fun initializeUI() {
-        val movieData = arguments?.getParcelable<MovieData>("data_movie")
-        movieData?.let { showMovieDetails(it) }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        displayMovieInfo()
     }
 
-    private fun showMovieDetails(dataMovie:MovieData) {
-        val posterUrl = "https://image.tmdb.org/t/p/original="+ dataMovie.posterUrl
-        Glide.with(binding.root.context).load(posterUrl).into(binding.poster)
-        binding.title.text = dataMovie.title
-        binding.overview.text = dataMovie.overview
-        binding.star.text = "평점: ${dataMovie.voteAverage}"
-        binding.date.text = "개봉일: ${dataMovie.releaseDate}"
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun displayMovieInfo() {
+        Glide.with(pageBinding.root.context)
+            .load("https://image.tmdb.org/t/p/original/${movieDetail.posterPath}")
+            .into(pageBinding.moviePoster)
+        pageBinding.movieTitle.text = movieDetail.movieTitle
+        pageBinding.movieOverview.text = movieDetail.overviewDescription
+        pageBinding.movieRating.text = "평점 : ${movieDetail.averageVote}"
+        pageBinding.movieReleaseDate.text = "개봉일 : ${movieDetail.releaseDate}"
     }
 }
