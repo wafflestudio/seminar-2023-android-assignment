@@ -1,13 +1,13 @@
 package com.wafflestudio.assignment5
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.contextaware.withContextAvailable
+import androidx.activity.viewModels
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,36 +27,37 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -72,7 +73,8 @@ class MainActivity : ComponentActivity() {
     private fun MyApp(
         modifier: Modifier = Modifier,
         navController: NavHostController = rememberNavController(),
-        startDestination: String = "Onboarding")
+        startDestination: String = "Onboarding",
+    )
     {
         NavHost(navController = navController, startDestination = startDestination){
             composable("Onboarding"){
@@ -83,8 +85,15 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable("Tutorial"){ TutorialScreen()}
-            composable("Search"){ SearchScreen()}
-            composable("Movie"){ MovieScreen("")}
+            composable("Search"){ SearchScreen(
+                onSearchClicked = { text ->
+                    navController.navigate("Movie/$text")
+                }
+            )}
+            composable("Movie/{text}"){
+                val text = it.arguments?.getString("text") ?: ""
+                MovieScreen(text) }
+
             composable("Clock"){ ClockScreen() }
         }
     }
@@ -94,46 +103,37 @@ class MainActivity : ComponentActivity() {
         onNavigateToTutorial : () -> Unit,
         onNavigateToSearch : () -> Unit,
         onNavigateToCLock : () -> Unit,) {
-        var shouldShowWhichScreen by rememberSaveable { mutableStateOf(Screen.ScreenType.Onboarding) }
-        when (shouldShowWhichScreen) {
-            Screen.ScreenType.Tutorial -> TutorialScreen()
-            Screen.ScreenType.MovieSearch -> SearchScreen()
-            Screen.ScreenType.Clock -> ClockScreen()
-            else -> {
-                Column(
-                    modifier = modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp, horizontal = 12.dp),
-                        onClick = { shouldShowWhichScreen = Screen.ScreenType.Tutorial }
-                    ) {
-                        Text("튜토리얼")
-                    }
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp, horizontal = 12.dp),
-                        onClick = { shouldShowWhichScreen = Screen.ScreenType.MovieSearch }
-                    ) {
-                        Text("영화 검색")
-                    }
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp, horizontal = 12.dp),
-                        onClick = { shouldShowWhichScreen = Screen.ScreenType.Clock }
-                    ) {
-                        Text("디지털 시계")
-                    }
-                }
+
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 24.dp, horizontal = 12.dp),
+                onClick = onNavigateToTutorial
+            ) {
+                Text("튜토리얼")
+            }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 24.dp, horizontal = 12.dp),
+                onClick = onNavigateToSearch
+            ) {
+                Text("영화 검색")
+            }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 24.dp, horizontal = 12.dp),
+                onClick = onNavigateToCLock
+            ) {
+                Text("디지털 시계")
             }
         }
-
-
 
     }
     @Composable
@@ -205,31 +205,28 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun SearchScreen(
         modifier: Modifier = Modifier,
+        onSearchClicked : (String) -> Unit,
     ){
-        var text by rememberSaveable { mutableStateOf("입력") }
-        var searchClicked by rememberSaveable { mutableStateOf(false) }
-        if(searchClicked){
-            MovieScreen(text = text)
+        var text by rememberSaveable {
+            mutableStateOf("")
         }
-
         Surface(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             BasicTextField(
+                value = text,
+                onValueChange = { newText -> text = newText},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
                     .height(20.dp),
-                value = text,
-                onValueChange = { newText -> text = newText},
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        //Log.d("aaaa",text.toString())
-                        searchClicked = true
+                        onSearchClicked(text)
                     }
                 )
             )
@@ -239,9 +236,19 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MovieScreen(
         text : String,
+        //viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+        viewModel: MainViewModel = viewModel(factory = MyViewModelFactory()),
         modifier: Modifier = Modifier,
-    ){
-        Text(text = "바뀜!!")
+        ){
+
+        /*val scope = rememberCoroutineScope()
+        LaunchedEffect(Unit){
+            scope.launch(Dispatchers.IO){
+                val movieList = viewModel.api.getMovie()
+
+            }
+        }*/
+        Text(text = text)
     }
 
     @Composable
@@ -262,7 +269,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun SearchPreview(){
         MyApplicationTheme {
-            SearchScreen()
+            SearchScreen(onSearchClicked = {})
         }
     }
     @Preview(showBackground = true, widthDp = 320)
