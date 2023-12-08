@@ -16,9 +16,9 @@ class NetworkModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient{
         return OkHttpClient.Builder()
-            .addInterceptor{chain ->
+            .addInterceptor{ chain ->
             val newRequest = chain.request().newBuilder().
-            addHeader("access token","Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOGJiYzRiZmI4MzIyYjZlYzc3NGY4ZDRkNjk3OTI1NyIsInN1YiI6IjY1NGE0OGEzZmQ0ZjgwMDEwMWI3ODgzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3DQk-AQUBRCiZCATMhbM46in3-ECYMR3Q9DXd2SoPZI")
+            addHeader("Authorization","Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOGJiYzRiZmI4MzIyYjZlYzc3NGY4ZDRkNjk3OTI1NyIsInN1YiI6IjY1NGE0OGEzZmQ0ZjgwMDEwMWI3ODgzYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3DQk-AQUBRCiZCATMhbM46in3-ECYMR3Q9DXd2SoPZI")
                 .build()
                 chain.proceed(newRequest)
             }
