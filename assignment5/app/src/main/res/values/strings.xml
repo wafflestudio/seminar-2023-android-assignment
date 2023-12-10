@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">assignment5</string>
+    <string name="num0">1111110</string>
+    <string name="num1">0110000</string>
+    <string name="num2">1101101</string>
+    <string name="num3">1111001</string>
+    <string name="num4">0110011</string>
+    <string name="num5">1011011</string>
+    <string name="num6">1011111</string>
+    <string name="num7">1110000</string>
+    <string name="num8">1111111</string>
+    <string name="num9">1111011</string>
 </resources>
