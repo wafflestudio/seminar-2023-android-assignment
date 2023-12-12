@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.fragment.app.activityViewModels
@@ -44,7 +45,12 @@ class MainActivity : AppCompatActivity() {
         }
         else navController.navigate(R.id.loginFragment)
         //viewModel.printOne()
-
+        viewModel.error.observe(this) { eventWrapper ->
+            eventWrapper.getContentIfNotHandled()?.let {
+                Log.d("aaaa","ㄷㄱ객 ㅐㅊ쳣")
+                Toast.makeText(this,"wrong token",Toast.LENGTH_SHORT).show()
+            }
+        }
         viewModel.transition.observe(this) { eventWrapper ->
             eventWrapper.getContentIfNotHandled()?.let {
                 navController.navigate(R.id.action_loginFragment_to_homeFragment)

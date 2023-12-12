@@ -2,6 +2,7 @@ package com.example.movie
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -62,11 +63,12 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginButton.setOnClickListener {
-            viewModel.checkAPIKey("eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDA3YTQ0MjU1NGM5ZTNiM2E1NmVhNzQ1MmVkYTNjYiIsInN1YiI6IjY1NTcxODg0ZWE4NGM3MTA5MjI4OTFkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Tk7NnUpEzXoD-8aaCJw4L-neabtM56D_-WvgB2T50eo")
-            //viewModel.checkAPIKey(binding.apiKeyInput.text.toString())
+            //viewModel.checkAPIKey("eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDA3YTQ0MjU1NGM5ZTNiM2E1NmVhNzQ1MmVkYTNjYiIsInN1YiI6IjY1NTcxODg0ZWE4NGM3MTA5MjI4OTFkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Tk7NnUpEzXoD-8aaCJw4L-neabtM56D_-WvgB2T50eo")
+            viewModel.checkAPIKey(binding.apiKeyInput.text.toString())
         }
         viewModel.error.observe(viewLifecycleOwner) { eventWrapper ->
             eventWrapper.getContentIfNotHandled()?.let { message ->
+                Log.d("aaaa","ㄷㄱ객 ㅐㅊ쳣")
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         }
