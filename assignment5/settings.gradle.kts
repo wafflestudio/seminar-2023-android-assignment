@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "assignment5"
+rootProject.name = "jet"
 include(":app")

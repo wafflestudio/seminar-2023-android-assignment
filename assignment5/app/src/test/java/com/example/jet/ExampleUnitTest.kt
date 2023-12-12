@@ -1,4 +1,4 @@
-package com.wafflestudio.assignment5
+package com.example.jet
 
 import org.junit.Test
 
