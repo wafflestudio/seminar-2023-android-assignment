@@ -15,6 +15,7 @@ import com.wafflestudio.assignment4.lib.network.dto.MovieDetailDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,30 +25,31 @@ class HomeViewModel @Inject constructor(
     private val storage: PrefStorage
 ): ViewModel() {
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    private val _movieList = MutableLiveData<MutableList<MovieDetailDto>>()
+    val movieList: LiveData<MutableList<MovieDetailDto>> get() = _movieList
 
-    private val _movieList = MutableLiveData<List<MovieDetailDto>>()
-    val movieList: LiveData<List<MovieDetailDto>> get() = _movieList
-
-
+    private var movieInfos = mutableListOf<MovieDetailDto>()
 
 
 
     suspend fun fetchMovieDetails(language: String, page: Int)  {
-
-        viewModelScope.launch(Dispatchers.Main) {
+//        viewModelScope.launch(Dispatchers.IO) {
             Log.d("HVM", "비동기 시작")
-            _movieList.value = repository.getPopularMovies(language, page, "application/json", storage.getStoredTag("apiKey"))
-            Log.d("HVM", "this is ${repository.getPopularMovies(language, page, "application/json", storage.getStoredTag("apiKey"))}")
-        }
+            Log.d("HVM", "${storage.getStoredTag("apiKey")}")
+            movieInfos = repository.getPopularMovies(language, page, "application/json", storage.getStoredTag("apiKey")).toMutableList()
+            _movieList.postValue(movieInfos) // postValue: thread 상관없이 안정성 보장
+            Log.d("HVM", "this is $movieInfos")
+//        }
 
         Log.d("HVM", "mvl value is ${_movieList.value}")
     }
 
     suspend fun getMovieDetails(language: String, page: Int): List<MovieDetailDto> {
+
         fetchMovieDetails(language, page)
-        return _movieList.value ?: listOf()
+
+
+        return movieInfos
     }
 
 

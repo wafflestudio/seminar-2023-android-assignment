@@ -1,5 +1,6 @@
 package com.wafflestudio.assignment4.data
 
+import android.util.Log
 import com.wafflestudio.assignment4.lib.network.MovieRestApi
 import com.wafflestudio.assignment4.lib.network.dto.MovieDetailDto
 import javax.inject.Inject
@@ -11,7 +12,12 @@ class MainRepositoryImpl @Inject constructor(
 ): MainRepository {
 
     override suspend fun getPopularMovies(language: String, page: Int, accept: String, authorization: String): List<MovieDetailDto> {
-
-        return api.fetchPopularMovies(language, page, accept, authorization).body()!!.results
+        val response = api.fetchPopularMovies(language, page, accept, authorization)
+        if (response.isSuccessful) {
+            Log.e("Repository", "Success code: ${response.code()}")
+        } else {
+            Log.e("Repository", "Failed to fetch popular movies: ${response.code()}")
+        }
+        return response.body()?.results ?: emptyList()
     }
 }

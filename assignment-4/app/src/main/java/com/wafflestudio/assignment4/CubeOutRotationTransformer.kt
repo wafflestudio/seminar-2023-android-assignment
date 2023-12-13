@@ -26,8 +26,7 @@ class CubeOutRotationTransformer: ViewPager2.PageTransformer {
                     page.rotationY = -90 * abs(position)
                 }
 
-                // 페이지가 조금씩 살짝 넘어가면 투명도 조정
-                page.translationX = page.width * -position
+                page.translationX = page.width * position * 0
             }
             else -> { // 페이지가 오른쪽 화면 밖에 있는 경우
                 page.alpha = 0f

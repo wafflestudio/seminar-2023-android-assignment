@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private fun replaceHomeFragment() {
         Log.d("MA", "changed to HomeFragment")
         val homeFragment = HomeFragment()
+        // supporFragmentManager -> 구식
         supportFragmentManager.beginTransaction()
             .replace(binding.fragmentView.id, homeFragment)
             .commit()

@@ -23,8 +23,8 @@ import kotlinx.coroutines.withContext
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    lateinit var _binding: FragmentHomeBinding // lateinit var 활용
+    private val binding get() = _binding
     private val movieDetailFragment: MovieDetailFragment = MovieDetailFragment()
 
     private lateinit var viewPager: ViewPager2
@@ -47,8 +47,11 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             // 비동기 작업을 수행할 코루틴 블록
+            viewModel.fetchMovieDetails("en-US", 1)
             withContext(Dispatchers.Main) {
-                adapter = HomeAdapter(this@HomeFragment, viewModel.getMovieDetails("en-US", 1))
+                val movieDetails = viewModel.getMovieDetails("en-US", 1)
+                Log.d("HF", "$movieDetails")
+                adapter = HomeAdapter(this@HomeFragment, movieDetails)
                 viewPager.adapter = adapter
                 viewPager.offscreenPageLimit = 2
                 viewPager.setPageTransformer(cubeOutRotationTransformer)
@@ -57,6 +60,7 @@ class HomeFragment : Fragment() {
                     adapter.setItems(movieList)
                     adapter.notifyItemInserted(0)
                 })
+
             }
         }
 
@@ -70,9 +74,9 @@ class HomeFragment : Fragment() {
         }
 
     }
-
-    override fun onDestroyView() { // 메모리 누수 방지
-        super.onDestroyView()
-        _binding = null
-    }
+//
+//    override fun onDestroyView() { // 메모리 누수 방지
+//        super.onDestroyView()
+//        _binding = null
+//    }
 }
