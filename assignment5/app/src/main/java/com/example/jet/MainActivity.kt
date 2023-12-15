@@ -3,8 +3,10 @@ package com.example.jet
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,8 +54,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.lazy.items
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel:MyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -66,6 +71,13 @@ class MainActivity : ComponentActivity() {
                 /*...*/
             }
             //MainAc(navController)
+        }
+
+        viewModel.error.observe(this) { eventWrapper ->
+            eventWrapper.getContentIfNotHandled()?.let {
+                Log.d("aaaa","ㄷㄱ객 ㅐㅊ쳣")
+                Toast.makeText(this,"error occur",Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -116,7 +128,3 @@ fun MainAc(navController: NavController){
         MainButton("Clock","Clock",navController)
     }
 }
-
-
-@Composable
-fun Movie(){}
