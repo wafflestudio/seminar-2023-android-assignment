@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    //id("kotlin-parcelize")
 }
 
 android {
@@ -33,12 +34,12 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -54,9 +55,12 @@ android {
 }
 
 dependencies {
+
+    implementation("io.coil-kt:coil-compose:1.4.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("androidx.activity:activity-ktx:1.8.1")
-    implementation("com.google.dagger:hilt-android:2.47")
-    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 // Retrofit
@@ -84,4 +88,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+kapt {
+    correctErrorTypes = true
 }

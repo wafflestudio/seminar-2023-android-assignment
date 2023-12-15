@@ -58,11 +58,7 @@ fun Clock(){
     }
 }
 
-@Preview
-@Composable
-fun PreviewClock(){
-    Movie()
-}
+
 
 @Composable
 fun SetDigit(digit:Int){

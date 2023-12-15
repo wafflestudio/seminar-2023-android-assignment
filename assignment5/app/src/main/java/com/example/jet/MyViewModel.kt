@@ -1,5 +1,8 @@
 package com.example.jet
 
+import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,26 +21,33 @@ class MyViewModel @Inject constructor(
     private val _error = MutableLiveData<Event<String>>()
     val error: LiveData<Event<String>> = _error
 
-    private val _myMovieList : MutableLiveData<List<MyDataTypes.MovieInfo>> = MutableLiveData(listOf())
-    val myMovieList: LiveData<List<MyDataTypes.MovieInfo>> = _myMovieList
+   val myMovieList : MutableState<List<MyDataTypes.MovieInfo>> = mutableStateOf(listOf())
 
+
+
+
+
+
+    var page =1
+    /*
     private fun handleError(exception: Throwable) {
         val message = exception.message ?: ""
         _error.value = Event(message)
-    }
+    }*/
     fun getMoviesByQuery(query:String,page:Int){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response=api.getMoviesByQuery(query,page)
-                //Log.d("aaaa",response.toString())
+                val response=api.getMoviesByQuery(query,false,page)
+                Log.d("aaaa",response.toString())
 
                 withContext(Dispatchers.Main){
-                    _myMovieList.value=response.results.subList(0,5)
+                    myMovieList.value=response.results
                 }
             } catch (e: Exception) {
+                Log.d("aaaa","faikl")
                 //Toast.makeText(getActivity(), "Wrong Token", Toast.LENGTH_LONG).show()
                 withContext(Dispatchers.Main){
-                    handleError(e)
+                    //handleError(e)
                 }
             }
 

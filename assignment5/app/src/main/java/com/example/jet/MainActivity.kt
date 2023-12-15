@@ -55,10 +55,13 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.lazy.items
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel:MyViewModel by viewModels()
+    @Inject
+    lateinit var restAPI: MyRestAPI
+    private val viewModel:MyViewModel by viewModels()//위의 inject 안하면 이거 작동 안함
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -66,7 +69,7 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "MainAc") {
                 composable("MainAc") { MainAc(navController) }
                 composable("Tutorial") { Tutorial(/*...*/) }
-                composable("Movie") { Movie(/*...*/) }
+                composable("Movie") { Movie(viewModel) }
                 composable("Clock") { Clock(/*...*/) }
                 /*...*/
             }
