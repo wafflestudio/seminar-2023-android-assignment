@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Name"
+        android:padding="12dp"/>
+
+    <EditText
+        android:id="@+id/editOwner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Owner"
+        android:padding="12dp"/>
+
+    <EditText
+        android:id="@+id/editSetName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="단어장 이름"
+        android:padding="12dp"/>
+
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Password"
+        android:padding="12dp"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/editWord"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Word"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editMeaning"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Meaning"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editSynonym"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Synonym"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editAntonym"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Antonym"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editSentence"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Sentence"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editSpell"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:hint="Spell"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/positiveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:minWidth="48dp"
+        android:text="확인"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_gravity="end" />
+
+    <Button
+        android:id="@+id/negativeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:minWidth="48dp"
+        android:text="취소"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_gravity="end" />
+
+
+</LinearLayout>
