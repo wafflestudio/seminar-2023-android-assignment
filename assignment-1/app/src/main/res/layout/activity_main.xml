@@ -4,15 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        >
+
+        <ImageView
+            android:contentDescription="profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/my_profile"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="이름: 김민재"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="학번: 2022"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="학과: 공과대학 컴퓨터공학부"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout> <!-- Profile -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_rectangle_border"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/InputId"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:inputType="textAutoComplete"
+            android:autofillHints="username"
+
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+
+            android:hint="아이디를 입력하세요"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/inputPw"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:inputType="textPassword"
+            android:autofillHints="password"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+
+            android:hint="비밀번호를 입력하세요."
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/logIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="#000081"
+            android:text="로그인하기"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout> <!-- Login UI -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
